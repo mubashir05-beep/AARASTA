@@ -10,6 +10,12 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'Popins': 'Poppins, sans-serif',
+      'Roboto': 'Roboto Condensed, sans-serif'
+    
+    }
   },
+  
   plugins: [],
 }
