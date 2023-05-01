@@ -25,11 +25,11 @@ export default function App({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-      <React.Fragment className="mx-5">
+     <div>
         <Header />
         <Component {...pageProps} />
         <Footer />
-      </React.Fragment>
+        </div>
     </>
   );
 }

@@ -1,4 +1,7 @@
-
+import HeroBanner from "@/components/HeroBanner";
+import React from "react";
 export default function Home() {
-  return <main className={`flex bg-red-500 font-Popins-300 `}>hello</main>;
+  return <main className={``}>
+    <HeroBanner/>
+  </main>;
 }

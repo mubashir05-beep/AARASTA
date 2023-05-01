@@ -1,0 +1,1 @@
+import sanityClient form '@sanity/client';
