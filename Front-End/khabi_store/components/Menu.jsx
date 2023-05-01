@@ -9,9 +9,9 @@ const Menu = () => {
     { id: 4, name: "Contact", url: "/contact" },
   ];
   return (
-    <div className="flex">
-        <div className="">Khaabi</div>
-      <ul className="flex gap-5">
+    <div className="flex justify-between width-full ">
+        <div className="font-semibold pointer ">Khaabi</div>
+      <ul className="flex gap-5 ">
         {data.map((object) => {
           return (
             <li key={object.id}>

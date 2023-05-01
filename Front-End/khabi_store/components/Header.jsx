@@ -2,7 +2,7 @@ import React from 'react'
 import Menu from './Menu'
 const Header = () => {
   return (
-    <div>
+    <div className='mx-[5rem]'>
       <Menu/>
     </div>
   )
