@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sanity/client": "^5.4.2",
+    "@sanity/image-url": "^1.0.2",
     "animate.css": "^4.1.1",
     "autoprefixer": "10.4.14",
     "eslint": "8.39.0",

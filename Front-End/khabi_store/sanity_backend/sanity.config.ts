@@ -6,11 +6,12 @@ import {getStartedPlugin} from './plugins/sanity-plugin-tutorial'
 
 const devOnlyPlugins = [getStartedPlugin()]
 
+
 export default defineConfig({
   name: 'default',
-  title: 'yellow-dog',
+  title: 'magenta-baboon',
 
-  projectId: 'tk5cfny0',
+  projectId: 'a3lmxvs9',
   dataset: 'production',
 
   plugins: [deskTool(), visionTool(), ...(isDev ? devOnlyPlugins : [])],
