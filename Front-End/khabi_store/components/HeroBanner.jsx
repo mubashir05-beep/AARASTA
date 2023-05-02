@@ -22,7 +22,7 @@ const HeroBanner = ({ setBannerData }) => {
   ))}
   
       </Carousel>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+      {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
         <h1 className="text-4xl font-bold text-white">Welcome to our store</h1>
         <p className="mt-4 text-lg text-white">
           Shop our latest collection now!
@@ -30,7 +30,7 @@ const HeroBanner = ({ setBannerData }) => {
         <button className="mt-8 px-8 py-3 bg-white text-black rounded-full hover:bg-gray-300 transition-colors duration-300">
           hello
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

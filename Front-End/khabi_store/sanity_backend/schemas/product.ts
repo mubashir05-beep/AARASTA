@@ -35,6 +35,16 @@ export default {
         name: 'details',
         title: 'Details',
         type: 'string',
+      },
+      {
+        name:'featured',
+        title:'Featured',
+        type: 'boolean'
+      },
+      {
+        name:'category',
+        title:'Category',
+        type:'string'
       }
     ]
   } as const;

@@ -1,14 +1,14 @@
 import HeroBanner from "@/components/HeroBanner";
 import Products from "@/components/Products";
 import React from "react";
-import HeaderTitle from "@/components/HeaderTitle";
 import { client } from "@/lib/client";
+import FeaturedProducts from "@/components/FeaturedProducts";
 export default function Home({ products, bannerData }) {
   return (
     <main>
       <HeroBanner setBannerData={bannerData} />
-      <HeaderTitle />
-      {}
+      <FeaturedProducts products={products} />
+  
     </main>
   );
 }

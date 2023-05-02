@@ -27,5 +27,6 @@ font-family: 'Inter', sans-serif;
   letter-spacing: 3px;
 }
 
-
-
+.react-multi-carousel-item react-multi-carousel-item--active {
+  width: auto;
+}

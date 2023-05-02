@@ -16,8 +16,13 @@ const Menu = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const handleMenu = () => {
     setMobileMenu(!mobileMenu);
-    console.log(mobileMenu);
+    if (mobileMenu) {
+      document.body.style.overflow = 'auto'; // allow scroll
+    } else {
+      document.body.style.overflow = 'hidden'; // disable scroll
+    }
   };
+  
 
   return (
     <div className="flex justify-between items-center w-full ">
