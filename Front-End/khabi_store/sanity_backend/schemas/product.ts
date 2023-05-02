@@ -45,6 +45,25 @@ export default {
         name:'category',
         title:'Category',
         type:'string'
-      }
+      },
+      {
+        name:'quantity',
+        title:'Quantity',
+        type: 'boolean'
+      },
+      {
+        name: 'Size',
+        type: 'array',
+        of: [{ 
+          type: 'string',
+          title: 'My String',
+          description: 'Enter a string value'
+        }]
+      },
+      {
+        name:'darazLink',
+        title:'DarazLink',
+        type:'string'
+      },
     ]
   } as const;

@@ -3,8 +3,21 @@ import Header from "@/components/Header";
 import "@/styles/globals.css";
 import React from "react";
 import Head from "next/head";
-import { Fragment } from "react";
+import client from '/lib/client';
+import { useEffect, useState } from 'react';
+
 export default function App({ Component, pageProps }) {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      const query = '*[_type=="product"]';
+      const products = await client.fetch(query);
+      setProducts(products);
+    }
+
+    fetchProducts();
+  }, []);
   return (
     <>
       <Head>
@@ -27,7 +40,7 @@ export default function App({ Component, pageProps }) {
       </Head>
      <div>
         <Header />
-        <Component {...pageProps} />
+        <Component {...pageProps} products={products} />
         <Footer />
         </div>
     </>

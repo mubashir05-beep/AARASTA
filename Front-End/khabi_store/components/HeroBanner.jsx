@@ -14,13 +14,11 @@ const HeroBanner = ({ setBannerData }) => {
         showStatus={false}
         showIndicators={false}
       >
-       
         {setBannerData?.map((banner) => (
-    <div key={banner._id}>
-      <img src={urlFor(banner.image)} alt="Slide 1" />
-    </div>
-  ))}
-  
+          <div key={banner._id}>
+            <img src={urlFor(banner.image)} alt="Slide 1" />
+          </div>
+        ))}
       </Carousel>
       {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
         <h1 className="text-4xl font-bold text-white">Welcome to our store</h1>
