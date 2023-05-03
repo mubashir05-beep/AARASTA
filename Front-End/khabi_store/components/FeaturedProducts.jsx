@@ -27,20 +27,22 @@ const FeaturedProducts = ({ products }) => {
   return (
     <div className="flex flex-col item-center">
       <HeaderTitle />
-      <Carousel
-        responsive={responsive}
-       className="flex
-        gap-15"
-      >
-        {products
-          .filter((product) => product.featured)
-          .map((product) => (
-            <div>
-            
-              <Products key={product._id} product={product} />
-            </div>
-          ))}
-      </Carousel>
+      <Carousel responsive={responsive} itemClass="carousel-item-padding" className="mx-3">
+  {products
+    .filter((product) => product.featured)
+    .map((product) => (
+      <div>
+        <Products key={product._id} product={product} />
+      </div>
+    ))}
+</Carousel>
+
+<style jsx global>{`
+  .carousel-item-padding {
+    padding-right: 50px; /* adjust the gap size as needed */
+      }
+`}</style>
+
       ;
     </div>
   );

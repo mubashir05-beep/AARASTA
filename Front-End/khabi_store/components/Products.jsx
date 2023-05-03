@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Products = ({ product }) => {
   return (
-    <div className="bg-white shadow rounded mx-[50px] my-4">
+    <div className="bg-white shadow rounded  ">
       <Link href={`/ready_to_wear/${product.slug.current}`}>
         <div className="h-48 md:h-60 bg-gray-200 flex flex-col justify-between bg-cover bg-center">
           <img

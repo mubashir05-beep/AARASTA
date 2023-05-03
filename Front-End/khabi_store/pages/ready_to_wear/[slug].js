@@ -90,7 +90,9 @@ const Product = ({ products, product }) => {
           </button>
         </div>
         <div className="py-[25px]">
-          <p className="mb-[18px] text-black/[0.5] text-[15px]">Or buy this Product from Daraz!</p>
+          <p className="mb-[18px] text-black/[0.5] text-[15px]">
+            Or buy this Product from Daraz!
+          </p>
 
           <a
             href={`${product.darazLink}`}
@@ -106,6 +108,7 @@ const Product = ({ products, product }) => {
             Buy
           </a>
         </div>
+        <div className=" text-[14px] text-red-400">Disclaimer: Due to the difference in lighting used during photoshoots, the color or texture of the actual product may slightly vary from the image.</div>
       </div>
     </div>
   );
