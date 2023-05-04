@@ -4,6 +4,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { BsCart } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import MobileMenu from "./MobileMenu";
+import { useStateContext } from "@/context/StateContext";
+import Cart from "./Cart";
 
 const Menu = () => {
   const data = [
@@ -21,6 +23,7 @@ const Menu = () => {
       document.body.style.overflow = "hidden"; // disable scroll
     }
   };
+  const {showCart,setShowCart,totalQuantities} =useStateContext();
 
   return (
     <div className="flex justify-between items-center w-full ">
@@ -40,7 +43,7 @@ const Menu = () => {
           <div class="relative">
             <BsCart size={22} />
             <span class="absolute bottom-2 left-3 inline-flex items-center justify-center px-[6px] py-[3px] mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-              3
+              {totalQuantities}
             </span>
           </div>
         </Link>

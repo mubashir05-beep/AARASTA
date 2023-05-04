@@ -3,8 +3,9 @@ import Header from "@/components/Header";
 import "@/styles/globals.css";
 import React from "react";
 import Head from "next/head";
+import { StateContext } from "@/context/StateContext";
+import { Toaster } from "react-hot-toast";
 
-import { Fragment } from "react";
 export default function App({ Component, pageProps }) {
   return (
     <>
@@ -26,11 +27,13 @@ export default function App({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-     <div>
-        <Header />
+     <StateContext>
+     <Header />
+     <Toaster/>
         <Component {...pageProps} />
         <Footer />
-        </div>
+     </StateContext>
+       
     </>
   );
 }

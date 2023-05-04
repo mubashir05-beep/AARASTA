@@ -3,13 +3,9 @@ import Products from "@/components/Products";
 import React, { useState } from "react";
 import { client } from "@/lib/client";
 import FeaturedProducts from "@/components/FeaturedProducts";
-const [product,setProduct] = useState(0);
+
 
 export default function Home({ products, bannerData }) {
-   const transferData=()=>{
-    setProduct(product);
-    return(product);
-   }
   return (
     <main>
       <HeroBanner setBannerData={bannerData} />

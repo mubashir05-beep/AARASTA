@@ -2,11 +2,13 @@ import { client, urlFor } from "@/lib/client";
 import product from "../../sanity_backend/schemas/product";
 import React from "react";
 import Link from "next/link";
+import { useStateContext } from "@/context/StateContext";
 
 const Product = ({ products, product }) => {
+  const { qty, incQty, decQty ,onAdd} = useStateContext();
   return (
     <div className="flex flex-col lg:flex-row items-center mx-[3rem] my-[3rem] justify-center gap-[45px]">
-      <div className="max-w-[500px]">
+      <div className="max-w-[600px]">
         <img src={urlFor(product.image && product.image[0])} />
       </div>
       <div className="flex flex-col md:w-[450px]">
@@ -47,6 +49,24 @@ const Product = ({ products, product }) => {
                 </ul>
               )}
             </div>
+            <div  className="my-[1rem] flex flex-col justify-center gap-[6px]">
+              <p className="text-[16px]">Quantity:</p>
+              <div className="flex items-center">
+                <button
+                  className="px-2 py-1 bg-gray-200 text-gray-700 rounded-l"
+                  onClick={decQty}
+                >
+                  -
+                </button>
+                <span className="mx-2 text-lg">{qty}</span>
+                <button
+                  className="px-2 py-1 bg-gray-200 text-gray-700 rounded-r"
+                  onClick={incQty}
+                >
+                  +
+                </button>
+              </div>
+            </div>
           </div>
           <div className="text-black/[0.6]">{product.details}</div>
           <div className="py-[12px] text-red-400">
@@ -54,7 +74,7 @@ const Product = ({ products, product }) => {
           </div>
         </div>
         <div>
-          <button className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center">
+          <button onClick={()=>{onAdd(product)}} className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center">
             Add to Cart
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +128,11 @@ const Product = ({ products, product }) => {
             Buy
           </a>
         </div>
-        <div className=" text-[14px] text-red-400">Disclaimer: Due to the difference in lighting used during photoshoots, the color or texture of the actual product may slightly vary from the image.</div>
+        <div className=" text-[14px] text-red-400">
+          Disclaimer: Due to the difference in lighting used during photoshoots,
+          the color or texture of the actual product may slightly vary from the
+          image.
+        </div>
       </div>
     </div>
   );

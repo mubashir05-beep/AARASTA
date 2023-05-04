@@ -1,8 +1,9 @@
 import React from "react";
 import { urlFor } from "@/lib/client";
 import Link from "next/link";
-
+import { useStateContext } from "@/context/StateContext";
 const Products = ({ product }) => {
+  const {incQty}=useStateContext();
   return (
     <div className="bg-white shadow rounded  ">
       <Link href={`/ready_to_wear/${product.slug.current}`}>
@@ -24,7 +25,7 @@ const Products = ({ product }) => {
         <p className="text-center text-gray-800 mt-1">
           {"PKR " + product.price}
         </p>
-        <button className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center">
+        <button onClick={incQty} className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center">
           Add to Cart
           <svg
             xmlns="http://www.w3.org/2000/svg"
