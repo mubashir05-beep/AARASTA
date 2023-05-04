@@ -21,7 +21,7 @@ const Product = ({ products, product }) => {
           </div>
 
           <div className="text-black/[0.7]">
-            Product Code :<span className="text-[14px]"> SS-23-23-3-Black</span>
+            Product Code :<span className="text-[14px]">{product.productCode} </span>
           </div>
         </div>
         <div>
@@ -74,7 +74,7 @@ const Product = ({ products, product }) => {
           </div>
         </div>
         <div>
-          <button onClick={()=>{onAdd(product)}} className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center">
+          <button onClick={()=>{onAdd(product,qty)}} className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center">
             Add to Cart
             <svg
               xmlns="http://www.w3.org/2000/svg"

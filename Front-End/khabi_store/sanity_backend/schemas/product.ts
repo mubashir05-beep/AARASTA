@@ -36,6 +36,11 @@ export default {
         title: 'Details',
         type: 'string',
       },
+      { 
+        name: 'productCode',
+        title: 'ProductCode',
+        type: 'string',
+      },
       {
         name:'featured',
         title:'Featured',

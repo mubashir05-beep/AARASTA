@@ -5,7 +5,7 @@ import { BsCart } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import MobileMenu from "./MobileMenu";
 import { useStateContext } from "@/context/StateContext";
-import Cart from "./Cart";
+
 
 const Menu = () => {
   const data = [
