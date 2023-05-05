@@ -1,11 +1,12 @@
 import { client, urlFor } from "@/lib/client";
 import product from "../../sanity_backend/schemas/product";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
 
 const Product = ({ products, product }) => {
-  const { qty, incQty, decQty ,onAdd} = useStateContext();
+  const { qty, incQty, decQty, onAdd, size, setSize,toggleCartSize } = useStateContext();
+  const [selected, setSelected] = useState("");
   return (
     <div className="flex flex-col lg:flex-row items-center mx-[3rem] my-[3rem] justify-center gap-[45px]">
       <div className="max-w-[600px]">
@@ -21,7 +22,8 @@ const Product = ({ products, product }) => {
           </div>
 
           <div className="text-black/[0.7]">
-            Product Code :<span className="text-[14px]">{product.productCode} </span>
+            Product Code :
+            <span className="text-[14px]">{product.productCode} </span>
           </div>
         </div>
         <div>
@@ -41,7 +43,16 @@ const Product = ({ products, product }) => {
                 <ul className="flex my-[15px] gap-4">
                   {product.Size.map((size, index) => (
                     <li key={index} className="text-center">
-                      <div className="w-[30px] h-[30px]  text-black rounded-full bg-black/[0.1] flex items-center justify-center">
+                      <div
+                        className={`w-[30px] h-[30px] text-black rounded-full cursor-pointer bg-black/[0.1] flex items-center justify-center ${
+                          selected === size ? "bg-black/[0.5]" : ""
+                        }`}
+                        onClick={() => {
+                          setSize(size);
+
+                          setSelected(size);
+                        }}
+                      >
                         <span>{size}</span>
                       </div>
                     </li>
@@ -49,7 +60,7 @@ const Product = ({ products, product }) => {
                 </ul>
               )}
             </div>
-            <div  className="my-[1rem] flex flex-col justify-center gap-[6px]">
+            <div className="my-[1rem] flex flex-col justify-center gap-[6px]">
               <p className="text-[16px]">Quantity:</p>
               <div className="flex items-center">
                 <button
@@ -74,40 +85,92 @@ const Product = ({ products, product }) => {
           </div>
         </div>
         <div>
-          <button onClick={()=>{onAdd(product,qty)}} className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center">
-            Add to Cart
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 ml-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-          </button>
-          <button className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center">
-            Buy Now
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 ml-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-              />
-            </svg>
-          </button>
+          {product.quantity ? (
+            <div>
+              <button
+                onClick={() => {
+                  if (size === "") {
+                    alert("Please select a size!");
+                  } else {
+                    onAdd(product, qty);
+                    toggleCartSize(product._id,size);
+                  
+                  }
+
+                }}
+                className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+              >
+                Add to Cart
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 ml-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+              </button>
+              <Link href={"/cart"}>
+                <button
+                  onClick={() => {
+                    if (size === "") {
+                      alert("Please select a size!");
+                    } else {
+                      onAdd(product, qty);
+                    }
+                  }}
+                  className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+                >
+                  Buy Now
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <div>
+              {" "}
+              <button
+                disabled
+                onClick={() => {
+                  if (size === "") {
+                    alert("Please select a size!");
+                  } else {
+                    onAdd(product, qty);
+                  }
+                }}
+                className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+              >
+                Add to Cart
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 ml-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+              </button>
+              <Link href={"/cart"}>
+                <button
+                  disabled
+                  className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+                >
+                  Buy Now
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
         <div className="py-[25px]">
           <p className="mb-[18px] text-black/[0.5] text-[15px]">

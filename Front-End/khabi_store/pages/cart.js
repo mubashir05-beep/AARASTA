@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor } from "@/lib/client";
-import CartItems from "@/components/CartItems";
 import { RxCross2 } from "react-icons/rx";
+import CartEmpty from "@/components/CartEmpty";
 
 const Cart = () => {
   const {
@@ -14,19 +14,22 @@ const Cart = () => {
     setShowCart,
     toggleCartItemQuanitity,
     decQty,
+    size,
+    setSize,
     incQty,
     qty,
   } = useStateContext();
   const cartRef = useRef();
-
+  useEffect(() => {
+    setSize("");
+  }, []);
+const [sizeChange,setSizeChange]=useState(size);
   return (
     <div className="mx-[3rem] my-[3rem]">
       <div className="hidden sm:block text-center text-[34px] ">
         Shopping Cart
       </div>
-      {cartItems.length < 1 && <div>Cart Empty</div>}
-
-      <div>Total Items:</div>
+      {cartItems.length < 1 && <CartEmpty/>}
       <div>
    
       {cartItems.length >= 1 &&
@@ -55,7 +58,7 @@ const Cart = () => {
                   {" "}
                   Size:
                   <span className="w-[20px] h-[20px] text-[12px] text-black rounded-full bg-black/[0.1] flex items-center justify-center">
-                    S
+                    {sizeChange}
                   </span>
                 </div>
                 <div>

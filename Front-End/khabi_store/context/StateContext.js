@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
+  const [size, setSize]=useState('');
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -20,10 +21,10 @@ export const StateContext = ({ children }) => {
           : cartProduct
       );
       setCartItems(updatedCartItems);
-      toast.success(`${quantity} ${product.name} added to the cart`);
+      toast.success(`${quantity} ${product.name} (${size}) added to the cart`);
     } else {
       setCartItems([...cartItems, { ...product, quantity }]);
-      toast.success(`${quantity} ${product.name} added to the cart`);
+      toast.success(`${quantity} ${product.name} (${size}) added to the cart`);
     }
 
     setTotalQuantities((prev) => prev + quantity);
@@ -70,6 +71,19 @@ export const StateContext = ({ children }) => {
       setCartItems(newCartItems);
     }
   };
+  
+  const toggleCartSize = (id, size) => {
+    const foundProduct = cartItems.find((item) => item._id === id);
+    const index = cartItems.findIndex((product) => product._id === id);
+    if ( foundProduct) {
+      const newCartSize = [...cartItems];
+      newCartSize[index] = { ...foundProduct, size: size};
+
+      
+      setSize(newCartSize);
+    }
+  }
+  
 
   return (
     <Context.Provider
@@ -78,7 +92,10 @@ export const StateContext = ({ children }) => {
         setShowCart,
         cartItems,
         totalPrice,
+        size,
+        setSize,
         totalQuantities,
+        toggleCartSize,
         qty,
         onAdd,
         incQty,
