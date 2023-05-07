@@ -28,7 +28,7 @@ const Cart = () => {
       {cartItems.length >= 1 && (
         <div className="flex items-center justify-between border-t pt-8">
           <div className="flex flex-row gap-2 items-center  ">
-            <div className="text-lg font-semibold ">Total Quantities:</div>
+            <div className="text-lg font-semibold ">Total Quantity:</div>
             <div className="text-[18px]">{totalQuantities}</div>
           </div>
           <div className="flex gap-2 items-center">
