@@ -7,6 +7,7 @@ import { useStateContext } from "@/context/StateContext";
 const Product = ({ products, product }) => {
   const { qty, incQty, decQty, onAdd, size, setSize,toggleCartSize } = useStateContext();
   const [selected, setSelected] = useState("");
+
   return (
     <div className="flex flex-col lg:flex-row items-center mx-[3rem] my-[3rem] justify-center gap-[45px]">
       <div className="max-w-[600px]">
@@ -93,7 +94,6 @@ const Product = ({ products, product }) => {
                     alert("Please select a size!");
                   } else {
                     onAdd(product, qty);
-                    toggleCartSize(product._id,size);
                   
                   }
 
