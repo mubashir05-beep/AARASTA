@@ -15,8 +15,11 @@ const Menu = () => {
     { id: 4, name: "About Us", url: "/about" },
   ];
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [shipFee,setShipFee]=useState(true);
   const handleMenu = () => {
+    setShipFee(!shipFee)
     setMobileMenu(!mobileMenu);
+    
     if (mobileMenu) {
       document.body.style.overflow = "auto"; // allow scroll
     } else {
@@ -24,8 +27,15 @@ const Menu = () => {
     }
   };
   const {showCart,setShowCart,totalQuantities} =useStateContext();
-
+    
   return (
+    <>
+ {shipFee && (
+  <div className='text-center py-3 bg-red-200'>
+    Free shipping on orders above PKR. 2999/-
+  </div>
+)}
+     
     <div className="flex justify-between items-center w-full ">
       <Link href="/">
         {" "}
@@ -66,6 +76,7 @@ const Menu = () => {
         )}
       </ul>
     </div>
+    </>
   );
 };
 
