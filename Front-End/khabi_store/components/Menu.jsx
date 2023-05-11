@@ -7,7 +7,7 @@ import MobileMenu from "./MobileMenu";
 import { useStateContext } from "@/context/StateContext";
 
 
-const Menu = () => {
+const Menu = ({ shipFee, setShipFee }) => {
   const data = [
     { id: 1, name: "Home", url: "/" },
     { id: 2, name: "Tailored Clothing", url: "/tailored_clothing" },
@@ -15,7 +15,7 @@ const Menu = () => {
     { id: 4, name: "About Us", url: "/about" },
   ];
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [shipFee,setShipFee]=useState(true);
+  
   const handleMenu = () => {
     setShipFee(!shipFee)
     setMobileMenu(!mobileMenu);
@@ -30,13 +30,9 @@ const Menu = () => {
     
   return (
     <>
- {shipFee && (
-  <div className='text-center py-3 bg-red-200'>
-    Free shipping on orders above PKR. 2999/-
-  </div>
-)}
+
      
-    <div className="flex justify-between items-center w-full ">
+    <div className="flex  justify-between items-center w-full ">
       <Link href="/">
         {" "}
         <div className="font-semibold pointer text-[24px] logo">Khaabi</div>

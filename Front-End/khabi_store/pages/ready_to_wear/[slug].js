@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
 
 const Product = ({ products, product }) => {
-  const { qty, incQty, decQty, onAdd, size, setSize,toggleCartSize } = useStateContext();
+  const { qty, incQty, decQty, onAdd, size, setSize, toggleCartSize } =
+    useStateContext();
   const [selected, setSelected] = useState("");
 
   return (
@@ -50,7 +51,6 @@ const Product = ({ products, product }) => {
                         }`}
                         onClick={() => {
                           setSize(size);
-
                           setSelected(size);
                         }}
                       >
@@ -94,9 +94,7 @@ const Product = ({ products, product }) => {
                     alert("Please select a size!");
                   } else {
                     onAdd(product, qty);
-                  
                   }
-
                 }}
                 className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
               >
@@ -116,24 +114,30 @@ const Product = ({ products, product }) => {
                   />
                 </svg>
               </button>
-              <Link href={"/cart"}>
+              {size === "" ? (
                 <button
                   onClick={() => {
-                    if (size === "") {
-                      alert("Please select a size!");
-                    } else {
-                      onAdd(product, qty);
-                    }
+                    alert("Please select a size!");
                   }}
                   className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
                 >
                   Buy Now
                 </button>
-              </Link>
+              ) : (
+                <Link href={"/cart"}>
+                  <button
+                    onClick={() => {
+                      onAdd(product, qty);
+                    }}
+                    className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+                  >
+                    Buy Now
+                  </button>
+                </Link>
+              )}
             </div>
           ) : (
             <div>
-              {" "}
               <button
                 disabled
                 onClick={() => {
@@ -176,7 +180,6 @@ const Product = ({ products, product }) => {
           <p className="mb-[18px] text-black/[0.5] text-[15px]">
             Or buy this Product from Daraz!
           </p>
-
           <a
             href={`${product.darazLink}`}
             className="flex gap-2 

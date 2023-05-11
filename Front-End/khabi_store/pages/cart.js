@@ -20,13 +20,15 @@ const Cart = () => {
     qty,
   } = useStateContext();
   const cartRef = useRef();
+  const [scroll, setScoll] = useState("");
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
         Shopping Cart
       </div>
+      {cartItems.length < 1 && <CartEmpty />}
       {cartItems.length >= 1 && (
-        <div className="flex items-center justify-between border-t pt-8">
+        <div className="flex items-center justify-between border-t border-b pb-8 pt-8">
           <div className="flex flex-row gap-2 items-center  ">
             <div className="text-lg font-semibold ">Total Quantity:</div>
             <div className="text-[18px]">{totalQuantities}</div>
@@ -37,22 +39,21 @@ const Cart = () => {
           </div>
         </div>
       )}
-      {cartItems.length < 1 && <CartEmpty />}
-      <div>
-        {cartItems.length >= 1 &&
-          cartItems.map((items, index) => (
-            <>
-              <div
-                className="flex border-b border-t  justify-between py-5 my-8"
-                key={items._id}
-              >
-                <div className="flex gap-8 ">
+
+      <div className="flex flex-col min-[996px]:flex-row">
+        <div
+          className={`flex flex-col justify-between scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300 gap-5 scrollbar-hide flex-[1.5]  scrollbar-track-rounded-full `}
+        >
+          {cartItems.length >= 1 &&
+            cartItems.map((items, index) => (
+              <div className="flex border-b  py-5 " key={items._id}>
+                <div className="flex gap-[3rem] justify-center ">
                   <img
                     src={urlFor(items?.image[0])}
                     width={"200px"}
                     className="rounded-lg"
                   />
-                  <div className="flex flex-col gap-2 my-6 w-[250px]">
+                  <div className="flex flex-col gap-2 my-6 w-[200px]">
                     <div className="font-semibold text-lg break-words">
                       {items.name}
                     </div>
@@ -81,47 +82,76 @@ const Cart = () => {
                       )}
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2 my-6 w-[150px]">
-                    <div className="font-semibold text-[15px] text-lg">
-                      Price
+                  <div className="flex flex-col gap-2 w-[100px] items-center my-6">
+                    <div className="flex flex-col gap-2 my-1  items-center">
+                      <div className="font-[500] text-[15px] text-lg">
+                        Per Price
+                      </div>
+                      <div className="text-gray-600">PKR {items.price}/-</div>
                     </div>
-                    <div>PKR {items.price}/-</div>
+                    <div className="flex flex-col my-1 gap-2  items-center ">
+                      <div className="font-[500] text-[15px] text-lg">
+                        Quantity
+                      </div>
+                      <div className="flex items-center ">
+                        <button
+                          className="px-2 bg-gray-200 text-gray-700 rounded-l"
+                          onClick={() =>
+                            toggleCartItemQuanitity(items._id, "dec")
+                          }
+                        >
+                          -
+                        </button>
+                        <span className="mx-2 text-lg text-gray-600">
+                          {items.quantity}
+                        </span>
+                        <button
+                          className="px-2  bg-gray-200 text-gray-700 rounded-r"
+                          onClick={() =>
+                            toggleCartItemQuanitity(items._id, "inc")
+                          }
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex flex-col my-6 gap-2 w-[150px] ">
-                    <div className="font-semibold text-[15px] text-lg">
-                      Quantity
-                    </div>
-                    <div className="flex items-center ">
-                      <button
-                        className="px-2 bg-gray-200 text-gray-700 rounded-l"
-                        onClick={() =>
-                          toggleCartItemQuanitity(items._id, "dec")
-                        }
-                      >
-                        -
-                      </button>
-                      <span className="mx-2 text-lg">{items.quantity}</span>
-                      <button
-                        className="px-2  bg-gray-200 text-gray-700 rounded-r"
-                        onClick={() =>
-                          toggleCartItemQuanitity(items._id, "inc")
-                        }
-                      >
-                        +
-                      </button>
-                    </div>
+                  <div className="w-[100px] flex justify-center">
+                    <RxCross2
+                      size={25}
+                      className="cursor-pointer"
+                      onClick={() => onRemove(items)}
+                    />
                   </div>
-                </div>
-                <div>
-                  <RxCross2
-                    size={25}
-                    className="cursor-pointer"
-                    onClick={() => onRemove(items)}
-                  />
                 </div>
               </div>
-            </>
-          ))}
+            ))}
+        </div>
+        <div className="flex  flex-[0.5] border-l border-r border-b">
+          {cartItems.length >= 1 && (
+            <div className="py-5 px-5 flex flex-col ">
+              <div className="flex  flex-col gap-5">
+                <div className="text-lg font-semibold">Order Summary</div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex gap-2">
+                    <p className="font-medium">Items Total:</p>
+                    <div>{totalQuantities}</div>
+                  </div>
+
+                  <div className="flex gap-2">
+                    <p  className="font-medium">Delivery Fee:</p>
+                    <div>PKR 99/-</div>
+                  </div>
+
+                  <div  className="flex gap-2 bg-gray-600 text-white px-2" >
+                    <p className="font-medium">Grand Total:</p>
+                    <div>PKR {totalPrice+99}/-</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
