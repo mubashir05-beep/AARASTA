@@ -3,7 +3,7 @@ import { useStateContext } from "@/context/StateContext";
 import { urlFor } from "@/lib/client";
 import { RxCross2 } from "react-icons/rx";
 import CartEmpty from "@/components/CartEmpty";
-
+import { AiOutlineExclamation } from "react-icons/ai";
 const Cart = () => {
   const {
     totalPrice,
@@ -28,7 +28,7 @@ const Cart = () => {
       </div>
       {cartItems.length < 1 && <CartEmpty />}
       {cartItems.length >= 1 && (
-        <div className="flex items-center justify-between border-t border-b pb-8 pt-8">
+        <div className="flex items-center justify-between border pb-8 px-5 pt-8">
           <div className="flex flex-row gap-2 items-center  ">
             <div className="text-lg font-semibold ">Total Quantity:</div>
             <div className="text-[18px]">{totalQuantities}</div>
@@ -47,7 +47,7 @@ const Cart = () => {
           {cartItems.length >= 1 &&
             cartItems.map((items, index) => (
               <div className="flex border-b  py-5 " key={items._id}>
-                <div className="flex gap-[3rem] justify-center ">
+                <div className="flex gap-[3rem] justify-evenly w-[100%] ">
                   <img
                     src={urlFor(items?.image[0])}
                     width={"200px"}
@@ -127,11 +127,23 @@ const Cart = () => {
               </div>
             ))}
         </div>
-        <div className="flex  flex-[0.5] border-l border-r border-b">
+        <div className="flex flex-[0.5] border-l border-r border-b">
           {cartItems.length >= 1 && (
-            <div className="py-5 px-5 flex flex-col ">
-              <div className="flex  flex-col gap-5">
-                <div className="text-lg font-semibold">Order Summary</div>
+            <div className=" px-5 py-5 flex flex-col items-center justify-around  h-[556px] ">
+              <div className="flex flex-col min-[1534px]:flex-row items-center bg-red-200 p-3 w-[100%] text-black gap-5">
+                <div className="rounded-full border-black border-2">
+                  <AiOutlineExclamation size={20} />
+                </div>
+                <div className="text center  max-[1534px]:text-[14px]">
+                  Delivery available in Islamabad and Rawalpindi. Contact us for
+                  other areas. Thank you for choosing us.
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-5 border-t w-[100%] border-b py-5">
+                <div className="text-lg font-semibold underline underline-offset-8">
+                  Order Summary
+                </div>
                 <div className="flex flex-col gap-2">
                   <div className="flex gap-2">
                     <p className="font-medium">Items Total:</p>
@@ -139,16 +151,20 @@ const Cart = () => {
                   </div>
 
                   <div className="flex gap-2">
-                    <p  className="font-medium">Delivery Fee:</p>
+                    <p className="font-medium">Delivery Fee:</p>
                     <div>PKR 99/-</div>
                   </div>
 
-                  <div  className="flex gap-2 bg-gray-600 text-white px-2" >
-                    <p className="font-medium">Grand Total:</p>
-                    <div>PKR {totalPrice+99}/-</div>
+                  <div className="flex items-center gap-2 w-[100%] bg-gray-600 text-white px-1">
+                    <p className="font-medium text-[16px]  ">Grand Total:</p>
+                    <div className=" text-[16px]">PKR {totalPrice + 99}/- <span className="text-sm"> (incl shipping fee)</span></div>
                   </div>
                 </div>
               </div>
+
+              <button className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-slate-900 duration-300">
+                Proceed to Checkout
+              </button>
             </div>
           )}
         </div>
