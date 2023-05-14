@@ -4,6 +4,8 @@ import { urlFor } from "@/lib/client";
 import { RxCross2 } from "react-icons/rx";
 import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
+
+import { RiDeleteBinLine } from "react-icons/ri";
 const Cart = () => {
   const {
     totalPrice,
@@ -21,6 +23,7 @@ const Cart = () => {
   } = useStateContext();
   const cartRef = useRef();
   const [scroll, setScoll] = useState("");
+  
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -28,14 +31,18 @@ const Cart = () => {
       </div>
       {cartItems.length < 1 && <CartEmpty />}
       {cartItems.length >= 1 && (
-        <div className="flex items-center justify-between border pb-8 px-5 pt-8">
+        <div className="flex items-center max-[499px]:flex-col  max-[499px]:items-start  max-[499px]:gap-2  max-[499px]:border-b justify-between border pb-8 px-5 pt-8">
           <div className="flex flex-row gap-2 items-center  ">
-            <div className="text-lg font-semibold ">Total Quantity:</div>
-            <div className="text-[18px]">{totalQuantities}</div>
+            <div className="text-lg font-semibold max-[339px]:text-[15px] ">
+              Total Quantity:
+            </div>
+            <div className="text-[18px] max-[339px]:text-[16px]">{totalQuantities}</div>
           </div>
           <div className="flex gap-2 items-center">
-            <div className="text-lg font-semibold ">Sub-Total:</div>
-            <div className="text-[18px]">PKR {totalPrice}/-</div>
+            <div className="text-lg max-[339px]:text-[15px] font-semibold ">
+              Sub-Total:
+            </div>
+            <div className="text-[18px] max-[339px]:text-[16px]">PKR {totalPrice}/-</div>
           </div>
         </div>
       )}
@@ -132,7 +139,7 @@ const Cart = () => {
         <div className="flex flex-[0.5] border-l border-r justify-center border-b">
           {cartItems.length >= 1 && (
             <div className=" px-5 py-5 flex flex-col items-center justify-around  h-[556px] ">
-              <div className="flex flex-col min-[1534px]:flex-row items-center bg-red-200 p-3 w-[100%] text-black gap-5">
+              <div className="flex flex-col min-[1534px]:flex-row items-center bg-red-200 p-7 rounded-2xl w-[100%] text-black gap-5">
                 <div className="rounded-full border-black border-2">
                   <AiOutlineExclamation size={20} />
                 </div>
