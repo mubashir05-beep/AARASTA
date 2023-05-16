@@ -148,7 +148,7 @@ const Cart = () => {
                   other areas. Thank you for choosing us.
                 </div>
               </div>
-
+                {/* Address Modal */}
               <div className="flex flex-col gap-5 border-t w-[100%] border-b py-5">
                 <div className="text-lg font-semibold underline underline-offset-8">
                   Order Summary

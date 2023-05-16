@@ -10,29 +10,45 @@ const Context = createContext();
 export const StateContext = ({ children }) => {
   const [size, setSize] = useState("");
   const [showCart, setShowCart] = useState(false);
- 
-  const localStorageCart =
-  JSON.parse(localStorage.getItem(CART_ITEMS_STORAGE_KEY)) || [];
-   const [cartItems, setCartItems] = useState(
-    localStorageCart
-  );
+  // Address
 
-  const localStoragePrice =
-  JSON.parse(localStorage.getItem(TOTAL_PRICE_STORAGE_KEY)) || 0;
-  const [totalPrice, setTotalPrice] = useState(localStoragePrice);
- 
-  const localStorageQuantity =
-    JSON.parse(localStorage.getItem(TOTAL_QUANTITIES_STORAGE_KEY)) || 0;
-  const [totalQuantities, setTotalQuantities] = useState(localStorageQuantity);
+  const [fullName, setFullName] = useState("");
+  const [mobNumber, setMobNumber] = useState(0);
+  const [city, setCity] = useState("");
+  const [landMark, setLandMark] = useState("");
+  const [address, setAddress] = useState("");
+
+  const localCart =
+    (typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem(CART_ITEMS_STORAGE_KEY))) ||
+    [];
+
+  const [cartItems, setCartItems] = useState([]);
+  const localPrice =
+    (typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem(TOTAL_PRICE_STORAGE_KEY))) ||
+    0;
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  const localQty =
+    (typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem(TOTAL_QUANTITIES_STORAGE_KEY))) ||
+    0;
+  const [totalQuantities, setTotalQuantities] = useState(0);
   const [qty, setQty] = useState(1);
   const [cartChange, setCartChange] = useState("");
+
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(CART_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
-      localStorage.setItem(TOTAL_QUANTITIES_STORAGE_KEY, totalQuantities);
-      localStorage.setItem(TOTAL_PRICE_STORAGE_KEY, totalPrice);
-    }
+    setCartItems(localCart);
+    setTotalPrice(localPrice);
+    setTotalQuantities(localQty);
+  }, []);
+  useEffect(() => {
+    localStorage.setItem(CART_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
+    localStorage.setItem(TOTAL_QUANTITIES_STORAGE_KEY, totalQuantities);
+    localStorage.setItem(TOTAL_PRICE_STORAGE_KEY, totalPrice);
   }, [cartItems, totalQuantities, totalPrice]);
+
   const onAdd = (product, quantity) => {
     const checkProductInCart = cartItems.find(
       (item) => item._id === product._id
@@ -54,17 +70,6 @@ export const StateContext = ({ children }) => {
     setTotalQuantities((prev) => prev + quantity);
     setTotalPrice((prev) => prev + product.price * quantity);
   };
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedCartItems = JSON.parse(localStorage.getItem(CART_ITEMS_STORAGE_KEY)) || [];
-      setCartItems(storedCartItems);
-      const storedTotalPrice = JSON.parse(localStorage.getItem(TOTAL_PRICE_STORAGE_KEY)) || 0;
-      setTotalPrice(storedTotalPrice);
-      const storedTotalQuantities = JSON.parse(localStorage.getItem(TOTAL_QUANTITIES_STORAGE_KEY)) || 0;
-      setTotalQuantities(storedTotalQuantities);
-    }
-  }, []);
-  
 
   const incQty = () => {
     setQty((prev) => prev + 1);
@@ -136,6 +141,16 @@ export const StateContext = ({ children }) => {
         onRemove,
         toggleCartItemQuanitity,
         decQty,
+        fullName,
+        setFullName,
+        mobNumber,
+        setMobNumber,
+        city,
+        setCity,
+        landMark,
+        setLandMark,
+        address,
+        setAddress,
       }}
     >
       {children}
