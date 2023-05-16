@@ -1,10 +1,9 @@
-import React, { useRef, useEffect,useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor } from "@/lib/client";
 import { RxCross2 } from "react-icons/rx";
 import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
-import MicroModal from "micromodal";
 import { RiDeleteBinLine } from "react-icons/ri";
 
 const Cart = () => {
@@ -21,29 +20,20 @@ const Cart = () => {
     setSize,
     incQty,
     qty,
-    fullName,
-    setFullName,
-    mobNumber,
-    setMobNumber,
-    city,
-    setCity,
-    landMark,
-    setLandMark,
     address,
     setAddress,
   } = useStateContext();
   const cartRef = useRef();
 
-  useEffect(() => {
-    MicroModal.init();
-  }, []);
-
-  const handleInput = () => {
-    MicroModal.show("modal-1");
-  };
-
   const [isOpen, setIsOpen] = useState(false);
-
+  const [formData, setFormData] = useState({
+    name: "",
+    street: "",
+    city: "",
+    state: "",
+    phone: "",
+    landmark: "",
+  });
   const openModal = () => {
     setIsOpen(true);
   };
@@ -51,10 +41,29 @@ const Cart = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+  const [submited,setSubmited]=useState(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setAddress(formData);
+    setSubmited(true);
+    // setFormData({
+    //   name: "",
+    //   street: "",
+    //   city: "",
+    //   state: "",
+    //   phone: "",
+    //   landmark: "",
+    // });
+  };
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
-    
-
       <div className="hidden sm:block text-center text-[34px] py-4 ">
         Shopping Cart
       </div>
@@ -182,13 +191,16 @@ const Cart = () => {
                 </div>
               </div>
               {/* Address Modal */}
-
+              <div>
+                {address.name}
+                {address.phone}
+              </div>
               <div>
                 <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-black text-white border-t w-[150px] rounded-lg h-11 hover:bg-gray-600 duration-300"
                   onClick={openModal}
                 >
-                  Open Modal
+                  {submited?'Edit Address':'Add Address'}
                 </button>
 
                 {isOpen && (
@@ -200,28 +212,98 @@ const Cart = () => {
                           onClick={closeModal}
                         ></div>
                       </div>
-                      <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                      <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all  sm:max-w-[25rem] sm:w-full">
+                        <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <div className="absolute right-6 top-6">
+                              <button onClick={closeModal}>
+                                <RxCross2 size={24} />
+                              </button>
+                            </div>
+                          </div>
                           <div className="sm:flex sm:items-start">
-                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                              <h3 className="text-lg leading-6 font-medium text-gray-900">
-                                Modal Title
-                              </h3>
-                              <div className="mt-2">
-                                <p className="text-sm text-gray-500">
-                                  Modal content goes here.
-                                </p>
+                            <div className="mt-3 flex flex-col gap-6  sm:mt-0 sm:ml-4 sm:text-left">
+                              {/* <h3 className="text-lg leading-6 text-center  text-gray-900 font-semibold">
+                                Add Address
+                              </h3> */}
+
+                              <div className="mt-2 flex flex-col items-center gap-6">
+                                <form
+                                  onSubmit={handleSubmit}
+                                  className="flex flex-col gap-5 justify-center "
+                                >
+                                  <label className="flex gap-3 items-center justify-center">
+                                    <p className="w-[89px] font-semibold">
+                                      Full Name:
+                                    </p>
+                                    <input
+                                      type="text"
+                                      name="name"
+                                      value={formData.name}
+                                      onChange={handleChange}
+                                      className="border"
+                                    />
+                                  </label>
+                                  <label className="flex gap-3 items-center justify-center">
+                                    <p className="w-[89px] font-semibold">
+                                      Phone:
+                                    </p>
+                                    <input
+                                      type="text"
+                                      name="phone"
+                                      value={formData.phone}
+                                      onChange={handleChange}
+                                      className="border"
+                                    />
+                                  </label>
+                                  <label className="flex gap-3 items-center justify-center">
+                                    <p className="w-[89px] font-semibold">
+                                      ZIP Code:
+                                    </p>
+                                    <input
+                                      type="text"
+                                      name="zip"
+                                      value={formData.zip}
+                                      onChange={handleChange}
+                                      className="border "
+                                    />
+                                  </label>
+                                  <label className="flex gap-3 items-center justify-center">
+                                    <p className="w-[89px] font-semibold">
+                                      City:
+                                    </p>
+                                    <input
+                                      type="text"
+                                      name="city"
+                                      value={formData.city}
+                                      onChange={handleChange}
+                                      className="border "
+                                    />
+                                  </label>
+                                  <label className="flex gap-3 items-center justify-center">
+                                    <p className="w-[89px] font-semibold">
+                                      {" "}
+                                      Address:
+                                    </p>
+                                    <input
+                                      type="text"
+                                      name="street"
+                                      value={formData.landmark}
+                                      onChange={handleChange}
+                                      className="border"
+                                    />
+                                  </label>
+                                </form>
+                                <button
+                                  className=" inline-flex justify-center rounded-md border border-transparent w-[80px] shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-600 sm:w-auto sm:text-sm transition-all duration-300"
+                                  type="submit"
+                                  onClick={handleSubmit}
+                                >
+                                  Submit
+                                </button>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                          <button
-                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
-                            onClick={closeModal}
-                          >
-                            Close
-                          </button>
                         </div>
                       </div>
                     </div>

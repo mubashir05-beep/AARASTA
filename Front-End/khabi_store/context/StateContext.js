@@ -11,12 +11,14 @@ export const StateContext = ({ children }) => {
   const [size, setSize] = useState("");
   const [showCart, setShowCart] = useState(false);
   // Address
-
-  const [fullName, setFullName] = useState("");
-  const [mobNumber, setMobNumber] = useState(0);
-  const [city, setCity] = useState("");
-  const [landMark, setLandMark] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState({
+    name: "",
+    street: "",
+    city: "",
+    state: "",
+    phone: "",
+    landmark: "",
+  });
 
   const localCart =
     (typeof window !== "undefined" &&
@@ -124,7 +126,6 @@ export const StateContext = ({ children }) => {
     }
   };
 
-
   return (
     <Context.Provider
       value={{
@@ -141,16 +142,7 @@ export const StateContext = ({ children }) => {
         onRemove,
         toggleCartItemQuanitity,
         decQty,
-        fullName,
-        setFullName,
-        mobNumber,
-        setMobNumber,
-        city,
-        setCity,
-        landMark,
-        setLandMark,
-        address,
-        setAddress
+        address, setAddress
       }}
     >
       {children}
