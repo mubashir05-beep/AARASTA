@@ -1,11 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect,useState } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor } from "@/lib/client";
 import { RxCross2 } from "react-icons/rx";
 import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
-
+import MicroModal from "micromodal";
 import { RiDeleteBinLine } from "react-icons/ri";
+
 const Cart = () => {
   const {
     totalPrice,
@@ -20,12 +21,40 @@ const Cart = () => {
     setSize,
     incQty,
     qty,
+    fullName,
+    setFullName,
+    mobNumber,
+    setMobNumber,
+    city,
+    setCity,
+    landMark,
+    setLandMark,
+    address,
+    setAddress,
   } = useStateContext();
   const cartRef = useRef();
-  const [scroll, setScoll] = useState("");
-  
+
+  useEffect(() => {
+    MicroModal.init();
+  }, []);
+
+  const handleInput = () => {
+    MicroModal.show("modal-1");
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
+    
+
       <div className="hidden sm:block text-center text-[34px] py-4 ">
         Shopping Cart
       </div>
@@ -36,13 +65,17 @@ const Cart = () => {
             <div className="text-lg font-semibold max-[339px]:text-[15px] ">
               Total Quantity:
             </div>
-            <div className="text-[18px] max-[339px]:text-[16px]">{totalQuantities}</div>
+            <div className="text-[18px] max-[339px]:text-[16px]">
+              {totalQuantities}
+            </div>
           </div>
           <div className="flex gap-2 items-center">
             <div className="text-lg max-[339px]:text-[15px] font-semibold ">
               Sub-Total:
             </div>
-            <div className="text-[18px] max-[339px]:text-[16px]">PKR {totalPrice}/-</div>
+            <div className="text-[18px] max-[339px]:text-[16px]">
+              PKR {totalPrice}/-
+            </div>
           </div>
         </div>
       )}
@@ -61,7 +94,7 @@ const Cart = () => {
                     className="rounded-lg"
                   />
                   <div className="flex flex-col md:flex-row items-center min-[500px]:items-start">
-                    <div className="flex flex-col gap-2 items-center  min-[500px]:items-start md:my-6 w-[200px]">
+                    <div className="flex flex-col gap-2 items-center min-[500px]:items-start md:my-6 w-[200px]">
                       <div className="font-semibold text-lg break-words">
                         {items.name}
                       </div>
@@ -114,7 +147,7 @@ const Cart = () => {
                             {items.quantity}
                           </span>
                           <button
-                            className="px-2  bg-gray-200 text-gray-700 rounded-r"
+                            className="px-2 bg-gray-200 text-gray-700 rounded-r"
                             onClick={() =>
                               toggleCartItemQuanitity(items._id, "inc")
                             }
@@ -138,7 +171,7 @@ const Cart = () => {
         </div>
         <div className="flex flex-[0.5] border-l border-r justify-center border-b">
           {cartItems.length >= 1 && (
-            <div className=" px-5 py-5 flex flex-col items-center justify-around  h-[556px] ">
+            <div className="px-5 py-5 flex flex-col items-center justify-around  h-[556px] ">
               <div className="flex flex-col min-[1534px]:flex-row items-center bg-red-200 p-7 rounded-2xl w-[100%] text-black gap-5">
                 <div className="rounded-full border-black border-2">
                   <AiOutlineExclamation size={20} />
@@ -148,7 +181,54 @@ const Cart = () => {
                   other areas. Thank you for choosing us.
                 </div>
               </div>
-                {/* Address Modal */}
+              {/* Address Modal */}
+
+              <div>
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={openModal}
+                >
+                  Open Modal
+                </button>
+
+                {isOpen && (
+                  <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen">
+                      <div className="fixed inset-0 transition-opacity">
+                        <div
+                          className="absolute inset-0 bg-black opacity-75"
+                          onClick={closeModal}
+                        ></div>
+                      </div>
+                      <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                        <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div className="sm:flex sm:items-start">
+                            <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                              <h3 className="text-lg leading-6 font-medium text-gray-900">
+                                Modal Title
+                              </h3>
+                              <div className="mt-2">
+                                <p className="text-sm text-gray-500">
+                                  Modal content goes here.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                          <button
+                            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                            onClick={closeModal}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div className="flex flex-col gap-5 border-t w-[100%] border-b py-5">
                 <div className="text-lg font-semibold underline underline-offset-8">
                   Order Summary
@@ -174,7 +254,7 @@ const Cart = () => {
                 </div>
               </div>
 
-              <button className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-slate-900 duration-300">
+              <button className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-gray-600 duration-300">
                 Proceed to Checkout
               </button>
             </div>

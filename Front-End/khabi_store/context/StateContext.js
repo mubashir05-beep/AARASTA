@@ -150,7 +150,7 @@ export const StateContext = ({ children }) => {
         landMark,
         setLandMark,
         address,
-        setAddress,
+        setAddress
       }}
     >
       {children}
