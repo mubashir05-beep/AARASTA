@@ -53,6 +53,7 @@ const Cart = () => {
     e.preventDefault();
     setAddress(formData);
     setSubmited(true);
+    setIsOpen(false);
     // setFormData({
     //   name: "",
     //   street: "",
