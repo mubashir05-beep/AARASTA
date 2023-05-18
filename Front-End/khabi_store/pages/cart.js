@@ -32,7 +32,7 @@ const Cart = () => {
     city: "",
     state: "",
     phone: "",
-    landmark: "",
+    addressAll: "",
   });
   const openModal = () => {
     setIsOpen(true);
@@ -48,7 +48,7 @@ const Cart = () => {
       [name]: value,
     }));
   };
-  const [submited,setSubmited]=useState(false);
+  const [submited, setSubmited] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
     setAddress(formData);
@@ -181,7 +181,7 @@ const Cart = () => {
         </div>
         <div className="flex flex-[0.5] border-l border-r justify-center border-b">
           {cartItems.length >= 1 && (
-            <div className="px-5 py-5 flex flex-col items-center justify-around  h-[556px] ">
+            <div className="px-5 py-5 flex flex-col items-center justify-around">
               <div className="flex flex-col min-[1534px]:flex-row items-center bg-red-200 p-7 rounded-2xl w-[100%] text-black gap-5">
                 <div className="rounded-full border-black border-2">
                   <AiOutlineExclamation size={20} />
@@ -192,16 +192,35 @@ const Cart = () => {
                 </div>
               </div>
               {/* Address Modal */}
-              <div>
-                {address.name}
-                {address.phone}
+              <div >
+                <div className="flex flex-col gap-1 mx-1 my-6" >
+                  <span className="font-semibold  text-sm md:text-base lg:text-lg">
+                    {address.name}
+                  </span>
+
+                  <span className="break-words  text-gray-600 text-sm">
+                    {address.phone}
+                  </span>
+
+                  <span className="break-words  text-gray-600 text-sm">
+                    {address.zip}
+                  </span>
+
+                  <span className="break-words  text-gray-600 text-sm">
+                    {address.city}
+                  </span>
+
+                  <span className="break-words max-w-[150px] md:max-w-[300px] text-gray-600 text-sm md:text-base ">
+                    {address.addressAll}
+                  </span>
+                </div>
               </div>
               <div>
                 <button
-                  className="bg-black text-white border-t w-[150px] rounded-lg h-11 hover:bg-gray-600 duration-300"
+                  className="bg-black text-white border-t w-[150px] my-5 rounded-lg h-11 hover:bg-gray-600 duration-300"
                   onClick={openModal}
                 >
-                  {submited?'Edit Address':'Add Address'}
+                  {submited ? "Edit Address" : "Add Address"}
                 </button>
 
                 {isOpen && (
@@ -245,6 +264,7 @@ const Cart = () => {
                                       className="border"
                                     />
                                   </label>
+
                                   <label className="flex gap-3 items-center justify-center">
                                     <p className="w-[89px] font-semibold">
                                       Phone:
@@ -283,15 +303,15 @@ const Cart = () => {
                                   </label>
                                   <label className="flex gap-3 items-center justify-center">
                                     <p className="w-[89px] font-semibold">
-                                      {" "}
                                       Address:
                                     </p>
-                                    <input
-                                      type="text"
-                                      name="street"
-                                      value={formData.landmark}
+                                    <textarea
+                                      name="addressAll"
+                                      value={formData.addressAll}
+                                      rows={6}
+                                      cols={18}
                                       onChange={handleChange}
-                                      className="border"
+                                      className="border resize-none"
                                     />
                                   </label>
                                 </form>

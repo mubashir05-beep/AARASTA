@@ -17,7 +17,7 @@ export const StateContext = ({ children }) => {
     city: "",
     state: "",
     phone: "",
-    landmark: "",
+    addressAll: "",
   });
 
   const localCart =
