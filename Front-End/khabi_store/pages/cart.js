@@ -6,8 +6,6 @@ import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-
-
 const Cart = () => {
   const {
     totalPrice,
@@ -22,18 +20,17 @@ const Cart = () => {
     setSize,
     incQty,
     qty,
+    submited, setSubmited,
     address,
     setAddress,
   } = useStateContext();
   const cartRef = useRef();
-  
 
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     street: "",
     city: "",
-    state: "",
     phone: "",
     addressAll: "",
   });
@@ -51,11 +48,11 @@ const Cart = () => {
       [name]: value,
     }));
   };
-  const [submited, setSubmited] = useState(false);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     // Perform form validation
     const { name, phone, zip, city, addressAll } = formData;
     let nameErr = true;
@@ -63,20 +60,61 @@ const Cart = () => {
     let zipErr = true;
     let cityErr = true;
     let addressErr = true;
-  
+
+    if (addressAll === "") {
+      addressErr = "The field must contain a value.";
+    } else {
+      const regex = /^[a-zA-Z0-9\s\-\,\']+$/;
+      if (!regex.test(addressAll)) {
+        addressErr = "Please enter a valid ZIP code!";
+      } else {
+        addressErr = "";
+      }
+    }
+
+    if (city === "") {
+      cityErr = "The field must contain a value.";
+    } else {
+      const regex = /^[a-zA-Z\s]+$/;
+      if (!regex.test(city)) {
+        cityErr = "Please enter a valid City Name!";
+      } else {
+        cityErr = "";
+      }
+    }
+
+    if (zip === "") {
+      zipErr = "The field must contain a value.";
+    } else {
+      const regex = /^\d{5}$/;
+      if (!regex.test(zip)) {
+        zipErr = "Please enter a valid ZIP code!";
+      } else {
+        zipErr = "";
+      }
+    }
+
     if (name === "") {
-      nameErr = "Please enter your name";
+      nameErr = "The field must contain a value.";
     } else {
       const regex = /^[a-zA-Z\s]+$/;
       if (!regex.test(name)) {
-        nameErr = "Please enter a valid name";
+        nameErr = "Please enter a valid name!";
       } else {
         nameErr = "";
       }
     }
-  
-    // Validate other fields similarly
-  
+    if (phone === "") {
+      phoneErr = "The field must contain a value.";
+    } else {
+      const regex = /^(\+92|0)?\d{10}$/;
+      if (!regex.test(phone)) {
+        phoneErr = "Please enter a valid number!";
+      } else {
+        phoneErr = "";
+      }
+    }
+
     // Update error messages
     setFormData((prevState) => ({
       ...prevState,
@@ -86,7 +124,7 @@ const Cart = () => {
       cityErr,
       addressErr,
     }));
-  
+
     // If there are no errors, submit the form
     if (!nameErr && !phoneErr && !zipErr && !cityErr && !addressErr) {
       setAddress(formData);
@@ -94,8 +132,6 @@ const Cart = () => {
       setIsOpen(false);
     }
   };
-  
- 
 
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
@@ -226,7 +262,7 @@ const Cart = () => {
                 </div>
               </div>
               {/* Address Modal */}
-              <div >
+              <div className=" w-[100%]">
                 <div className="flex flex-col  items-start gap-1 mx-1 my-6" c>
                   <span className="font-semibold  text-sm md:text-base lg:text-lg">
                     {address.name}
@@ -277,10 +313,6 @@ const Cart = () => {
                           </div>
                           <div className="sm:flex sm:items-start">
                             <div className="mt-3 flex flex-col gap-6  sm:mt-0 sm:ml-4 sm:text-left">
-                              {/* <h3 className="text-lg leading-6 text-center  text-gray-900 font-semibold">
-                                Add Address
-                              </h3> */}
-
                               <div className="mt-2 flex flex-col items-center gap-6">
                                 <form
                                   onSubmit={handleSubmit}
@@ -288,71 +320,102 @@ const Cart = () => {
                                   name="addressForm"
                                 >
                                   <label className="flex gap-3 items-center justify-center">
-                                    <p className="w-[89px] font-semibold">
-                                      Full Name:
-                                    </p>
-                                    <input
-                                      type="text"
-                                      name="name"
-                                      value={formData.name}
-                                      onChange={handleChange}
-                                      className="border"
-                                    />
-                             <div className="text-red-600 text-sm">{formData.nameErr}</div>
+                                    <div className="flex flex-col">
+                                      <div className="flex ">
+                                        <p className="w-[89px] font-semibold">
+                                          Full Name:
+                                        </p>
+                                        <input
+                                          type="text"
+                                          name="name"
+                                          value={formData.name}
+                                          onChange={handleChange}
+                                          className="border"
+                                          required
+                                        />
+                                      </div>
+                                      <div className="text-red-600 text-sm">
+                                        {formData.nameErr}
+                                      </div>
+                                    </div>
                                   </label>
 
                                   <label className="flex gap-3 items-center justify-center">
-                                    <p className="w-[89px] font-semibold">
-                                      Phone:
-                                    </p>
-                                    <input
-                                      type="text"
-                                      name="phone"
-                                      value={formData.phone}
-                                      onChange={handleChange}
-                                      className="border"
-                                    />
-                                     <div className="text-red-600 text-sm">{formData.p}</div>
+                                    <div className="flex flex-col">
+                                      <div className="flex ">
+                                        <p className="w-[89px] font-semibold">
+                                          Phone:
+                                        </p>
+                                        <input
+                                          type="text"
+                                          name="phone"
+                                          value={formData.phone}
+                                          onChange={handleChange}
+                                          className="border"
+                                        />
+                                      </div>
+                                      <div className="text-red-600 text-sm">
+                                        {formData.phoneErr}
+                                      </div>
+                                    </div>
                                   </label>
                                   <label className="flex gap-3 items-center justify-center">
-                                    <p className="w-[89px] font-semibold">
-                                      ZIP Code:
-                                    </p>
-                                    <input
-                                      type="text"
-                                      name="zip"
-                                      value={formData.zip}
-                                      onChange={handleChange}
-                                      className="border"
-                                    />
-                                  <div className="text-red-600 text-sm">{formData.zipErr}</div>
+                                    <div className="flex flex-col">
+                                      <div className="flex ">
+                                        <p className="w-[89px] font-semibold">
+                                          ZIP Code:
+                                        </p>
+                                        <input
+                                          type="text"
+                                          name="zip"
+                                          value={formData.zip}
+                                          onChange={handleChange}
+                                          className="border"
+                                        />
+                                      </div>
+                                      <div className="text-red-600 text-sm">
+                                        {formData.zipErr}
+                                      </div>
+                                    </div>
                                   </label>
                                   <label className="flex gap-3 items-center justify-center">
-                                    <p className="w-[89px] font-semibold">
-                                      City:
-                                    </p>
-                                    <input
-                                      type="text"
-                                      name="city"
-                                      value={formData.city}
-                                      onChange={handleChange}
-                                      className="border "
-                                    />
-                                 <div className="text-red-600 text-sm">{formData.cityErr}</div>
+                                    <div className="flex flex-col">
+                                      <div className="flex ">
+                                        <p className="w-[89px] font-semibold">
+                                          City:
+                                        </p>
+                                        <input
+                                          type="text"
+                                          name="city"
+                                          value={formData.city}
+                                          onChange={handleChange}
+                                          className="border "
+                                        />
+                                      </div>
+                                      <div className="text-red-600 text-sm">
+                                        {formData.cityErr}
+                                      </div>
+                                    </div>
                                   </label>
                                   <label className="flex gap-3 items-center justify-center">
-                                    <p className="w-[89px] font-semibold">
-                                      Address:
-                                    </p>
-                                    <textarea
-                                      name="addressAll"
-                                      value={formData.addressAll}
-                                      rows={6}
-                                      cols={18}
-                                      onChange={handleChange}
-                                      className="border resize-none"
-                                    />
-                                   <div className="text-red-600 text-sm">{formData.addressErr}</div>
+                                    <div className="flex flex-col">
+                                      <div className="flex ">
+                                        <p className="w-[89px] font-semibold">
+                                          Address:
+                                        </p>
+                                        <textarea
+                                          name="addressAll"
+                                          value={formData.addressAll}
+                                          rows={6}
+                                          cols={20}
+                                          onChange={handleChange}
+                                          className="border resize-none"
+                                        />
+                                      </div>
+                                      <div className="text-red-600 text-sm">
+                                        {formData.addressErr}
+                                      </div>
+                                    </div>
                                   </label>
                                 </form>
                                 <button

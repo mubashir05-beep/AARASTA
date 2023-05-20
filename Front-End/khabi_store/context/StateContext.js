@@ -4,22 +4,32 @@ import { toast } from "react-hot-toast";
 const CART_ITEMS_STORAGE_KEY = "cartItems";
 const TOTAL_QUANTITIES_STORAGE_KEY = "totalQuantities";
 const TOTAL_PRICE_STORAGE_KEY = "totalPrice";
+const ADDRESS_STORAGE_KEY = "address";
 
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
+  const [submited, setSubmited] = useState(false);
   const [size, setSize] = useState("");
   const [showCart, setShowCart] = useState(false);
+  
+
   // Address
+  let localAddress = "";
+
+  if (typeof window !== "undefined") {
+    localAddress = JSON.parse(localStorage.getItem(ADDRESS_STORAGE_KEY)) || "";
+  }
+
   const [address, setAddress] = useState({
     name: "",
     street: "",
     city: "",
-    state: "",
     phone: "",
     addressAll: "",
   });
 
+ 
   const localCart =
     (typeof window !== "undefined" &&
       JSON.parse(localStorage.getItem(CART_ITEMS_STORAGE_KEY))) ||
@@ -44,12 +54,14 @@ export const StateContext = ({ children }) => {
     setCartItems(localCart);
     setTotalPrice(localPrice);
     setTotalQuantities(localQty);
+    setAddress(localAddress);
   }, []);
   useEffect(() => {
     localStorage.setItem(CART_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
     localStorage.setItem(TOTAL_QUANTITIES_STORAGE_KEY, totalQuantities);
     localStorage.setItem(TOTAL_PRICE_STORAGE_KEY, totalPrice);
-  }, [cartItems, totalQuantities, totalPrice]);
+    localStorage.setItem(ADDRESS_STORAGE_KEY, address);
+  }, [cartItems, totalQuantities, totalPrice, address]);
 
   const onAdd = (product, quantity) => {
     const checkProductInCart = cartItems.find(
@@ -142,7 +154,10 @@ export const StateContext = ({ children }) => {
         onRemove,
         toggleCartItemQuanitity,
         decQty,
-        address, setAddress
+        address,
+        setAddress,
+        submited,
+        setSubmited,
       }}
     >
       {children}
