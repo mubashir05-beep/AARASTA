@@ -6,6 +6,8 @@ import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
 
+
+
 const Cart = () => {
   const {
     totalPrice,
@@ -24,6 +26,7 @@ const Cart = () => {
     setAddress,
   } = useStateContext();
   const cartRef = useRef();
+  
 
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -49,20 +52,51 @@ const Cart = () => {
     }));
   };
   const [submited, setSubmited] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setAddress(formData);
-    setSubmited(true);
-    setIsOpen(false);
-    // setFormData({
-    //   name: "",
-    //   street: "",
-    //   city: "",
-    //   state: "",
-    //   phone: "",
-    //   landmark: "",
-    // });
+  
+    // Perform form validation
+    const { name, phone, zip, city, addressAll } = formData;
+    let nameErr = true;
+    let phoneErr = true;
+    let zipErr = true;
+    let cityErr = true;
+    let addressErr = true;
+  
+    if (name === "") {
+      nameErr = "Please enter your name";
+    } else {
+      const regex = /^[a-zA-Z\s]+$/;
+      if (!regex.test(name)) {
+        nameErr = "Please enter a valid name";
+      } else {
+        nameErr = "";
+      }
+    }
+  
+    // Validate other fields similarly
+  
+    // Update error messages
+    setFormData((prevState) => ({
+      ...prevState,
+      nameErr,
+      phoneErr,
+      zipErr,
+      cityErr,
+      addressErr,
+    }));
+  
+    // If there are no errors, submit the form
+    if (!nameErr && !phoneErr && !zipErr && !cityErr && !addressErr) {
+      setAddress(formData);
+      setSubmited(true);
+      setIsOpen(false);
+    }
   };
+  
+ 
+
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -193,7 +227,7 @@ const Cart = () => {
               </div>
               {/* Address Modal */}
               <div >
-                <div className="flex flex-col gap-1 mx-1 my-6" >
+                <div className="flex flex-col  items-start gap-1 mx-1 my-6" c>
                   <span className="font-semibold  text-sm md:text-base lg:text-lg">
                     {address.name}
                   </span>
@@ -251,6 +285,7 @@ const Cart = () => {
                                 <form
                                   onSubmit={handleSubmit}
                                   className="flex flex-col gap-5 justify-center "
+                                  name="addressForm"
                                 >
                                   <label className="flex gap-3 items-center justify-center">
                                     <p className="w-[89px] font-semibold">
@@ -263,6 +298,7 @@ const Cart = () => {
                                       onChange={handleChange}
                                       className="border"
                                     />
+                             <div className="text-red-600 text-sm">{formData.nameErr}</div>
                                   </label>
 
                                   <label className="flex gap-3 items-center justify-center">
@@ -276,6 +312,7 @@ const Cart = () => {
                                       onChange={handleChange}
                                       className="border"
                                     />
+                                     <div className="text-red-600 text-sm">{formData.p}</div>
                                   </label>
                                   <label className="flex gap-3 items-center justify-center">
                                     <p className="w-[89px] font-semibold">
@@ -286,8 +323,9 @@ const Cart = () => {
                                       name="zip"
                                       value={formData.zip}
                                       onChange={handleChange}
-                                      className="border "
+                                      className="border"
                                     />
+                                  <div className="text-red-600 text-sm">{formData.zipErr}</div>
                                   </label>
                                   <label className="flex gap-3 items-center justify-center">
                                     <p className="w-[89px] font-semibold">
@@ -300,6 +338,7 @@ const Cart = () => {
                                       onChange={handleChange}
                                       className="border "
                                     />
+                                 <div className="text-red-600 text-sm">{formData.cityErr}</div>
                                   </label>
                                   <label className="flex gap-3 items-center justify-center">
                                     <p className="w-[89px] font-semibold">
@@ -313,6 +352,7 @@ const Cart = () => {
                                       onChange={handleChange}
                                       className="border resize-none"
                                     />
+                                   <div className="text-red-600 text-sm">{formData.addressErr}</div>
                                   </label>
                                 </form>
                                 <button
