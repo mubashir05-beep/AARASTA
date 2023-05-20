@@ -12,24 +12,28 @@ export const StateContext = ({ children }) => {
   const [submited, setSubmited] = useState(false);
   const [size, setSize] = useState("");
   const [showCart, setShowCart] = useState(false);
-  
 
   // Address
   let localAddress = "";
-
-  if (typeof window !== "undefined") {
-    localAddress = JSON.parse(localStorage.getItem(ADDRESS_STORAGE_KEY)) || "";
+  if (
+    typeof window !== "undefined" &&
+    localStorage.getItem(ADDRESS_STORAGE_KEY)
+  ) {
+    try {
+      localAddress = JSON.parse(localStorage.getItem(ADDRESS_STORAGE_KEY));
+    } catch (error) {
+      console.error("Error parsing address from localStorage:", error);
+    }
   }
 
   const [address, setAddress] = useState({
     name: "",
-    street: "",
     city: "",
     phone: "",
+    zip:'',
     addressAll: "",
   });
 
- 
   const localCart =
     (typeof window !== "undefined" &&
       JSON.parse(localStorage.getItem(CART_ITEMS_STORAGE_KEY))) ||
@@ -60,7 +64,7 @@ export const StateContext = ({ children }) => {
     localStorage.setItem(CART_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
     localStorage.setItem(TOTAL_QUANTITIES_STORAGE_KEY, totalQuantities);
     localStorage.setItem(TOTAL_PRICE_STORAGE_KEY, totalPrice);
-    localStorage.setItem(ADDRESS_STORAGE_KEY, address);
+    localStorage.setItem(ADDRESS_STORAGE_KEY, JSON.stringify(address));
   }, [cartItems, totalQuantities, totalPrice, address]);
 
   const onAdd = (product, quantity) => {

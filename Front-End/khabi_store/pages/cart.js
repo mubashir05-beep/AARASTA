@@ -29,7 +29,7 @@ const Cart = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    street: "",
+    zip: "",
     city: "",
     phone: "",
     addressAll: "",
