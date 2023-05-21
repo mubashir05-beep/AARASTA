@@ -21,6 +21,7 @@ const Cart = () => {
     incQty,
     qty,
     submited, setSubmited,
+    selectedSize,
     address,
     setAddress,
   } = useStateContext();
@@ -188,7 +189,7 @@ const Cart = () => {
                         {" "}
                         Size:
                         <span className="w-[20px] h-[20px] text-[12px] text-black rounded-full bg-black/[0.1] flex items-center justify-center">
-                          {size}
+                          {items.size}
                         </span>
                       </div>
                       <div className="hidden md:block">

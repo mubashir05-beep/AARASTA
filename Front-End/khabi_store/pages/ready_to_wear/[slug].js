@@ -26,6 +26,7 @@ const Product = ({ products, product }) => {
           <div className="text-black/[0.7]">
             Product Code :
             <span className="text-[14px]">{product.productCode} </span>
+            
           </div>
         </div>
         <div>
@@ -50,8 +51,7 @@ const Product = ({ products, product }) => {
             selected === sizeOption ? "bg-black/[0.5]" : ""
           }`}
           onClick={() => {
-            setSize(sizeOption); // Rename size to sizeOption
-            onSizeChange(product.id, sizeOption);
+            onSizeChange(product._id, sizeOption);
             setSelected(sizeOption);
           }}
         >

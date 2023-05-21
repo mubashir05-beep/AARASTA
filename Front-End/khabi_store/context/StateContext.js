@@ -12,6 +12,7 @@ export const StateContext = ({ children }) => {
   const [submited, setSubmited] = useState(false);
   const [size, setSize] = useState("");
   const [showCart, setShowCart] = useState(false);
+  const [selectedSize, setSelectedSize] = useState({});
 
   // Address
   let localAddress = "";
@@ -63,8 +64,11 @@ export const StateContext = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem(CART_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
-    localStorage.setItem(TOTAL_QUANTITIES_STORAGE_KEY, totalQuantities);
-    localStorage.setItem(TOTAL_PRICE_STORAGE_KEY, totalPrice);
+    localStorage.setItem(
+      TOTAL_QUANTITIES_STORAGE_KEY,
+      JSON.stringify(totalQuantities)
+    );
+    localStorage.setItem(TOTAL_PRICE_STORAGE_KEY, JSON.stringify(totalPrice));
     localStorage.setItem(ADDRESS_STORAGE_KEY, JSON.stringify(address));
   }, [cartItems, totalQuantities, totalPrice, address]);
 
@@ -77,21 +81,29 @@ export const StateContext = ({ children }) => {
           ? {
               ...cartProduct,
               quantity: cartProduct.quantity + quantity,
-              size: selectedSize[product._id],
-            } // Include the selected size
+              size: selectedSize[product._id] || "", // Use selected size from state
+            }
           : cartProduct
       );
       setCartItems(updatedCartItems);
       toast.success(
-        `${quantity} ${product.name} (${selectedSize[product._id]}) added to the cart`
+        `${quantity} ${product.name} (${
+          selectedSize[product._id]
+        }) added to the cart`
       );
     } else {
       setCartItems([
         ...cartItems,
-        { ...product, quantity, size: selectedSize[product._id] }, // Include the selected size
+        {
+          ...product,
+          quantity,
+          size: selectedSize[product._id] || "", // Use selected size from state
+        },
       ]);
       toast.success(
-        `${quantity} ${product.name} (${selectedSize[product._id]}) added to the cart`
+        `${quantity} ${product.name} (${
+          selectedSize[product._id]
+        }) added to the cart`
       );
     }
 
@@ -143,7 +155,9 @@ export const StateContext = ({ children }) => {
             ...foundProduct,
             quantity: foundProduct.quantity - 1,
           };
-          setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
+          setTotalPrice(
+            (prevTotalPrice) => prevTotalPrice - foundProduct.price
+          );
           setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
         }
       }
