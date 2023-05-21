@@ -5,14 +5,14 @@ import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
 
 const Product = ({ products, product }) => {
-  const { qty, incQty, decQty, onAdd, size, setSize, toggleCartSize } =
+  const { qty, incQty, decQty, onAdd, size, setSize, toggleCartSize, onSizeChange } =
     useStateContext();
   const [selected, setSelected] = useState("");
 
   return (
     <div className="flex flex-col lg:flex-row items-center mx-[3rem] my-[3rem] justify-center gap-[45px]">
       <div className="max-w-[600px]">
-        <img src={urlFor(product.image && product.image[0])} />
+        <img src={urlFor(product.image && product.image[0])} alt={product.name} />
       </div>
       <div className="flex flex-col md:w-[450px]">
         <div className="flex flex-col gap-[1px] my-[12px]">
@@ -41,25 +41,26 @@ const Product = ({ products, product }) => {
           </div>
           <div>
             <div>
-              {product.Size && product.Size.length > 0 && (
-                <ul className="flex my-[15px] gap-4">
-                  {product.Size.map((size, index) => (
-                    <li key={index} className="text-center">
-                      <div
-                        className={`w-[30px] h-[30px] text-black rounded-full cursor-pointer bg-black/[0.1] flex items-center justify-center ${
-                          selected === size ? "bg-black/[0.5]" : ""
-                        }`}
-                        onClick={() => {
-                          setSize(size);
-                          setSelected(size);
-                        }}
-                      >
-                        <span>{size}</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
+            {product.Size && product.Size.length > 0 && (
+  <ul className="flex my-[15px] gap-4">
+    {product.Size.map((sizeOption, index) => (
+      <li key={index} className="text-center">
+        <div
+          className={`w-[30px] h-[30px] text-black rounded-full cursor-pointer bg-black/[0.1] flex items-center justify-center ${
+            selected === sizeOption ? "bg-black/[0.5]" : ""
+          }`}
+          onClick={() => {
+            setSize(sizeOption); // Rename size to sizeOption
+            onSizeChange(product.id, sizeOption);
+            setSelected(sizeOption);
+          }}
+        >
+          <span>{sizeOption}</span>
+        </div>
+      </li>
+    ))}
+  </ul>
+)}
             </div>
             <div className="my-[1rem] flex flex-col justify-center gap-[6px]">
               <p className="text-[16px]">Quantity:</p>
@@ -203,10 +204,8 @@ const Product = ({ products, product }) => {
     </div>
   );
 };
-
 export default Product;
-
-export const getStaticPaths = async () => {
+export async function getStaticPaths() {
   const query = `*[_type == "product"]{
         slug {
             current
@@ -222,9 +221,9 @@ export const getStaticPaths = async () => {
     paths,
     fallback: "blocking",
   };
-};
+}
 
-export const getStaticProps = async ({ params: { slug } }) => {
+export async function getStaticProps({ params: { slug } }) {
   const query = `*[_type == "product" && slug.current == "${slug}"][0]`;
   const product = await client.fetch(query);
   const productsQuery = '*[_type == "product"]';
@@ -236,4 +235,7 @@ export const getStaticProps = async ({ params: { slug } }) => {
       product,
     },
   };
-};
+}
+
+
+

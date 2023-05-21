@@ -30,7 +30,7 @@ export const StateContext = ({ children }) => {
     name: "",
     city: "",
     phone: "",
-    zip:'',
+    zip: "",
     addressAll: "",
   });
 
@@ -60,6 +60,7 @@ export const StateContext = ({ children }) => {
     setTotalQuantities(localQty);
     setAddress(localAddress);
   }, []);
+
   useEffect(() => {
     localStorage.setItem(CART_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
     localStorage.setItem(TOTAL_QUANTITIES_STORAGE_KEY, totalQuantities);
@@ -68,21 +69,30 @@ export const StateContext = ({ children }) => {
   }, [cartItems, totalQuantities, totalPrice, address]);
 
   const onAdd = (product, quantity) => {
-    const checkProductInCart = cartItems.find(
-      (item) => item._id === product._id
-    );
+    const checkProductInCart = cartItems.find((item) => item._id === product._id);
 
     if (checkProductInCart) {
       const updatedCartItems = cartItems.map((cartProduct) =>
         cartProduct._id === product._id
-          ? { ...cartProduct, quantity: cartProduct.quantity + quantity }
+          ? {
+              ...cartProduct,
+              quantity: cartProduct.quantity + quantity,
+              size: selectedSize[product._id],
+            } // Include the selected size
           : cartProduct
       );
       setCartItems(updatedCartItems);
-      toast.success(`${quantity} ${product.name} (${size}) added to the cart`);
+      toast.success(
+        `${quantity} ${product.name} (${selectedSize[product._id]}) added to the cart`
+      );
     } else {
-      setCartItems([...cartItems, { ...product, quantity }]);
-      toast.success(`${quantity} ${product.name} (${size}) added to the cart`);
+      setCartItems([
+        ...cartItems,
+        { ...product, quantity, size: selectedSize[product._id] }, // Include the selected size
+      ]);
+      toast.success(
+        `${quantity} ${product.name} (${selectedSize[product._id]}) added to the cart`
+      );
     }
 
     setTotalQuantities((prev) => prev + quantity);
@@ -99,6 +109,7 @@ export const StateContext = ({ children }) => {
       return prev - 1;
     });
   };
+
   const onRemove = (product) => {
     const foundProduct = cartItems.find((item) => item._id === product._id);
     const newCartItems = cartItems.filter((item) => item._id !== product._id);
@@ -112,6 +123,7 @@ export const StateContext = ({ children }) => {
     );
     setCartItems(newCartItems);
   };
+
   const toggleCartItemQuanitity = (id, value) => {
     const foundProduct = cartItems.find((item) => item._id === id);
     const index = cartItems.findIndex((product) => product._id === id);
@@ -131,15 +143,20 @@ export const StateContext = ({ children }) => {
             ...foundProduct,
             quantity: foundProduct.quantity - 1,
           };
-          setTotalPrice(
-            (prevTotalPrice) => prevTotalPrice - foundProduct.price
-          );
+          setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
           setTotalQuantities((prevTotalQuantities) => prevTotalQuantities - 1);
         }
       }
 
       setCartItems(newCartItems);
     }
+  };
+
+  const onSizeChange = (productId, selectedSize) => {
+    setSelectedSize((prevSelectedSize) => ({
+      ...prevSelectedSize,
+      [productId]: selectedSize,
+    }));
   };
 
   return (
@@ -149,8 +166,8 @@ export const StateContext = ({ children }) => {
         setShowCart,
         cartItems,
         totalPrice,
-        size,
-        setSize,
+        selectedSize,
+        setSelectedSize,
         totalQuantities,
         qty,
         onAdd,
@@ -161,7 +178,10 @@ export const StateContext = ({ children }) => {
         address,
         setAddress,
         submited,
+        size,
+        setSize,
         setSubmited,
+        onSizeChange,
       }}
     >
       {children}
