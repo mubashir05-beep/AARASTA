@@ -20,7 +20,8 @@ const Cart = () => {
     setSize,
     incQty,
     qty,
-    submited, setSubmited,
+    submited,
+    setSubmited,
     selectedSize,
     address,
     setAddress,
@@ -49,7 +50,6 @@ const Cart = () => {
       [name]: value,
     }));
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
