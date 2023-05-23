@@ -354,6 +354,7 @@ const Cart = () => {
                                           value={formData.phone}
                                           onChange={handleChange}
                                           className="border"
+                                          required
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
@@ -373,6 +374,7 @@ const Cart = () => {
                                           value={formData.zip}
                                           onChange={handleChange}
                                           className="border"
+                                          required
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
@@ -391,7 +393,8 @@ const Cart = () => {
                                           name="city"
                                           value={formData.city}
                                           onChange={handleChange}
-                                          className="border "
+                                          className="border"
+                                          required
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
@@ -412,6 +415,7 @@ const Cart = () => {
                                           cols={20}
                                           onChange={handleChange}
                                           className="border resize-none"
+                                          required
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
