@@ -7,6 +7,30 @@ import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Link from "next/link";
+
+
+import axios from 'axios';
+import FormData from 'form-data';
+import { Mailgun } from 'mailgun.js';
+const DOMAIN = 'sandbox5f178edcd1ed46a4a4fec5f29f446d8a.mailgun.org';
+const mg = new Mailgun(FormData);
+
+const sendEmail = async () => {
+  try {
+    const response = await mg.messages.create(DOMAIN, {
+      from: 'Excited User <mailgun@sandbox5f178edcd1ed46a4a4fec5f29f446d8a.mailgun.org>',
+      to: ['test@example.com'],
+      subject: 'Hello',
+      text: 'Testing some Mailgun awesomeness!',
+      html: '<h1>Testing some Mailgun awesomeness!</h1>',
+    });
+
+    console.log('Email sent:', response);
+  } catch (error) {
+    console.error('Error sending email:', error);
+  }
+};
+
 const Cart = () => {
   const {
     totalPrice,
@@ -469,7 +493,8 @@ const Cart = () => {
                 <button  className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-gray-600 px-4 my-2 duration-300">
                   Proceed to Checkout
                 </button>
-             
+                <button onClick={sendEmail}>Send Email</button>
+
             </div>
           )}
         </div>
