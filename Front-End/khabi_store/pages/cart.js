@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor } from "@/lib/client";
 import { RxCross2 } from "react-icons/rx";
-import { sendContactForm } from "../lib/api";
+
 import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -466,7 +466,7 @@ const Cart = () => {
                 </div>
               </div>
         
-                <button onClick={()=>sendContactForm(address)} className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-gray-600 px-4 my-2 duration-300">
+                <button  className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-gray-600 px-4 my-2 duration-300">
                   Proceed to Checkout
                 </button>
              
