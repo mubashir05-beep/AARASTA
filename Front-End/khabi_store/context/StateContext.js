@@ -73,7 +73,9 @@ export const StateContext = ({ children }) => {
   }, [cartItems, totalQuantities, totalPrice, address]);
 
   const onAdd = (product, quantity) => {
-    const checkProductInCart = cartItems.find((item) => item._id === product._id);
+    const checkProductInCart = cartItems.find(
+      (item) => item._id === product._id
+    );
 
     if (checkProductInCart) {
       const updatedCartItems = cartItems.map((cartProduct) =>

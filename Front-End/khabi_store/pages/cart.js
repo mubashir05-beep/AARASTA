@@ -2,10 +2,11 @@ import React, { useRef, useEffect, useState } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor } from "@/lib/client";
 import { RxCross2 } from "react-icons/rx";
+import { sendContactForm } from "../lib/api";
 import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
-
+import Link from "next/link";
 const Cart = () => {
   const {
     totalPrice,
@@ -20,7 +21,8 @@ const Cart = () => {
     setSize,
     incQty,
     qty,
-    submited, setSubmited,
+    submited,
+    setSubmited,
     selectedSize,
     address,
     setAddress,
@@ -49,7 +51,6 @@ const Cart = () => {
       [name]: value,
     }));
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -163,7 +164,7 @@ const Cart = () => {
 
       <div className="flex flex-col min-[996px]:flex-row">
         <div
-          className={`flex flex-col justify-between scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300 gap-5 scrollbar-hide flex-[1.5]  scrollbar-track-rounded-full `}
+          className={`flex flex-col justify-center scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300  scrollbar-hide flex-[1.5]  scrollbar-track-rounded-full `}
         >
           {cartItems.length >= 1 &&
             cartItems.map((items, index) => (
@@ -305,7 +306,7 @@ const Cart = () => {
                       </div>
                       <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all  sm:max-w-[25rem] sm:w-full">
                         <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                          <div className=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                             <div className="absolute right-6 top-6">
                               <button onClick={closeModal}>
                                 <RxCross2 size={24} />
@@ -460,10 +461,11 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-
-              <button className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-gray-600 duration-300">
-                Proceed to Checkout
-              </button>
+        
+                <button onClick={()=>sendContactForm(address)} className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-gray-600 px-4 my-2 duration-300">
+                  Proceed to Checkout
+                </button>
+             
             </div>
           )}
         </div>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
 
 const Product = ({ products, product }) => {
-  const { qty, incQty, decQty, onAdd, size, setSize, toggleCartSize, onSizeChange } =
+  const { qty, incQty, decQty, onAdd, size, setSize, toggleCartSize, onSizeChange, selectedSize } =
     useStateContext();
   const [selected, setSelected] = useState("");
 
@@ -22,7 +22,7 @@ const Product = ({ products, product }) => {
               <div className="text-black text-[16px]">{product.category}</div>
             </Link>
           </div>
-
+    {console.log(size)}
           <div className="text-black/[0.7]">
             Product Code :
             <span className="text-[14px]">{product.productCode} </span>
@@ -91,7 +91,7 @@ const Product = ({ products, product }) => {
             <div>
               <button
                 onClick={() => {
-                  if (size === "") {
+                  if (selectedSize === "") {
                     alert("Please select a size!");
                   } else {
                     onAdd(product, qty);
@@ -115,7 +115,7 @@ const Product = ({ products, product }) => {
                   />
                 </svg>
               </button>
-              {size === "" ? (
+              {selectedSize === "" ? (
                 <button
                   onClick={() => {
                     alert("Please select a size!");
