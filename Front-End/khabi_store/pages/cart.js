@@ -9,9 +9,9 @@ import Link from "next/link";
 import emailjs from "emailjs-com";
 
 
-const service_id = process.env.NEXT_SERVICE_ID;
-const template_id = process.env.NEXT_TEMPLATE_ID;
-const public_key = process.env.NEXT_PUBLIC_KEY;
+const service_id = "service_sonrbya";
+const template_id = "template_pydi16r";
+const public_key = "ikU_zGYWqgPI4FcWO";
 
 const sendEmail = async () => {
   try {
@@ -19,7 +19,7 @@ const sendEmail = async () => {
       from_name: "Excited User",
       to_name: "mubashir.munir2020@gmail.com",
       subject: "Hello",
-      message: "Testing some Mailgun awesomeness!",
+      html:'<p>hello <h1> GGZ</h1></p>',
     };
 
     const response = await emailjs.send(
