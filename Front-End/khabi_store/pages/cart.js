@@ -2,34 +2,40 @@ import React, { useRef, useEffect, useState } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor } from "@/lib/client";
 import { RxCross2 } from "react-icons/rx";
-
 import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Link from "next/link";
+import emailjs from "emailjs-com";
 
 
-import axios from 'axios';
-import FormData from 'form-data';
-import { Mailgun } from 'mailgun.js';
-const DOMAIN = 'sandbox5f178edcd1ed46a4a4fec5f29f446d8a.mailgun.org';
-const mg = new Mailgun(FormData);
+const service_id = process.env.NEXT_SERVICE_ID;
+const template_id = process.env.NEXT_TEMPLATE_ID;
+const public_key = process.env.NEXT_PUBLIC_KEY;
 
 const sendEmail = async () => {
   try {
-    const response = await mg.messages.create(DOMAIN, {
-      from: 'Excited User <mailgun@sandbox5f178edcd1ed46a4a4fec5f29f446d8a.mailgun.org>',
-      to: ['test@example.com'],
-      subject: 'Hello',
-      text: 'Testing some Mailgun awesomeness!',
-      html: '<h1>Testing some Mailgun awesomeness!</h1>',
-    });
+    const templateParams = {
+      from_name: "Excited User",
+      to_name: "mubashir.munir2020@gmail.com",
+      subject: "Hello",
+      message: "Testing some Mailgun awesomeness!",
+    };
 
-    console.log('Email sent:', response);
+    const response = await emailjs.send(
+      service_id,
+      template_id,
+      templateParams,
+      public_key
+    );
+
+    console.log("Email sent:", response);
   } catch (error) {
-    console.error('Error sending email:', error);
+    console.error("Error sending email:", error);
   }
 };
+
+
 
 const Cart = () => {
   const {
