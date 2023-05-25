@@ -7,35 +7,7 @@ import { AiOutlineExclamation } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Link from "next/link";
 import emailjs from "emailjs-com";
-
-
-const service_id = "service_sonrbya";
-const template_id = "template_pydi16r";
-const public_key = "ikU_zGYWqgPI4FcWO";
-
-const sendEmail = async () => {
-  try {
-    const templateParams = {
-      from_name: "Excited User",
-      to_name: "mubashir.munir2020@gmail.com",
-      subject: "Hello",
-      html:'<p>hello <h1> GGZ</h1></p>',
-    };
-
-    const response = await emailjs.send(
-      service_id,
-      template_id,
-      templateParams,
-      public_key
-    );
-
-    console.log("Email sent:", response);
-  } catch (error) {
-    console.error("Error sending email:", error);
-  }
-};
-
-
+import { toast } from "react-hot-toast";
 
 const Cart = () => {
   const {
@@ -58,7 +30,27 @@ const Cart = () => {
     setAddress,
   } = useStateContext();
   const cartRef = useRef();
-
+  const sendEmail = async () => {
+    try {
+      const templateParams = {
+        from_name: "Excited User",
+        to_name: "mubashir.munir2020@gmail.com",
+        subject: "Hello",
+        message_html: '<p>This is the HTML content of the email.</p>',
+      };
+  
+      const response = await emailjs.send(
+        process.env.NEXT_PUBLIC_SERVICE_ID,
+        process.env.NEXT_PUBLIC_TEMPLATE_ID,
+        templateParams,
+        "ikU_zGYWqgPI4FcWO"
+      );
+      toast.success(`Order placed successfully!`);
+      console.log("Email sent:", response);
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -162,6 +154,9 @@ const Cart = () => {
       setAddress(formData);
       setSubmited(true);
       setIsOpen(false);
+    }
+    if (cartItems.length >= 0) {
+      sendEmail();
     }
   };
 
@@ -495,12 +490,13 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-        
-                <button  className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-gray-600 px-4 my-2 duration-300">
-                  Proceed to Checkout
-                </button>
-                <button onClick={sendEmail}>Send Email</button>
 
+              <button
+                onClick={sendEmail}
+                className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-gray-600 px-4 my-2 duration-300"
+              >
+                Proceed to Checkout
+              </button>
             </div>
           )}
         </div>
