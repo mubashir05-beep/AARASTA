@@ -33,22 +33,25 @@ const Cart = () => {
   const sendEmail = async () => {
     try {
       const templateParams = {
-        from_name: "Excited User",
-        to_name: "mubashir.munir2020@gmail.com",
-        subject: "Hello",
+        from_name: 'Excited User',
+        to_name: 'mubashir.munir2020@gmail.com',
+        subject: 'Hello',
         message_html: '<p>This is the HTML content of the email.</p>',
+        user_name:`${address.name}`,
+        user_address:`${address.addressAll}`
       };
   
       const response = await emailjs.send(
         process.env.NEXT_PUBLIC_SERVICE_ID,
         process.env.NEXT_PUBLIC_TEMPLATE_ID,
         templateParams,
-        "ikU_zGYWqgPI4FcWO"
+        'ikU_zGYWqgPI4FcWO'
       );
-      toast.success(`Order placed successfully!`);
-      console.log("Email sent:", response);
+  
+      console.log('Email sent successfully!', response.status, response.text);
+      toast.success(`Email sent successfully!`);
     } catch (error) {
-      console.error("Error sending email:", error);
+      console.error('Error sending email:', error);
     }
   };
   const [isOpen, setIsOpen] = useState(false);
