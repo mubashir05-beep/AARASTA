@@ -33,35 +33,44 @@ const Cart = () => {
   const sendEmail = async () => {
     try {
       const templateParams = {
-        from_name: 'Excited User',
-        to_name: 'mubashir.munir2020@gmail.com',
-        subject: 'Hello',
-        message_html: '<p>This is the HTML content of the email.</p>',
-        user_name:`${address.name}`,
-        user_address:`${address.addressAll}`
+        from_name: "Excited User",
+        to_name: `${address.mail}`,
+        subject: "Hello",
+        message_html: "<p>This is the HTML content of the email.</p>",
+        user_name: `${address.name}`,
+        user_address: `${address.addressAll}`,
       };
-  
+
       const response = await emailjs.send(
         process.env.NEXT_PUBLIC_SERVICE_ID,
         process.env.NEXT_PUBLIC_TEMPLATE_ID,
         templateParams,
-        'ikU_zGYWqgPI4FcWO'
+        "ikU_zGYWqgPI4FcWO"
       );
-  
-      console.log('Email sent successfully!', response.status, response.text);
+
+      console.log("Email sent successfully!", response.status, response.text);
       toast.success(`Email sent successfully!`);
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error("Error sending email:", error);
+      toast.error(`Error sending email!`);
     }
   };
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     zip: "",
+    email: "",
     city: "",
     phone: "",
     addressAll: "",
+    nameErr: "",
+    phoneErr: "",
+    emailErr: "",
+    zipErr: "",
+    cityErr: "",
+    addressErr: "",
   });
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -69,6 +78,7 @@ const Cart = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -81,21 +91,29 @@ const Cart = () => {
     e.preventDefault();
 
     // Perform form validation
-    const { name, phone, zip, city, addressAll } = formData;
-    let nameErr = true;
-    let phoneErr = true;
-    let zipErr = true;
-    let cityErr = true;
-    let addressErr = true;
+    const { name, phone, zip, city, addressAll, email } = formData;
+    let nameErr = "";
+    let phoneErr = "";
+    let emailErr = "";
+    let zipErr = "";
+    let cityErr = "";
+    let addressErr = "";
+
+    if (email === "") {
+      emailErr = "The field must contain a value.";
+    } else {
+      const regex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+      if (!regex.test(email)) {
+        emailErr = "Please enter a valid email!";
+      }
+    }
 
     if (addressAll === "") {
       addressErr = "The field must contain a value.";
     } else {
       const regex = /^[a-zA-Z0-9\s\-\,\']+$/;
       if (!regex.test(addressAll)) {
-        addressErr = "Please enter a valid ZIP code!";
-      } else {
-        addressErr = "";
+        addressErr = "Please enter a valid address!";
       }
     }
 
@@ -105,8 +123,6 @@ const Cart = () => {
       const regex = /^[a-zA-Z\s]+$/;
       if (!regex.test(city)) {
         cityErr = "Please enter a valid City Name!";
-      } else {
-        cityErr = "";
       }
     }
 
@@ -116,8 +132,6 @@ const Cart = () => {
       const regex = /^\d{5}$/;
       if (!regex.test(zip)) {
         zipErr = "Please enter a valid ZIP code!";
-      } else {
-        zipErr = "";
       }
     }
 
@@ -127,18 +141,15 @@ const Cart = () => {
       const regex = /^[a-zA-Z\s]+$/;
       if (!regex.test(name)) {
         nameErr = "Please enter a valid name!";
-      } else {
-        nameErr = "";
       }
     }
+
     if (phone === "") {
       phoneErr = "The field must contain a value.";
     } else {
       const regex = /^(\+92|0)?\d{10}$/;
       if (!regex.test(phone)) {
         phoneErr = "Please enter a valid number!";
-      } else {
-        phoneErr = "";
       }
     }
 
@@ -147,6 +158,7 @@ const Cart = () => {
       ...prevState,
       nameErr,
       phoneErr,
+      emailErr,
       zipErr,
       cityErr,
       addressErr,
@@ -158,8 +170,12 @@ const Cart = () => {
       setSubmited(true);
       setIsOpen(false);
     }
-    if (cartItems.length >= 0) {
+  };
+  const handleCheckout = () => {
+    if (address.length !== 0 && cartItems.length >= 1) {
       sendEmail();
+    } else {
+      toast.error("Please fill out address form!");
     }
   };
 
@@ -301,7 +317,9 @@ const Cart = () => {
                   <span className="break-words  text-gray-600 text-sm">
                     {address.phone}
                   </span>
-
+                  <span className="break-words  text-gray-600 text-sm">
+                    {address.email}
+                  </span>
                   <span className="break-words  text-gray-600 text-sm">
                     {address.zip}
                   </span>
@@ -387,6 +405,26 @@ const Cart = () => {
                                       </div>
                                       <div className="text-red-600 text-sm">
                                         {formData.phoneErr}
+                                      </div>
+                                    </div>
+                                  </label>
+                                  <label className="flex gap-3 items-center justify-center">
+                                    <div className="flex flex-col">
+                                      <div className="flex ">
+                                        <p className="w-[89px] font-semibold">
+                                          Email:
+                                        </p>
+                                        <input
+                                          type="text"
+                                          name="email"
+                                          value={formData.email}
+                                          onChange={handleChange}
+                                          className="border"
+                                          required
+                                        />
+                                      </div>
+                                      <div className="text-red-600 text-sm">
+                                        {formData.emailErr}
                                       </div>
                                     </div>
                                   </label>
@@ -495,8 +533,8 @@ const Cart = () => {
               </div>
 
               <button
-                onClick={sendEmail}
-                className="bg-black text-white border-t rounded-lg w-[100%] h-11 hover:bg-gray-600 px-4 my-2 duration-300"
+                onClick={() => handleCheckout}
+                className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
               >
                 Proceed to Checkout
               </button>

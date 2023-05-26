@@ -32,6 +32,7 @@ export const StateContext = ({ children }) => {
     city: "",
     phone: "",
     zip: "",
+    email:'',
     addressAll: "",
   });
 
