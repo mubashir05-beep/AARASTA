@@ -192,7 +192,7 @@ const Cart = () => {
 
       <div className="flex flex-col min-[996px]:flex-row">
         <div
-          className={`flex flex-col justify-center scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300  scrollbar-hide flex-[1.5]  scrollbar-track-rounded-full `}
+          className={`flex flex-col justify-start scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300  scrollbar-hide flex-[1.5]  scrollbar-track-rounded-full `}
         >
           {cartItems.length >= 1 &&
             cartItems.map((items, index) => (
