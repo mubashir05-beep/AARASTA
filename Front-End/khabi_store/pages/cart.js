@@ -30,31 +30,7 @@ const Cart = () => {
     setAddress,
   } = useStateContext();
   const cartRef = useRef();
-  const sendEmail = async () => {
-    try {
-      const templateParams = {
-        from_name: "Excited User",
-        to_name: `${address.mail}`,
-        subject: "Hello",
-        message_html: "<p>This is the HTML content of the email.</p>",
-        user_name: `${address.name}`,
-        user_address: `${address.addressAll}`,
-      };
-
-      const response = await emailjs.send(
-        process.env.NEXT_PUBLIC_SERVICE_ID,
-        process.env.NEXT_PUBLIC_TEMPLATE_ID,
-        templateParams,
-        "ikU_zGYWqgPI4FcWO"
-      );
-
-      console.log("Email sent successfully!", response.status, response.text);
-      toast.success(`Email sent successfully!`);
-    } catch (error) {
-      console.error("Error sending email:", error);
-      toast.error(`Error sending email!`);
-    }
-  };
+ 
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -171,14 +147,44 @@ const Cart = () => {
       setIsOpen(false);
     }
   };
+  
+  
+  const sendEmail = async () => {
+    try {
+      const templateParams = {
+        from_name: "Excited User",
+        to_name: `${address.email}`,
+        subject: "Hello",
+        user_name: `${address.name}`,
+        user_Address: `${address.addressAll}`,
+      };
+      console.log(address.email);
+  
+      const response = await emailjs.send(
+        process.env.NEXT_PUBLIC_SERVICE_ID,
+        process.env.NEXT_PUBLIC_TEMPLATE_ID,
+        templateParams,
+        "ikU_zGYWqgPI4FcWO"
+      );
+  
+      
+      toast.success(`Email sent successfully!`);
+      console.log("Email sent successfully!", response.status, response.text);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error(`Error sending email!`);
+    }
+  };
+  
   const handleCheckout = () => {
-    if (address.length !== 0 && cartItems.length >= 1) {
+    if (Object.keys(address).length !== 0 && cartItems.length >= 1) {
       sendEmail();
     } else {
       toast.error("Please fill out address form!");
     }
   };
-
+  
+  
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -531,13 +537,13 @@ const Cart = () => {
                   </div>
                 </div>
               </div>
-
               <button
-                onClick={() => handleCheckout}
-                className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
-              >
-                Proceed to Checkout
-              </button>
+  onClick={handleCheckout}
+  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
+>
+  Proceed to Checkout
+</button>
+
             </div>
           )}
         </div>
