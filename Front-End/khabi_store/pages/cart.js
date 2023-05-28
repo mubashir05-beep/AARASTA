@@ -164,7 +164,7 @@ const Cart = () => {
         process.env.NEXT_PUBLIC_SERVICE_ID,
         process.env.NEXT_PUBLIC_TEMPLATE_ID,
         templateParams,
-        "ikU_zGYWqgPI4FcWO"
+        process.env.NEXT_PUBLIC_USER_ID
       );
   
       
