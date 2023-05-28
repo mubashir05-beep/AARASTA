@@ -1,6 +1,6 @@
 const order = {
-    name: 'order',
-    title: 'User Order',
+    name: 'orders',
+    title: 'Orders',
     type: 'document',
     fields: [
       {

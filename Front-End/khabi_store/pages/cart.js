@@ -203,7 +203,33 @@ const Cart = () => {
       toast.error("Please fill out address form!");
     }
   };
-
+  async function handleCheckOutSubmit() {
+    try {
+      const orderData = cartItems.map((items) => items.name);
+      const response = await fetch("/api/order.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+  
+      if (response.ok) {
+        // Order successfully submitted
+        // Display success message to the user
+        alert("Order submitted successfully!");
+      } else {
+        // Order submission failed
+        // Display error message to the user
+        alert("Failed to submit the order. Please try again.");
+      }
+    } catch (error) {
+      // Handle any network or other errors
+      console.error("Error submitting the order:", error);
+      alert("An error occurred while submitting the order. Please try again later.");
+    }
+  }
+  
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -585,11 +611,15 @@ const Cart = () => {
                 </div>
               </div>
               <button
-                onClick={handleCheckout}
-                className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
-              >
-                Proceed to Checkout
-              </button>
+  onClick={() => {
+    handleCheckout();
+    handleCheckOutSubmit();
+  }}
+  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
+>
+  Proceed to Checkout
+</button>
+
             </div>
           )}
         </div>
