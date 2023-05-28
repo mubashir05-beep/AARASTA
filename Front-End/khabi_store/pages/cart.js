@@ -357,24 +357,42 @@ const Cart = () => {
                     {address.addressAll}
                   </span>
                 </div>
-                {!(address.name === '' && address.zip === '' && address.email === '' && address.city === '' && address.phone === '' && address.addressAll === '') ? (
-  <RxCross2
-    size={20}
-    onClick={deleteForm}
-    className="relative top-[28px] cursor-pointer"
-  />
-) : null}
-
-
-               
+                {!(
+                  address.name === "" &&
+                  address.zip === "" &&
+                  address.email === "" &&
+                  address.city === "" &&
+                  address.phone === "" &&
+                  address.addressAll === ""
+                ) ? (
+                  <RxCross2
+                    size={20}
+                    onClick={deleteForm}
+                    className="relative top-[28px] cursor-pointer"
+                  />
+                ) : null}
               </div>
               <div>
-                <button
-                  className="bg-black text-white border-t w-[150px] my-5 rounded-lg h-11 hover:bg-gray-600 duration-300"
-                  onClick={openModal}
-                >
-                  {submited ? "Edit Address" : "Add Address"}
-                </button>
+                {address.name === "" &&
+                address.zip === "" &&
+                address.email === "" &&
+                address.city === "" &&
+                address.phone === "" &&
+                address.addressAll === "" ? (
+                  <button
+                    className="bg-black text-white border-t w-[150px] my-5 rounded-lg h-11 hover:bg-gray-600 duration-300"
+                    onClick={openModal}
+                  >
+                    Add Address
+                  </button>
+                ) : (
+                  <button
+                    className="bg-black text-white border-t w-[150px] my-5 rounded-lg h-11 hover:bg-gray-600 duration-300"
+                    onClick={openModal}
+                  >
+                    Edit Address
+                  </button>
+                )}
 
                 {isOpen && (
                   <div className="fixed z-10 inset-0 overflow-y-auto">
