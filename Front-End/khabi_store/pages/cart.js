@@ -204,38 +204,44 @@ const Cart = () => {
     }
   };
   // Client-side code to place an order
-const handlePlaceOrder = async () => {
-  try {
-    // Prepare the order data
-    const orderData = {
-      name: "John Doe",
-      price: 9.99,
-      // Add other order details here
-    };
-
-    // Send the order data to your server endpoint
-    const response = await fetch("/api/order", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(orderData),
-    });
-
-    if (response.ok) {
-      const result = await response.json();
-      console.log("Order placed successfully!", result);
-      // Handle success case (e.g., show a success message)
-    } else {
-      console.error("Failed to place order.");
+  const handlePlaceOrder = async () => {
+    try {
+      // Prepare the order data
+      const orderData = {
+        name: "John Doe",
+        price: 9.99,
+        details: "Dummy details",
+        productCode: "ABC123",
+        category: "Dummy category",
+        quantity: 1,
+        size: "Large",
+        image: "dummy-image-url",
+        // Add other order details here
+      };
+  
+      // Send the order data to your server endpoint
+      const response = await fetch("api/order.js", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+  
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Order placed successfully!", result);
+        // Handle success case (e.g., show a success message)
+      } else {
+        console.error("Failed to place order.");
+        // Handle error case (e.g., show an error message)
+      }
+    } catch (error) {
+      console.error("Failed to place order.", error);
       // Handle error case (e.g., show an error message)
     }
-  } catch (error) {
-    console.error("Failed to place order.", error);
-    // Handle error case (e.g., show an error message)
-  }
-};
-
+  };
+  
 
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
