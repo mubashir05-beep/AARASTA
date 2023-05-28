@@ -30,7 +30,7 @@ const Cart = () => {
     setAddress,
   } = useStateContext();
   const cartRef = useRef();
- 
+
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -49,6 +49,24 @@ const Cart = () => {
 
   const openModal = () => {
     setIsOpen(true);
+  };
+  const [deleted, setDelete] = useState(false);
+  const deleteForm = () => {
+    setAddress({
+      name: "",
+      zip: "",
+      email: "",
+      city: "",
+      phone: "",
+      addressAll: "",
+      nameErr: "",
+      phoneErr: "",
+      emailErr: "",
+      zipErr: "",
+      cityErr: "",
+      addressErr: "",
+    });
+    setDelete(true);
   };
 
   const closeModal = () => {
@@ -147,8 +165,7 @@ const Cart = () => {
       setIsOpen(false);
     }
   };
-  
-  
+
   const sendEmail = async () => {
     try {
       const templateParams = {
@@ -159,15 +176,14 @@ const Cart = () => {
         user_Address: `${address.addressAll}`,
       };
       console.log(address.email);
-  
+
       const response = await emailjs.send(
         process.env.NEXT_PUBLIC_SERVICE_ID,
         process.env.NEXT_PUBLIC_TEMPLATE_ID,
         templateParams,
         process.env.NEXT_PUBLIC_USER_ID
       );
-  
-      
+
       toast.success(`Email sent successfully!`);
       console.log("Email sent successfully!", response.status, response.text);
     } catch (error) {
@@ -175,16 +191,19 @@ const Cart = () => {
       toast.error(`Error sending email!`);
     }
   };
-  
+
   const handleCheckout = () => {
-    if (Object.keys(address).length !== 0 && cartItems.length >= 1) {
+    if (
+      Object.keys(address).length !== 0 &&
+      cartItems.length >= 1 &&
+      submited == true
+    ) {
       sendEmail();
     } else {
       toast.error("Please fill out address form!");
     }
   };
-  
-  
+
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -314,7 +333,7 @@ const Cart = () => {
                 </div>
               </div>
               {/* Address Modal */}
-              <div className=" w-[100%]">
+              <div className=" w-[100%] flex  gap-[1rem] ">
                 <div className="flex flex-col  items-start gap-1 mx-1 my-6" c>
                   <span className="font-semibold  text-sm md:text-base lg:text-lg">
                     {address.name}
@@ -338,6 +357,16 @@ const Cart = () => {
                     {address.addressAll}
                   </span>
                 </div>
+                {!(address.name === '' && address.zip === '' && address.email === '' && address.city === '' && address.phone === '' && address.addressAll === '') ? (
+  <RxCross2
+    size={20}
+    onClick={deleteForm}
+    className="relative top-[28px] cursor-pointer"
+  />
+) : null}
+
+
+               
               </div>
               <div>
                 <button
@@ -538,12 +567,11 @@ const Cart = () => {
                 </div>
               </div>
               <button
-  onClick={handleCheckout}
-  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
->
-  Proceed to Checkout
-</button>
-
+                onClick={handleCheckout}
+                className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
+              >
+                Proceed to Checkout
+              </button>
             </div>
           )}
         </div>
