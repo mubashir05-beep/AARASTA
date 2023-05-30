@@ -167,36 +167,77 @@ const Cart = () => {
     }
   };
 
+  // const sendEmail = async () => {
+  //   try {
+  //     const products = cartItems.map((item) => ({
+  //       name: item.name,
+  //       price: item.price,
+  //       details: item.details,
+  //       productCode: item.productCode,
+  //       category: item.category,
+  //       quantity: item.quantity,
+  //       size: item.size,
+  //       image: item.image,
+  //     }));
+  
+  //     const templateParams = {
+  //       from_name: "Excited User",
+  //       to_name: address.email,
+  //       subject: "Hello",
+  //       user_name: address.name,
+  //       user_Address: address.addressAll,
+  //       products: products,
+  //     };
+  
+  //     const response = await emailjs.send(
+  //       process.env.NEXT_PUBLIC_SERVICE_ID,
+  //       process.env.NEXT_PUBLIC_TEMPLATE_ID,
+  //       templateParams,
+  //       process.env.NEXT_PUBLIC_USER_ID
+  //     );
+  
+  //     toast.success("Email sent successfully!");
+  //     console.log("Email sent successfully!", response.status, response.text);
+  //   } catch (error) {
+  //     console.error("Error sending email:", error);
+  //     toast.error("Error sending email!");
+  //   }
+  // };
+  
   const sendEmail = async () => {
     try {
-      const templateParams = {
-        from_name: "Excited User",
-        to_name: `${address.email}`,
-        subject: "Hello",
-        user_name: `${address.name}`,
-        user_Address: `${address.addressAll}`,
-      };
-      console.log(address.email);
-
-      const response = await emailjs.send(
-        process.env.NEXT_PUBLIC_SERVICE_ID,
-        process.env.NEXT_PUBLIC_TEMPLATE_ID,
-        templateParams,
-        process.env.NEXT_PUBLIC_USER_ID
-      );
-
-      toast.success(`Email sent successfully!`);
-      console.log("Email sent successfully!", response.status, response.text);
+      const products = cartItems.map((item) => ({
+        name: item.name
+      }));
+  
+      const response = await fetch('/api/send-email', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: address.name,
+          address: address.addressAll,
+          products: products,
+        }),
+      });
+      
+  
+      if (response.ok) {
+        toast.success('Email sent successfully!');
+      } else {
+        toast.error('Error sending email!');
+      }
     } catch (error) {
-      console.error("Error sending email:", error);
-      toast.error(`Error sending email!`);
+      console.error('Error sending email:', error);
+      toast.error('Error sending email!');
     }
   };
-
+  
   const handleCheckout = () => {
     if (
       Object.keys(address).length !== 0 &&
-      cartItems.length >= 1 &&
+      cartItems.length >= 1 ||
       submited == true
     ) {
       sendEmail();
