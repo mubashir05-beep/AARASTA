@@ -1,5 +1,21 @@
-// API endpoint handler
-import { client } from "@/lib/client";
+const { client } = require("@/lib/client");
+
+async function saveOrderToSanity(orderData) {
+  try {
+    // Initialize the Sanity client with your project configuration
+    const sanityClient = client(); // Use the correct initialization method
+
+    // Save the order to Sanity
+    const result = await sanityClient.create(orderData).catch((error) => {
+      throw new Error(`Failed to save order: ${error.message}`);
+    });
+
+    return result;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to save order.");
+  }
+}
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -15,29 +31,22 @@ export default async function handler(req, res) {
         image,
       } = req.body; // Adjust the fields based on your schema
 
-      // Initialize the Sanity client with your project configuration
-      // Replace the commented line below with your actual client initialization
-      const client = sanityClient({
-        projectId: 'a3lmxvs9',
-        dataset: 'production',
-        apiVersion: '2023-05-01',
-        useCdn: true,
-        token: process.env.NEXT_PUBLIC_SANITY_TOKEN
-      });
+      // Prepare the order data
+      const orderData = {
+        _type: "orders", // Match the schema name you defined in Sanity
+        name,
+        price,
+        details,
+        productCode,
+        category,
+        quantity,
+        size,
+        image,
+        // Add other fields based on your schema
+      };
 
       // Save the order to Sanity
-      const result = await client.create({
-        _type: "orders", // Match the schema name you defined in Sanity
-        name: "John Doe",
-        price: 9.99,
-        details: "Dummy details",
-        productCode: "ABC123",
-        category: "Dummy category",
-        quantity: 1,
-        size: "Large",
-        image: "dummy-image-url",
-        // Add other fields based on your schema
-      });
+      const result = await saveOrderToSanity(orderData);
 
       res.status(200).json({ success: true, result });
     } catch (error) {

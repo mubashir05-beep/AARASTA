@@ -8,7 +8,8 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import Link from "next/link";
 import emailjs from "emailjs-com";
 import { toast } from "react-hot-toast";
-
+const { client } = require("@/lib/client");
+import { saveOrderToSanity } from "./api/order";
 const Cart = () => {
   const {
     totalPrice,
@@ -204,43 +205,31 @@ const Cart = () => {
     }
   };
   // Client-side code to place an order
-  const handlePlaceOrder = async () => {
+
+
+  
+  async function handlePlaceOrder() {
     try {
-      // Prepare the order data
       const orderData = {
         name: "John Doe",
         price: 9.99,
         details: "Dummy details",
         productCode: "ABC123",
         category: "Dummy category",
-        quantity: 1,
-        size: "Large",
-        image: "dummy-image-url",
-        // Add other order details here
+        quantity: true,
+        size: ["Large", "Medium"],
+        image: "https://dummy-image-url.com/image.jpg",
       };
   
-      // Send the order data to your server endpoint
-      const response = await fetch("api/order.js", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
-      });
+      const result = await _api_order__WEBPACK_IMPORTED_MODULE_8__.saveOrderToSanity(orderData);
   
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Order placed successfully!", result);
-        // Handle success case (e.g., show a success message)
-      } else {
-        console.error("Failed to place order.");
-        // Handle error case (e.g., show an error message)
-      }
+      console.log("Order placed successfully!", result);
+      // Handle success case (e.g., show a success message)
     } catch (error) {
       console.error("Failed to place order.", error);
       // Handle error case (e.g., show an error message)
     }
-  };
+  }
   
 
   return (
