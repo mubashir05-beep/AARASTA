@@ -207,7 +207,11 @@ const Cart = () => {
   const sendEmail = async () => {
     try {
       const products = cartItems.map((item) => ({
-        name: item.name
+        name: item.name,
+        price:item.price,
+        imgSrc: urlFor(item.image[0]).width(200).url(),
+        size:item.size,
+        quantity:item.quantity
       }));
   
       const response = await fetch('/api/send-email', {

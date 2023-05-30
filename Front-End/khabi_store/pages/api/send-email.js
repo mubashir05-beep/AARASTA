@@ -38,12 +38,9 @@ export default async function handler(req, res) {
               <li>
                 <strong>${product.name}</strong>
                 <p>Price: ${product.price}</p>
-                <p>Details: ${product.details}</p>
-                <p>Product Code: ${product.productCode}</p>
-                <p>Category: ${product.category}</p>
                 <p>Quantity: ${product.quantity}</p>
                 <p>Size: ${product.size}</p>
-                <img src="${product.image}" alt="${product.name}" />
+                <img src=${product.imgSrc} alt="${product.name}" />
               </li>
             `
             )
