@@ -39,7 +39,7 @@ const Cart = () => {
   const handleDrop = () => {
     return setDropAddress(!dropAddress);
   };
-  let shipping='Shipping Details';
+  let shipping = "Shipping Details";
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -61,7 +61,7 @@ const Cart = () => {
   };
   const [deleted, setDelete] = useState(false);
   const deleteForm = () => {
-    shipping='';
+    shipping = "";
     setAddress({
       name: "",
       zip: "",
@@ -76,7 +76,7 @@ const Cart = () => {
       cityErr: "",
       addressErr: "",
     });
-  
+
     setDelete(true);
   };
 
@@ -121,7 +121,6 @@ const Cart = () => {
         addressErr = "Please enter a valid address!";
       }
     }
-    
 
     if (city === "") {
       cityErr = "The field must contain a value.";
@@ -170,7 +169,6 @@ const Cart = () => {
     // Update error messages
     // If there are no errors, submit the form
     if (!nameErr && !phoneErr && !zipErr && !cityErr && !addressErr) {
-      
       setSubmited(true);
       setIsOpen(false);
     }
@@ -359,37 +357,43 @@ const Cart = () => {
                 address.addressAll === ""
               ) && (
                 <div className="flex flex-col w-[100%]">
-                <div className="mt-4 w-[100%] flex items-center justify-between px-2 py-4 border-t rounded-t-md border-b">
-                  <div className=" text-lg font-semibold max-[500px]:text-sm">{address.name}</div>
-                  <div onClick={() => handleDrop()}>
-                    {dropAddress ? (
-                        <AiFillCaretUp className="text-2xl " />
-                    ) : (
-                      <AiFillCaretDown className="text-2xl " />
-                    )}
+                  <div className="mt-4 w-[100%] flex items-center justify-between px-2 py-4 border-t rounded-t-md border-b">
+                    <div className=" text-lg font-semibold max-[500px]:text-sm">
+                      {address.name}
+                    </div>
+                    <div onClick={() => handleDrop()}>
+                      {dropAddress ? (
+                        <AiFillCaretUp className="text-2xl  cursor-pointer" />
+                      ) : (
+                        <AiFillCaretDown className="text-2xl cursor-pointer" />
+                      )}
+                    </div>
                   </div>
-                </div>
-                {dropAddress && 
-                <div className="px-2 flex items-center justify-between pb-2 pt-3">
-                  <span className="max[500px]:text-sm font-semibold">Shipping Details</span>
-                  <div className="flex gap-3">
+                  {dropAddress && (
+                    <div className="px-2 flex items-center justify-between pb-2 pt-3">
+                      <span className="max[500px]:text-sm font-semibold">
+                        Shipping Details
+                      </span>
+                      <div className="flex gap-3">
+                      <div className="cursor-pointer hover:underline-offset-4 transition-all duration-300 ease-in-out hover:underline" onClick={openModal}>
+  Edit
+</div>
+<div className="cursor-pointer hover:underline-offset-4 transition-all duration-300 ease-in-out hover:underline" onClick={deleteForm}>
+  Delete
+</div>
 
-                <div   className="cursor-pointer" onClick={openModal}>Edit</div>
-                <div className="cursor-pointer" onClick={deleteForm}>Delete</div>
-                </div>
-                </div>
- }
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
               {dropAddress ? (
                 <div className=" w-[100%] flex pb-3 gap-[2rem]">
                   <div className="flex flex-col gap-1 mx-2">
-                   
                     <span className="break-words  text-gray-600 text-sm">
-                      {address.phone }
-                      
+                      {address.phone}
                     </span>
-                    
+
                     <span className="break-words  text-gray-600 text-sm">
                       {address.email}
                     </span>
@@ -399,11 +403,14 @@ const Cart = () => {
                         ", " +
                         address.city +
                         ", " +
-                        address.zip+"."}
+                        address.zip +
+                        "."}
                     </span>
                   </div>
                 </div>
-              ) : ''}
+              ) : (
+                ""
+              )}
 
               <div>
                 {!(
