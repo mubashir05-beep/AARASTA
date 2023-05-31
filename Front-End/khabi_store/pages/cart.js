@@ -35,6 +35,7 @@ const Cart = () => {
   const cartRef = useRef();
   const [dropAddress, setDropAddress] = useState(false);
   const [hidden, setHidden] = useState("hidden");
+
   const handleDrop = () => {
     return setDropAddress(!dropAddress);
   };
@@ -85,7 +86,7 @@ const Cart = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
+    setAddress((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -95,7 +96,7 @@ const Cart = () => {
     e.preventDefault();
 
     // Perform form validation
-    const { name, phone, zip, city, addressAll, email } = formData;
+    const { name, phone, zip, city, addressAll, email } = address;
     let nameErr = "";
     let phoneErr = "";
     let emailErr = "";
@@ -115,11 +116,12 @@ const Cart = () => {
     if (addressAll === "") {
       addressErr = "The field must contain a value.";
     } else {
-      const regex = /^[a-zA-Z0-9\s\-\,\']+$/;
+      const regex = /^[a-zA-Z0-9\s,#\/\-_@']+$/;
       if (!regex.test(addressAll)) {
         addressErr = "Please enter a valid address!";
       }
     }
+    
 
     if (city === "") {
       cityErr = "The field must contain a value.";
@@ -156,9 +158,7 @@ const Cart = () => {
         phoneErr = "Please enter a valid number!";
       }
     }
-
-    // Update error messages
-    setFormData((prevState) => ({
+    setAddress((prevState) => ({
       ...prevState,
       nameErr,
       phoneErr,
@@ -167,52 +167,14 @@ const Cart = () => {
       cityErr,
       addressErr,
     }));
-
+    // Update error messages
     // If there are no errors, submit the form
     if (!nameErr && !phoneErr && !zipErr && !cityErr && !addressErr) {
-      setAddress(formData);
+      
       setSubmited(true);
       setIsOpen(false);
     }
   };
-
-  // const sendEmail = async () => {
-  //   try {
-  //     const products = cartItems.map((item) => ({
-  //       name: item.name,
-  //       price: item.price,
-  //       details: item.details,
-  //       productCode: item.productCode,
-  //       category: item.category,
-  //       quantity: item.quantity,
-  //       size: item.size,
-  //       image: item.image,
-  //     }));
-
-  //     const templateParams = {
-  //       from_name: "Excited User",
-  //       to_name: address.email,
-  //       subject: "Hello",
-  //       user_name: address.name,
-  //       user_Address: address.addressAll,
-  //       products: products,
-  //     };
-
-  //     const response = await emailjs.send(
-  //       process.env.NEXT_PUBLIC_SERVICE_ID,
-  //       process.env.NEXT_PUBLIC_TEMPLATE_ID,
-  //       templateParams,
-  //       process.env.NEXT_PUBLIC_USER_ID
-  //     );
-
-  //     toast.success("Email sent successfully!");
-  //     console.log("Email sent successfully!", response.status, response.text);
-  //   } catch (error) {
-  //     console.error("Error sending email:", error);
-  //     toast.error("Error sending email!");
-  //   }
-  // };
-
   const sendEmail = async () => {
     try {
       const products = cartItems.map((item) => ({
@@ -260,7 +222,7 @@ const Cart = () => {
   // Client-side code to place an order
 
   return (
-    <div className="mx-[3rem] my-[3rem] py-3">
+    <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
         Shopping Cart
       </div>
@@ -396,52 +358,50 @@ const Cart = () => {
                 address.phone === "" &&
                 address.addressAll === ""
               ) && (
-                <div className="my-4 w-[100%] flex items-center justify-between px-2 py-4 border-t border-b">
-                  <div className=" text-lg font-semibold">{address.name}</div>
+                <div className="flex flex-col w-[100%]">
+                <div className="mt-4 w-[100%] flex items-center justify-between px-2 py-4 border-t rounded-t-md border-b">
+                  <div className=" text-lg font-semibold max-[500px]:text-sm">{address.name}</div>
                   <div onClick={() => handleDrop()}>
                     {dropAddress ? (
-                      <AiFillCaretUp size={26} />
+                        <AiFillCaretUp className="text-2xl " />
                     ) : (
-                      <AiFillCaretDown size={26} />
+                      <AiFillCaretDown className="text-2xl " />
                     )}
                   </div>
                 </div>
+                {dropAddress && 
+                <div className="px-2 flex items-center justify-between pb-2 pt-3">
+                  <span className="max[500px]:text-sm font-semibold">Shipping Details</span>
+                  <div className="flex gap-3">
+
+                <div   className="cursor-pointer" onClick={openModal}>Edit</div>
+                <div className="cursor-pointer" onClick={deleteForm}>Delete</div>
+                </div>
+                </div>
+ }
+                </div>
               )}
               {dropAddress ? (
-                <div className=" w-[100%] flex  gap-[2rem]">
-                  <div className="flex flex-col gap-1 mx-1">
+                <div className=" w-[100%] flex pb-3 gap-[2rem]">
+                  <div className="flex flex-col gap-1 mx-2">
                    
                     <span className="break-words  text-gray-600 text-sm">
                       {address.phone }
-                      <span>{shipping}</span>
+                      
                     </span>
                     
                     <span className="break-words  text-gray-600 text-sm">
                       {address.email}
                     </span>
 
-                    <span className="break-words max-w-[150px] sm:max-w-[300px] md:max-w-[600px]  text-gray-600 text-sm md:text-base ">
+                    <span className="break-words max-w-[150px] sm:max-w-[300px] md:max-w-[600px]  text-gray-600 text-sm ">
                       {address.addressAll +
-                        " " +
+                        ", " +
                         address.city +
-                        " " +
-                        address.zip}
+                        ", " +
+                        address.zip+"."}
                     </span>
                   </div>
-                  {!(
-                    address.name === "" &&
-                    address.zip === "" &&
-                    address.email === "" &&
-                    address.city === "" &&
-                    address.phone === "" &&
-                    address.addressAll === ""
-                  ) ? (
-                    <RxCross2
-                      size={20}
-                      onClick={deleteForm}
-                      className="relative top-[28px] cursor-pointer"
-                    />
-                  ) : null}
                 </div>
               ) : ''}
 
@@ -457,7 +417,7 @@ const Cart = () => {
                   ""
                 ) : (
                   <button
-                    className="bg-black text-white border-t w-[150px] mb-4  rounded-lg h-11 hover:bg-gray-600 duration-300"
+                    className="bg-black text-white border-t w-[150px] mb-4 mt-4  rounded-lg h-11 hover:bg-gray-600 duration-300"
                     onClick={openModal}
                   >
                     Add Address
@@ -499,14 +459,14 @@ const Cart = () => {
                                         <input
                                           type="text"
                                           name="name"
-                                          value={formData.name}
+                                          value={address.name}
                                           onChange={handleChange}
                                           className="border"
                                           required
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
-                                        {formData.nameErr}
+                                        {address.nameErr}
                                       </div>
                                     </div>
                                   </label>
@@ -520,14 +480,14 @@ const Cart = () => {
                                         <input
                                           type="text"
                                           name="phone"
-                                          value={formData.phone}
+                                          value={address.phone}
                                           onChange={handleChange}
                                           className="border"
                                           required
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
-                                        {formData.phoneErr}
+                                        {address.phoneErr}
                                       </div>
                                     </div>
                                   </label>
@@ -540,14 +500,14 @@ const Cart = () => {
                                         <input
                                           type="text"
                                           name="email"
-                                          value={formData.email}
+                                          value={address.email}
                                           onChange={handleChange}
                                           className="border"
                                           required
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
-                                        {formData.emailErr}
+                                        {address.emailErr}
                                       </div>
                                     </div>
                                   </label>
@@ -560,14 +520,14 @@ const Cart = () => {
                                         <input
                                           type="text"
                                           name="zip"
-                                          value={formData.zip}
+                                          value={address.zip}
                                           onChange={handleChange}
                                           className="border"
                                           required
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
-                                        {formData.zipErr}
+                                        {address.zipErr}
                                       </div>
                                     </div>
                                   </label>
@@ -580,14 +540,14 @@ const Cart = () => {
                                         <input
                                           type="text"
                                           name="city"
-                                          value={formData.city}
+                                          value={address.city}
                                           onChange={handleChange}
                                           className="border"
                                           required
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
-                                        {formData.cityErr}
+                                        {address.cityErr}
                                       </div>
                                     </div>
                                   </label>
@@ -599,7 +559,7 @@ const Cart = () => {
                                         </p>
                                         <textarea
                                           name="addressAll"
-                                          value={formData.addressAll}
+                                          value={address.addressAll}
                                           rows={6}
                                           cols={20}
                                           onChange={handleChange}
@@ -608,7 +568,7 @@ const Cart = () => {
                                         />
                                       </div>
                                       <div className="text-red-600 text-sm">
-                                        {formData.addressErr}
+                                        {address.addressErr}
                                       </div>
                                     </div>
                                   </label>

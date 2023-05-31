@@ -11,7 +11,7 @@ const Header = () => {
           Free shipping on orders above PKR. 2999/-
         </div>
       )}
-      <div className={`mx-[3rem] my-[1rem]`}>
+      <div className={`mx-[3rem] max-[500px]:mx-[1.5rem] my-[1rem]`}>
         <Menu shipFee={shipFee} setShipFee={setShipFee} />
       </div>
     </>
