@@ -10,6 +10,8 @@ import emailjs from "emailjs-com";
 import { toast } from "react-hot-toast";
 const { client } = require("@/lib/client");
 import { saveOrderToSanity } from "./api/order";
+import { AiFillCaretDown } from "react-icons/ai";
+import { AiFillCaretUp } from "react-icons/ai";
 const Cart = () => {
   const {
     totalPrice,
@@ -31,7 +33,12 @@ const Cart = () => {
     setAddress,
   } = useStateContext();
   const cartRef = useRef();
-
+  const [dropAddress, setDropAddress] = useState(false);
+  const [hidden, setHidden] = useState("hidden");
+  const handleDrop = () => {
+    return setDropAddress(!dropAddress);
+  };
+  let shipping='Shipping Details';
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -53,6 +60,7 @@ const Cart = () => {
   };
   const [deleted, setDelete] = useState(false);
   const deleteForm = () => {
+    shipping='';
     setAddress({
       name: "",
       zip: "",
@@ -67,6 +75,7 @@ const Cart = () => {
       cityErr: "",
       addressErr: "",
     });
+  
     setDelete(true);
   };
 
@@ -179,7 +188,7 @@ const Cart = () => {
   //       size: item.size,
   //       image: item.image,
   //     }));
-  
+
   //     const templateParams = {
   //       from_name: "Excited User",
   //       to_name: address.email,
@@ -188,14 +197,14 @@ const Cart = () => {
   //       user_Address: address.addressAll,
   //       products: products,
   //     };
-  
+
   //     const response = await emailjs.send(
   //       process.env.NEXT_PUBLIC_SERVICE_ID,
   //       process.env.NEXT_PUBLIC_TEMPLATE_ID,
   //       templateParams,
   //       process.env.NEXT_PUBLIC_USER_ID
   //     );
-  
+
   //     toast.success("Email sent successfully!");
   //     console.log("Email sent successfully!", response.status, response.text);
   //   } catch (error) {
@@ -203,45 +212,44 @@ const Cart = () => {
   //     toast.error("Error sending email!");
   //   }
   // };
-  
+
   const sendEmail = async () => {
     try {
       const products = cartItems.map((item) => ({
         name: item.name,
-        price:item.price,
+        price: item.price,
         imgSrc: urlFor(item.image[0]).width(200).url(),
-        size:item.size,
-        quantity:item.quantity
+        size: item.size,
+        quantity: item.quantity,
       }));
-  
-      const response = await fetch('/api/send-email', {
-        method: 'post',
+
+      const response = await fetch("/api/send-email", {
+        method: "post",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: address.name,
           address: address.addressAll,
           products: products,
+          email: address.email,
         }),
       });
-      
-  
+
       if (response.ok) {
-        toast.success('Email sent successfully!');
+        toast.success("Email sent successfully!");
       } else {
-        toast.error('Error sending email!');
+        toast.error("Error sending email!");
       }
     } catch (error) {
-      console.error('Error sending email:', error);
-      toast.error('Error sending email!');
+      console.error("Error sending email:", error);
+      toast.error("Error sending email!");
     }
   };
-  
+
   const handleCheckout = () => {
     if (
-      Object.keys(address).length !== 0 &&
-      cartItems.length >= 1 ||
+      (Object.keys(address).length !== 0 && cartItems.length >= 1) ||
       submited == true
     ) {
       sendEmail();
@@ -251,9 +259,6 @@ const Cart = () => {
   };
   // Client-side code to place an order
 
-
-  
-
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -261,7 +266,7 @@ const Cart = () => {
       </div>
       {cartItems.length < 1 && <CartEmpty />}
       {cartItems.length >= 1 && (
-        <div className="flex items-center max-[499px]:flex-col  max-[499px]:items-start  max-[499px]:gap-2  max-[499px]:border-b justify-between border pb-8 px-5 pt-8">
+        <div className="flex items-center rounded-t-lg max-[499px]:flex-col  max-[499px]:items-start  max-[499px]:gap-2  max-[499px]:border-b justify-between border pb-8 px-5 pt-8">
           <div className="flex flex-row gap-2 items-center  ">
             <div className="text-lg font-semibold max-[339px]:text-[15px] ">
               Total Quantity:
@@ -383,30 +388,64 @@ const Cart = () => {
                 </div>
               </div>
               {/* Address Modal */}
-              <div className=" w-[100%] flex  gap-[1rem] ">
-                <div className="flex flex-col  items-start gap-1 mx-1 my-6" c>
-                  <span className="font-semibold  text-sm md:text-base lg:text-lg">
-                    {address.name}
-                  </span>
-
-                  <span className="break-words  text-gray-600 text-sm">
-                    {address.phone}
-                  </span>
-                  <span className="break-words  text-gray-600 text-sm">
-                    {address.email}
-                  </span>
-                  <span className="break-words  text-gray-600 text-sm">
-                    {address.zip}
-                  </span>
-
-                  <span className="break-words  text-gray-600 text-sm">
-                    {address.city}
-                  </span>
-
-                  <span className="break-words max-w-[150px] md:max-w-[300px] text-gray-600 text-sm md:text-base ">
-                    {address.addressAll}
-                  </span>
+              {!(
+                address.name === "" &&
+                address.zip === "" &&
+                address.email === "" &&
+                address.city === "" &&
+                address.phone === "" &&
+                address.addressAll === ""
+              ) && (
+                <div className="my-4 w-[100%] flex items-center justify-between px-2 py-4 border-t border-b">
+                  <div className=" text-lg font-semibold">{address.name}</div>
+                  <div onClick={() => handleDrop()}>
+                    {dropAddress ? (
+                      <AiFillCaretUp size={26} />
+                    ) : (
+                      <AiFillCaretDown size={26} />
+                    )}
+                  </div>
                 </div>
+              )}
+              {dropAddress ? (
+                <div className=" w-[100%] flex  gap-[2rem]">
+                  <div className="flex flex-col gap-1 mx-1">
+                   
+                    <span className="break-words  text-gray-600 text-sm">
+                      {address.phone }
+                      <span>{shipping}</span>
+                    </span>
+                    
+                    <span className="break-words  text-gray-600 text-sm">
+                      {address.email}
+                    </span>
+
+                    <span className="break-words max-w-[150px] sm:max-w-[300px] md:max-w-[600px]  text-gray-600 text-sm md:text-base ">
+                      {address.addressAll +
+                        " " +
+                        address.city +
+                        " " +
+                        address.zip}
+                    </span>
+                  </div>
+                  {!(
+                    address.name === "" &&
+                    address.zip === "" &&
+                    address.email === "" &&
+                    address.city === "" &&
+                    address.phone === "" &&
+                    address.addressAll === ""
+                  ) ? (
+                    <RxCross2
+                      size={20}
+                      onClick={deleteForm}
+                      className="relative top-[28px] cursor-pointer"
+                    />
+                  ) : null}
+                </div>
+              ) : ''}
+
+              <div>
                 {!(
                   address.name === "" &&
                   address.zip === "" &&
@@ -415,32 +454,13 @@ const Cart = () => {
                   address.phone === "" &&
                   address.addressAll === ""
                 ) ? (
-                  <RxCross2
-                    size={20}
-                    onClick={deleteForm}
-                    className="relative top-[28px] cursor-pointer"
-                  />
-                ) : null}
-              </div>
-              <div>
-                {address.name === "" &&
-                address.zip === "" &&
-                address.email === "" &&
-                address.city === "" &&
-                address.phone === "" &&
-                address.addressAll === "" ? (
+                  ""
+                ) : (
                   <button
-                    className="bg-black text-white border-t w-[150px] my-5 rounded-lg h-11 hover:bg-gray-600 duration-300"
+                    className="bg-black text-white border-t w-[150px] mb-4  rounded-lg h-11 hover:bg-gray-600 duration-300"
                     onClick={openModal}
                   >
                     Add Address
-                  </button>
-                ) : (
-                  <button
-                    className="bg-black text-white border-t w-[150px] my-5 rounded-lg h-11 hover:bg-gray-600 duration-300"
-                    onClick={openModal}
-                  >
-                    Edit Address
                   </button>
                 )}
 
@@ -637,7 +657,6 @@ const Cart = () => {
               <button
                 onClick={() => {
                   handleCheckout();
-                  handlePlaceOrder();
                 }}
                 className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
               >
