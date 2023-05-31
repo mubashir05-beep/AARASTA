@@ -253,29 +253,6 @@ const Cart = () => {
 
 
   
-  async function handlePlaceOrder() {
-    try {
-      const orderData = {
-        name: "John Doe",
-        price: 9.99,
-        details: "Dummy details",
-        productCode: "ABC123",
-        category: "Dummy category",
-        quantity: true,
-        size: ["Large", "Medium"],
-        image: "https://dummy-image-url.com/image.jpg",
-      };
-  
-      const result = await _api_order__WEBPACK_IMPORTED_MODULE_8__.saveOrderToSanity(orderData);
-  
-      console.log("Order placed successfully!", result);
-      // Handle success case (e.g., show a success message)
-    } catch (error) {
-      console.error("Failed to place order.", error);
-      // Handle error case (e.g., show an error message)
-    }
-  }
-  
 
   return (
     <div className="mx-[3rem] my-[3rem] py-3">
