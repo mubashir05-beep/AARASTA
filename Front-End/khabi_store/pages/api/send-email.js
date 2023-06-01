@@ -3,7 +3,7 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-    service:'gmail',
+  service: "gmail",
   host: "smtp.gmail.com",
   port: 587,
   secure: false,
@@ -12,20 +12,34 @@ const transporter = nodemailer.createTransport({
     pass: process.env.NEXT_GMAIL_KHAABI_PASS,
   },
 });
-
+function generatePakistanDate() {
+  var date = new Date();
+  var offset = date.getTimezoneOffset();
+  var pakistanOffset = 300; // Offset for Pakistan timezone in minutes (+5 hours * 60 minutes)
+  
+  // Adjust the date by adding the offset
+  date.setMinutes(date.getMinutes() + offset + pakistanOffset);
+  
+  var year = date.getFullYear();
+  var month = String(date.getMonth() + 1).padStart(2, '0');
+  var day = String(date.getDate()).padStart(2, '0');
+  
+  return year + '-' + month + '-' + day;
+}
+let date=generatePakistanDate();
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ message: "Method Not Allowed" });
     return;
   }
 
-  const { email, name, address, products } = req.body;
+  const { email, name, address, products, zip, city } = req.body;
 
   try {
     const mailOptions = {
-      from: "Excited User <exciteduser@example.com>",
+      from: "Khaabi",
       to: email,
-      subject: "Hello",
+      subject: "Order Confirmation",
       html: `
         
   <div
@@ -178,7 +192,7 @@ export default async function handler(req, res) {
                     font-weight: 500;
                   "
                 >
-                  2125 Chestnut St, San Francisco, CA 94123
+                  ${address + ", " + city + ", " + zip + "."}
                 </p>
               </td>
             </tr>
@@ -211,29 +225,27 @@ export default async function handler(req, res) {
         ${products
           .map(
             (product) => `
-            <div style="display: flex; align-items: flex-start;">
-            <div style="max-width: 160px; padding-bottom: 12px;">
-              <img src=${product.imgSrc} alt="${product.name}" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
-            </div>
-            <div style="padding-left: 22px;">
-              <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
-                <strong>${product.name}</strong>
-              </p>
-              <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                Quantity: ${product.quantity}
-              </p>
-              <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                Size: ${product.size}
-              </p>
-              <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                Price: ${"RS "+product.price+'/-' }
-              </p>
-            </div>
-          </div>
-          
-            
-          
-          
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+  <div style="max-width: 160px; padding-bottom: 12px;">
+    <img src=${product.imgSrc} alt="${
+              product.name
+            }" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
+  </div>
+  <div style="padding-left: 22px;">
+    <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
+      <strong>${product.name}</strong>
+    </p>
+    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+      Quantity: ${product.quantity}
+    </p>
+    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+      Size: ${product.size}
+    </p>
+    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+      Price: ${"RS " + product.price + "/-"}
+    </p>
+  </div>
+</div>
           `
           )
           .join("")}
@@ -330,7 +342,7 @@ export default async function handler(req, res) {
                             color: #6f6f6f;
                           "
                         >
-                          Sep 22, 2022
+                          ${date}
                         </p>
                       </td>
                     </tr>

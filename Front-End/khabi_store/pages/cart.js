@@ -76,7 +76,7 @@ const Cart = () => {
       cityErr: "",
       addressErr: "",
     });
-
+    handleDrop();
     setDelete(true);
   };
 
@@ -193,6 +193,8 @@ const Cart = () => {
           address: address.addressAll,
           products: products,
           email: address.email,
+          zip:address.zip,
+          city:address.city,
         }),
       });
 
@@ -375,19 +377,24 @@ const Cart = () => {
                         Shipping Details
                       </span>
                       <div className="flex gap-3">
-                      <div className="cursor-pointer hover:underline-offset-4 transition-all duration-300 ease-in-out hover:underline" onClick={openModal}>
-  Edit
-</div>
-<div className="cursor-pointer hover:underline-offset-4 transition-all duration-300 ease-in-out hover:underline" onClick={deleteForm}>
-  Delete
-</div>
-
+                        <div
+                          className="cursor-pointer hover:underline-offset-4 transition-all duration-300 ease-in-out hover:underline"
+                          onClick={openModal}
+                        >
+                          Edit
+                        </div>
+                        <div
+                          className="cursor-pointer hover:underline-offset-4 transition-all duration-300 ease-in-out hover:underline"
+                          onClick={deleteForm}
+                        >
+                          Delete
+                        </div>
                       </div>
                     </div>
                   )}
                 </div>
               )}
-              {dropAddress ? (
+              {dropAddress && (
                 <div className=" w-[100%] flex pb-3 gap-[2rem]">
                   <div className="flex flex-col gap-1 mx-2">
                     <span className="break-words  text-gray-600 text-sm">
@@ -397,7 +404,6 @@ const Cart = () => {
                     <span className="break-words  text-gray-600 text-sm">
                       {address.email}
                     </span>
-
                     <span className="break-words max-w-[150px] sm:max-w-[300px] md:max-w-[600px]  text-gray-600 text-sm ">
                       {address.addressAll +
                         ", " +
@@ -408,9 +414,7 @@ const Cart = () => {
                     </span>
                   </div>
                 </div>
-              ) : (
-                ""
-              )}
+              ) }
 
               <div>
                 {!(
