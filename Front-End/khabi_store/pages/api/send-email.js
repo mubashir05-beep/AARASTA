@@ -211,84 +211,29 @@ export default async function handler(req, res) {
         ${products
           .map(
             (product) => `
-          <tbody>
-            <tr>
-              <td>
-                <table
-                  width="100%"
-                  align="center"
-                  role="presentation"
-                  cellspacing="0"
-                  cellpadding="0"
-                  border="0"
-                >
-                  <tbody style="width: 100%">
-                    <tr style="width: 100%">
-                     
-                        <img
-                        src=${product.imgSrc} alt="${product.name}"  
-                        width="160px"
-                          style="
-                            display: block;
-                            outline: none;
-                            border: none;
-                            text-decoration: none;
-                            float: left;
-                          "
-                        />
-                     
-                      <td style="vertical-align: top; padding-left: 12px">
-                        <p
-                          style="
-                            font-size: 14px;
-                            line-height: 2;
-                            margin: 0;
-                            font-weight: 500;
-                          "
-                        >
-                        <strong>${product.name}</strong>
-                        </p>
-                        <p
-                          style="
-                            font-size: 14px;
-                            line-height: 2;
-                            margin: 0;
-                            color: #747474;
-                            font-weight: 500;
-                          "
-                        >
-                        Quantity: ${product.quantity}
-                        </p>
-                      </p>
-                      <p
-                        style="
-                          font-size: 14px;
-                          line-height: 2;
-                          margin: 0;
-                          color: #747474;
-                          font-weight: 500;
-                        "
-                      >
-                        Size ${product.size}
-                      </p>
-                      <p
-                      style="
-                        font-size: 14px;
-                        line-height: 2;
-                        margin: 0;
-                        color: #747474;
-                        font-weight: 500;
-                      "
-                    >
-                    Price: ${product.price}
-                    </p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
+            <div style="display: flex; align-items: flex-start;">
+            <div style="max-width: 160px; padding-bottom: 12px;">
+              <img src=${product.imgSrc} alt="${product.name}" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
+            </div>
+            <div style="padding-left: 22px;">
+              <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
+                <strong>${product.name}</strong>
+              </p>
+              <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                Quantity: ${product.quantity}
+              </p>
+              <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                Size: ${product.size}
+              </p>
+              <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                Price: ${"RS "+product.price+'/-' }
+              </p>
+            </div>
+          </div>
+          
+            
+          
+          
           `
           )
           .join("")}
