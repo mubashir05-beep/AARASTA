@@ -9,9 +9,10 @@ import Link from "next/link";
 import emailjs from "emailjs-com";
 import { toast } from "react-hot-toast";
 const { client } = require("@/lib/client");
-import { saveOrderToSanity } from "./api/order";
+import createData, { saveOrderToSanity } from "./api/order";
 import { AiFillCaretDown } from "react-icons/ai";
 import { AiFillCaretUp } from "react-icons/ai";
+
 const Cart = () => {
   const {
     totalPrice,
@@ -628,6 +629,7 @@ const Cart = () => {
               <button
                 onClick={() => {
                   handleCheckout();
+                  createData();
                 }}
                 className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
               >
