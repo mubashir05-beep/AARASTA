@@ -5,15 +5,16 @@ import { RxCross2 } from "react-icons/rx";
 import CartEmpty from "@/components/CartEmpty";
 import { AiOutlineExclamation } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
-import Link from "next/link";
-import emailjs from "emailjs-com";
 import { toast } from "react-hot-toast";
-const { client } = require("@/lib/client");
-import createData, { saveOrderToSanity } from "./api/order";
-import { AiFillCaretDown } from "react-icons/ai";
-import { AiFillCaretUp } from "react-icons/ai";
+import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
+import { client } from '../utils/apiClient';
+
+
+
+
 
 const Cart = () => {
+
   const {
     totalPrice,
     totalQuantities,
@@ -174,6 +175,35 @@ const Cart = () => {
       setIsOpen(false);
     }
   };
+  const submitOrder = async (orderData) => {
+    try {
+      const response = await client("api/order", {
+        method: "POST",
+        body: JSON.stringify(orderData),
+      });
+  
+      if (response.ok) {
+        console.log("Order created successfully");
+        // Perform any additional actions or show success message
+      } else {
+        console.error("Couldn't submit order");
+        // Handle error or show error message
+      }
+    } catch (error) {
+      console.error("Couldn't submit order", error);
+      // Handle error or show error message
+    }
+  };
+  
+  const orderData = {
+    name: 'Product 1',
+    price: 19,
+    details: 'Some details about Product 1',
+    productCode: 'ABC123',
+    category: 'Clothing',
+    quantity: 1,
+    size: 'M',
+  };
   const sendEmail = async () => {
     try {
       const products = cartItems.map((item) => ({
@@ -220,8 +250,12 @@ const Cart = () => {
       toast.error("Please fill out address form!");
     }
   };
-  // Client-side code to place an order
 
+
+  // Call the createOrder function with the new order data
+
+  
+  
   return (
     <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -629,7 +663,7 @@ const Cart = () => {
               <button
                 onClick={() => {
                   handleCheckout();
-                  createData();
+                  submitOrder(orderData);
                 }}
                 className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
               >

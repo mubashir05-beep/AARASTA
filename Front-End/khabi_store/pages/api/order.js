@@ -1,26 +1,27 @@
-const { client } = require("@/lib/client");
+import { client } from "@/lib/client";
+import { sanityClient } from "@/lib/client";
 
-const createData = async () => {
-  const data = {
-    _type: 'Orders',
-    image: {
-      // Add image data here
-    },
-    name: 'Example Order',
-    price: 9.99,
-    details: 'Example details',
-    productCode: 'ABC123',
-    category: 'Example category',
-    quantity: true,
-    size: ['Small', 'Medium', 'Large'],
-  };
+export default async function handler(req, res) {
+  // Destructure the pieces of our request
+  const { name, price, details, productCode, category, quantity, size } =
+    req.body;
 
   try {
-    const response = await client.create(data);
-    console.log('Data created:', response);
-  } catch (error) {
-    console.error('Error creating data:', error);
-  }
-};
+    // Use our Client to create a new document in Sanity with an object
+    await client.create({
+      _type: "orders",
+      name,
+      price,
+      details,
+      productCode,
+      category,
+      quantity,
+      size,
+    });
 
-module.exports = createData;
+    return res.status(200).json({ message: "Order created successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "not Working" });
+  }
+}
