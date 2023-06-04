@@ -1,47 +1,66 @@
-// Schema definition
+// schema.js
+
 const orders = {
   name: 'orders',
-  title: 'Orders',
+  title: 'Order',
   type: 'document',
-
-    fields: [
-      {
-        name: 'name',
-        title: 'Name',
-        type: 'string',
-      },
-      {
-        name: 'price',
-        title: 'Price',
-        type: 'number',
-      },
-      {
-        name: 'details',
-        title: 'Details',
-        type: 'text',
-      },
-      {
-        name: 'productCode',
-        title: 'Product Code',
-        type: 'string',
-      },
-      {
-        name: 'category',
-        title: 'Category',
-        type: 'string',
-      },
-      {
-        name: 'quantity',
-        title: 'Quantity',
-        type: 'number',
-      },
-      {
-        name: 'size',
-        title: 'Size',
-        type: 'string',
-      },
-    ],
-  };
-  
-
+  fields: [
+    {
+      name: 'orderId',
+      title: 'Order ID',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'customerAddress',
+      title: 'Customer Address',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'products',
+      title: 'Products',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'product',
+              title: 'Product',
+              type: 'reference',
+              to: [{ type: 'product' }], // Reference to a separate "Product" schema
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'size',
+              title: 'Size',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'price',
+              title: 'Price',
+              type: 'number',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'quantity',
+              title: 'quantity',
+              type: 'number',
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'totalPrice',
+      title: 'Total Price',
+      type: 'number',
+      validation: (Rule) => Rule.required(),
+    },
+  ],
+};
 export default orders;

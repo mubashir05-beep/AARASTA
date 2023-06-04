@@ -175,34 +175,53 @@ const Cart = () => {
       setIsOpen(false);
     }
   };
+ // Dummy data for Order schema
+const orderData = {
+  orderId: "ORD-123456",
+  customerAddress: "123 Main St, City, Country",
+  products: [
+    {
+      product: {
+        _ref: "product1", // Reference to a specific product ID from the "Product" schema
+        _type: "reference",
+      },
+      size: "M",
+      price: 19,
+    },
+    {
+      product: {
+        _ref: "product2", // Reference to another product ID from the "Product" schema
+        _type: "reference",
+      },
+      size: "L",
+      price: 25,
+    },
+  ],
+  totalPrice: 44,
+};
+
+  
   const submitOrder = async (orderData) => {
     try {
-      const response = await client("api/order", {
+      const response = await fetch("/api/order", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(orderData),
       });
   
       if (response.ok) {
-        console.log("Order created successfully");
+        const data = await response.json();
+        console.log(data.message);
         // Perform any additional actions or show success message
       } else {
-        console.error("Couldn't submit order");
-        // Handle error or show error message
+        throw new Error("Failed to submit order. Server returned status: " + response.status);
       }
     } catch (error) {
-      console.error("Couldn't submit order", error);
+      console.error("Error submitting order:", error.message);
       // Handle error or show error message
     }
-  };
-  
-  const orderData = {
-    name: 'Product 1',
-    price: 19,
-    details: 'Some details about Product 1',
-    productCode: 'ABC123',
-    category: 'Clothing',
-    quantity: 1,
-    size: 'M',
   };
   const sendEmail = async () => {
     try {
