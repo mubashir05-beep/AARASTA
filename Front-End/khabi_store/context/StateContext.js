@@ -113,7 +113,11 @@ export const StateContext = ({ children }) => {
     setTotalQuantities((prev) => prev + quantity);
     setTotalPrice((prev) => prev + product.price * quantity);
   };
-
+const deleteCart=()=>{
+  setCartItems([]);
+  setTotalQuantities(0);
+  setTotalPrice(0);
+}
   const incQty = () => {
     setQty((prev) => prev + 1);
   };
@@ -180,8 +184,10 @@ export const StateContext = ({ children }) => {
     <Context.Provider
       value={{
         showCart,
-        setShowCart,
+   
+        deleteCart,
         cartItems,
+        setCartItems,
         totalPrice,
         selectedSize,
         setSelectedSize,

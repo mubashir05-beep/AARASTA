@@ -10,6 +10,10 @@ import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { client } from "../utils/apiClient";
 import product from "@/sanity_backend/schemas/product";
 import { v4 as uuidv4 } from "uuid";
+import Success from "@/components/Success";
+import Link from "next/link";
+import { useRouter } from 'next/router';
+
 const Cart = () => {
   const {
     totalPrice,
@@ -17,7 +21,7 @@ const Cart = () => {
     cartItems,
 
     onRemove,
-
+    deleteCart,
     toggleCartItemQuanitity,
 
     submited,
@@ -59,7 +63,6 @@ const Cart = () => {
     handleDrop();
     setDelete(true);
   };
-
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -153,19 +156,18 @@ const Cart = () => {
     }
   };
 
-
   let orderIdSet = new Set();
-  
+
   function generateOrderId() {
-    let orderId = '';
+    let orderId = "";
     do {
       orderId = uuidv4().substr(0, 5).toUpperCase();
     } while (orderIdSet.has(orderId));
-  
+
     orderIdSet.add(orderId);
     return "ORD-" + orderId;
   }
-  
+let customer_Order_id=generateOrderId();
   // Data for Order schema
   const products = cartItems.map((item) => ({
     _key: `product${item._id}`,
@@ -174,16 +176,15 @@ const Cart = () => {
     price: item.price,
     quantity: item.quantity,
   }));
-  
+
   const orderData = {
-    orderId: generateOrderId(),
+    orderId: customer_Order_id,
     customerAddress: `${
       address.addressAll + ", " + address.city + ", " + address.zip + "."
     }`,
     products: products,
     totalPrice: totalPrice,
   };
-  
 
   const submitOrder = async (orderData) => {
     try {
@@ -234,7 +235,7 @@ const Cart = () => {
           email: address.email,
           zip: address.zip,
           city: address.city,
-          Id:generateOrderId()
+          Id: customer_Order_id,
         }),
       });
 
@@ -248,8 +249,9 @@ const Cart = () => {
       toast.error("Error sending email!");
     }
   };
-
+  const router = useRouter();
   const handleCheckout = async () => {
+    
     if (
       (Object.keys(address).length !== 0 && cartItems.length >= 1) ||
       submited === true
@@ -259,11 +261,14 @@ const Cart = () => {
         await sendEmail();
         await submitOrder(orderData);
         toast.success("Your order has been completed!");
+        // await deleteCart();
       } catch (error) {
         toast.error("Error processing order!");
       } finally {
         setProcessing(false);
+        router.push('/sucess');
       }
+
     } else {
       toast.error("Please fill out address form!");
     }
@@ -294,7 +299,7 @@ const Cart = () => {
           </div>
         </div>
       )}
-
+{cartItems.length >= 1 &&(
       <div className="flex flex-col min-[996px]:flex-row">
         <div
           className={`flex flex-col justify-start scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300  scrollbar-hide flex-[1.5]  scrollbar-track-rounded-full `}
@@ -673,16 +678,22 @@ const Cart = () => {
                 </div>
               </div>
               <button
-      onClick={handleCheckout}
-      className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
-      disabled={processing}
-    >
-      {processing ? "Processing..." : orderCompleted ? "Order Placed!" : "Proceed to Checkout"}
-    </button>
+                onClick={handleCheckout}
+                className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
+                disabled={processing}
+       
+              >
+                {processing
+                  ? "Processing..."
+                  : orderCompleted
+                  ? "Order Placed!"
+                  : "Proceed to Checkout"}
+              </button>
+             
             </div>
           )}
         </div>
-      </div>
+      </div>)}
     </div>
   );
 };
