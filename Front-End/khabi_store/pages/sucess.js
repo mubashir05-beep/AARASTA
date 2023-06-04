@@ -7,7 +7,7 @@ const Success = () => {
       } = useStateContext();
       deleteCart(); 
   return (
-    <div>Success Itekss</div>
+    <div>Success Page</div>
   )
 }
 
