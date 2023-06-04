@@ -5,14 +5,26 @@ import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
 
 const Product = ({ products, product }) => {
-  const { qty, incQty, decQty, onAdd, size, setSize, toggleCartSize, onSizeChange, selectedSize } =
-    useStateContext();
+  const {
+    qty,
+    incQty,
+    decQty,
+    onAdd,
+    size,
+    setSize,
+    toggleCartSize,
+    onSizeChange,
+    selectedSize,
+  } = useStateContext();
   const [selected, setSelected] = useState("");
 
   return (
     <div className="flex flex-col lg:flex-row items-center mx-[3rem] my-[3rem] justify-center gap-[45px]">
       <div className="max-w-[600px]">
-        <img src={urlFor(product.image && product.image[0])} alt={product.name} />
+        <img
+          src={urlFor(product.image && product.image[0])}
+          alt={product.name}
+        />
       </div>
       <div className="flex flex-col md:w-[450px]">
         <div className="flex flex-col gap-[1px] my-[12px]">
@@ -22,11 +34,10 @@ const Product = ({ products, product }) => {
               <div className="text-black text-[16px]">{product.category}</div>
             </Link>
           </div>
-    {console.log(size)}
+          {console.log(size)}
           <div className="text-black/[0.7]">
             Product Code :
             <span className="text-[14px]">{product.productCode} </span>
-            
           </div>
         </div>
         <div>
@@ -42,25 +53,25 @@ const Product = ({ products, product }) => {
           </div>
           <div>
             <div>
-            {product.Size && product.Size.length > 0 && (
-  <ul className="flex my-[15px] gap-4">
-    {product.Size.map((sizeOption, index) => (
-      <li key={index} className="text-center">
-        <div
-          className={`w-[30px] h-[30px] text-black rounded-full cursor-pointer bg-black/[0.1] flex items-center justify-center ${
-            selected === sizeOption ? "bg-black/[0.5]" : ""
-          }`}
-          onClick={() => {
-            onSizeChange(product._id, sizeOption);
-            setSelected(sizeOption);
-          }}
-        >
-          <span>{sizeOption}</span>
-        </div>
-      </li>
-    ))}
-  </ul>
-)}
+              {product.Size && product.Size.length > 0 && (
+                <ul className="flex my-[15px] gap-4">
+                  {product.Size.map((sizeOption, index) => (
+                    <li key={index} className="text-center">
+                      <div
+                        className={`w-[30px] h-[30px] text-black rounded-full cursor-pointer bg-black/[0.1] flex items-center justify-center ${
+                          selected === sizeOption ? "bg-black/[0.5]" : ""
+                        }`}
+                        onClick={() => {
+                          onSizeChange(product._id, sizeOption);
+                          setSelected(sizeOption);
+                        }}
+                      >
+                        <span>{sizeOption}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
             <div className="my-[1rem] flex flex-col justify-center gap-[6px]">
               <p className="text-[16px]">Quantity:</p>
@@ -236,6 +247,3 @@ export async function getStaticProps({ params: { slug } }) {
     },
   };
 }
-
-
-

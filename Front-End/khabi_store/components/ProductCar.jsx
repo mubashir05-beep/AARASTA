@@ -1,8 +1,12 @@
-import React from 'react';
+import React from "react";
 
 const ProductCar = () => {
   return (
-    <div id="controls-carousel" className="relative w-full" data-carousel="static">
+    <div
+      id="controls-carousel"
+      className="relative w-full"
+      data-carousel="static"
+    >
       {/* Carousel wrapper */}
       <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
         {/* Item 1 */}

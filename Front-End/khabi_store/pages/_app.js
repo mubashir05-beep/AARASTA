@@ -27,13 +27,12 @@ export default function App({ Component, pageProps }) {
           rel="stylesheet"
         />
       </Head>
-     <StateContext>
-     <Header />
-     <Toaster/>
+      <StateContext>
+        <Header />
+        <Toaster />
         <Component {...pageProps} />
         <Footer />
-     </StateContext>
-       
+      </StateContext>
     </>
   );
 }

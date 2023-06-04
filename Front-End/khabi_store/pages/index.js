@@ -4,13 +4,11 @@ import React, { useState } from "react";
 import { client } from "@/lib/client";
 import FeaturedProducts from "@/components/FeaturedProducts";
 
-
 export default function Home({ products, bannerData }) {
   return (
     <main>
       <HeroBanner setBannerData={bannerData} />
-      <FeaturedProducts products={products}/>
-      
+      <FeaturedProducts products={products} />
     </main>
   );
 }
