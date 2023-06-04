@@ -234,6 +234,7 @@ const Cart = () => {
           email: address.email,
           zip: address.zip,
           city: address.city,
+          Id:generateOrderId()
         }),
       });
 

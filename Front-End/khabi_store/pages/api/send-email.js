@@ -33,7 +33,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  const { email, name, address, products, zip, city } = req.body;
+  const { email, name, address, products, zip, city,Id } = req.body;
 
   try {
     const mailOptions = {
@@ -319,7 +319,7 @@ export default async function handler(req, res) {
                             color: #6f6f6f;
                           "
                         >
-                          C0106373851
+                          ${Id}
                         </p>
                       </td>
                       <td>
