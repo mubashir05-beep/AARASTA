@@ -7,56 +7,34 @@ import { AiOutlineExclamation } from "react-icons/ai";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { toast } from "react-hot-toast";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
-import { client } from '../utils/apiClient';
-
-
-
-
-
+import { client } from "../utils/apiClient";
+import product from "@/sanity_backend/schemas/product";
+import { v4 as uuidv4 } from "uuid";
 const Cart = () => {
-
   const {
     totalPrice,
     totalQuantities,
     cartItems,
-    setItems,
+
     onRemove,
-    setShowCart,
+
     toggleCartItemQuanitity,
-    decQty,
-    size,
-    setSize,
-    incQty,
-    qty,
+
     submited,
     setSubmited,
-    selectedSize,
+
     address,
     setAddress,
   } = useStateContext();
-  const cartRef = useRef();
+  const [processing, setProcessing] = useState(false);
+  const [orderCompleted, setOrderCompleted] = useState(false);
   const [dropAddress, setDropAddress] = useState(false);
-  const [hidden, setHidden] = useState("hidden");
 
   const handleDrop = () => {
     return setDropAddress(!dropAddress);
   };
   let shipping = "Shipping Details";
   const [isOpen, setIsOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    zip: "",
-    email: "",
-    city: "",
-    phone: "",
-    addressAll: "",
-    nameErr: "",
-    phoneErr: "",
-    emailErr: "",
-    zipErr: "",
-    cityErr: "",
-    addressErr: "",
-  });
 
   const openModal = () => {
     setIsOpen(true);
@@ -147,7 +125,6 @@ const Cart = () => {
     } else {
       const regex = /^[a-zA-Z\s]+$/;
       if (!regex.test(name)) {
-        nameErr = "Please enter a valid name!";
       }
     }
 
@@ -175,32 +152,39 @@ const Cart = () => {
       setIsOpen(false);
     }
   };
- // Dummy data for Order schema
-const orderData = {
-  orderId: "ORD-123456",
-  customerAddress: "123 Main St, City, Country",
-  products: [
-    {
-      product: {
-        _ref: "product1", // Reference to a specific product ID from the "Product" schema
-        _type: "reference",
-      },
-      size: "M",
-      price: 19,
-    },
-    {
-      product: {
-        _ref: "product2", // Reference to another product ID from the "Product" schema
-        _type: "reference",
-      },
-      size: "L",
-      price: 25,
-    },
-  ],
-  totalPrice: 44,
-};
 
+
+  let orderIdSet = new Set();
   
+  function generateOrderId() {
+    let orderId = '';
+    do {
+      orderId = uuidv4().substr(0, 5).toUpperCase();
+    } while (orderIdSet.has(orderId));
+  
+    orderIdSet.add(orderId);
+    return "ORD-" + orderId;
+  }
+  
+  // Data for Order schema
+  const products = cartItems.map((item) => ({
+    _key: `product${item._id}`,
+    product: item.name,
+    size: item.size,
+    price: item.price,
+    quantity: item.quantity,
+  }));
+  
+  const orderData = {
+    orderId: generateOrderId(),
+    customerAddress: `${
+      address.addressAll + ", " + address.city + ", " + address.zip + "."
+    }`,
+    products: products,
+    totalPrice: totalPrice,
+  };
+  
+
   const submitOrder = async (orderData) => {
     try {
       const response = await fetch("/api/order", {
@@ -210,19 +194,24 @@ const orderData = {
         },
         body: JSON.stringify(orderData),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         console.log(data.message);
         // Perform any additional actions or show success message
+        setOrderCompleted(true);
       } else {
-        throw new Error("Failed to submit order. Server returned status: " + response.status);
+        throw new Error(
+          "Failed to submit order. Server returned status: " + response.status
+        );
       }
     } catch (error) {
       console.error("Error submitting order:", error.message);
       // Handle error or show error message
+      toast.error("Error submitting order!");
     }
   };
+
   const sendEmail = async () => {
     try {
       const products = cartItems.map((item) => ({
@@ -243,8 +232,8 @@ const orderData = {
           address: address.addressAll,
           products: products,
           email: address.email,
-          zip:address.zip,
-          city:address.city,
+          zip: address.zip,
+          city: address.city,
         }),
       });
 
@@ -259,22 +248,25 @@ const orderData = {
     }
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (
       (Object.keys(address).length !== 0 && cartItems.length >= 1) ||
-      submited == true
+      submited === true
     ) {
-      sendEmail();
+      setProcessing(true);
+      try {
+        await sendEmail();
+        await submitOrder(orderData);
+        toast.success("Your order has been completed!");
+      } catch (error) {
+        toast.error("Error processing order!");
+      } finally {
+        setProcessing(false);
+      }
     } else {
       toast.error("Please fill out address form!");
     }
   };
-
-
-  // Call the createOrder function with the new order data
-
-  
-  
   return (
     <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -468,7 +460,7 @@ const orderData = {
                     </span>
                   </div>
                 </div>
-              ) }
+              )}
 
               <div>
                 {!(
@@ -680,14 +672,12 @@ const orderData = {
                 </div>
               </div>
               <button
-                onClick={() => {
-                  handleCheckout();
-                  submitOrder(orderData);
-                }}
-                className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
-              >
-                Proceed to Checkout
-              </button>
+      onClick={handleCheckout}
+      className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
+      disabled={processing}
+    >
+      {processing ? "Processing..." : orderCompleted ? "Order Placed!" : "Proceed to Checkout"}
+    </button>
             </div>
           )}
         </div>

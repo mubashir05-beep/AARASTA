@@ -28,8 +28,8 @@ const orders = {
             {
               name: 'product',
               title: 'Product',
-              type: 'reference',
-              to: [{ type: 'product' }], // Reference to a separate "Product" schema
+              type: 'string',
+              
               validation: (Rule) => Rule.required(),
             },
             {
@@ -46,7 +46,7 @@ const orders = {
             },
             {
               name: 'quantity',
-              title: 'quantity',
+              title: 'Quantity',
               type: 'number',
               validation: (Rule) => Rule.required(),
             },

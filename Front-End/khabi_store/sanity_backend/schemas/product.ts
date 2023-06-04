@@ -3,6 +3,7 @@ export default {
     title: 'Product',
     type: 'document',
     fields: [
+      
       {
         name: 'image',
         title: 'Image',
