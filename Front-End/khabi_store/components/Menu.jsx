@@ -31,7 +31,6 @@ const Menu = ({ shipFee, setShipFee }) => {
     <>
       <div className="flex  justify-between items-center w-full ">
         <Link href="/">
-          {" "}
           <div className="font-semibold pointer text-[24px] logo">Khaabi</div>
         </Link>
         <ul className="flex gap-6 items-center text-[17px] ">

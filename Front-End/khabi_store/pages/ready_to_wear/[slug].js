@@ -1,5 +1,4 @@
 import { client, urlFor } from "@/lib/client";
-import product from "../../sanity_backend/schemas/product";
 import React, { useState } from "react";
 import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
@@ -11,8 +10,6 @@ const Product = ({ products, product }) => {
     decQty,
     onAdd,
     size,
-    setSize,
-    toggleCartSize,
     onSizeChange,
     selectedSize,
   } = useStateContext();

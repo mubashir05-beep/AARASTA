@@ -254,10 +254,7 @@ const Cart = () => {
         toast.error("Error processing order!");
       } finally {
         setProcessing(false);
-     
-          router.push("/success");
-       
-        
+        router.push("/success");
       }
     } else {
       toast.error("Please fill out address form!");
