@@ -2,7 +2,7 @@ import { client, urlFor } from "@/lib/client";
 import React, { useState } from "react";
 import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
-
+import Image from 'next/image';
 const Product = ({ products, product }) => {
   const {
     qty,
@@ -195,11 +195,12 @@ const Product = ({ products, product }) => {
           bg-orange-600 h-[30px] w-[80px] text-white items-center rounded-md"
             target="_blank"
           >
-            <img
-              height={24}
-              width={24}
-              src="http://icms-image.slatic.net/images/ims-web/fb7adc81-c369-4fe8-b62e-7595b09c7741.png"
-            />
+               <Image
+      src="/daraz.png"
+      alt='daraz'
+      width={25}
+      height={25}
+    />
             Buy
           </a>
         </div>
