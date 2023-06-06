@@ -16,11 +16,9 @@ const Success = () => {
   };
 
   return (
-    <div>
-      Success Page
-      <Link href="/ready_to_wear">GO SHOP</Link>
-      <a href="/ready_to_wear">jell</a>
-      <div onClick={gotoPage}>newpage</div>
+    <div className="flex flex-col justify-center items-center  h-[80vh]">
+      <h1 className='font-semibold text-4xl'>Thank you for your order</h1>
+      <div onClick={gotoPage} className="cursor-pointer py-2 px-3 rounded-xl background- border my-[14px]">Go Home</div>
     </div>
   );
 };
