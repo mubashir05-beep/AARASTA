@@ -19,13 +19,13 @@ const orders = {
     },
     {
       name: 'customerContactNumber',
-      title: 'Customer ContactNumber',
+      title: 'Customer Number',
       type: 'string',
       validation: (Rule) => Rule.required(),
     },
     {
       name: 'customerContactMail',
-      title: 'Customer ContactNumber',
+      title: 'Customer Email',
       type: 'string',
       validation: (Rule) => Rule.required(),
     },

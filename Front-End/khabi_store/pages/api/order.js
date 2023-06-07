@@ -2,7 +2,9 @@ import { client } from "@/lib/client";
 
 export default async function handler(req, res) {
   // Destructure the pieces of our request
-  const { orderId, customerAddress, products, totalPrice } = req.body;
+  const { orderId, customerAddress, products, totalPrice,customerName,
+      customerContactNumber,
+      customerContactMail } = req.body;
 
   try {
     // Use our Client to create a new document in Sanity with an object
@@ -12,6 +14,9 @@ export default async function handler(req, res) {
       products,
       customerAddress,
       totalPrice,
+      customerName,
+      customerContactNumber,
+      customerContactMail
     });
 
     if (response._id) {
