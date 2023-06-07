@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import NextNProgress from 'nextjs-progressbar';
 import "@/styles/globals.css";
 import React from "react";
 import Head from "next/head";
@@ -30,6 +31,7 @@ export default function App({ Component, pageProps }) {
       <StateContext>
         <Header />
         <Toaster />
+        <NextNProgress color="#000000"/>
         <Component {...pageProps} />
         <Footer />
       </StateContext>

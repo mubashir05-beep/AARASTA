@@ -12,6 +12,24 @@ const orders = {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: 'customerName',
+      title: 'Customer Name',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'customerContactNumber',
+      title: 'Customer ContactNumber',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: 'customerContactMail',
+      title: 'Customer ContactNumber',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: 'customerAddress',
       title: 'Customer Address',
       type: 'string',

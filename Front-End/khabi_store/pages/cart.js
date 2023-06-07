@@ -172,6 +172,9 @@ const Cart = () => {
     customerAddress: `${
       address.addressAll + ", " + address.city + ", " + address.zip + "."
     }`,
+    customerName:address.name,
+    customerContactNumber:address.phone,
+    customerContactMail:address.email,
     products: products,
     totalPrice: totalPrice,
   };
