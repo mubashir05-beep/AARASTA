@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useStateContext } from "@/context/StateContext";
+import {TbTruckDelivery } from "react-icons/tb";
 import Image from "next/image";
 const Success = () => {
   const router = useRouter();
@@ -20,6 +21,7 @@ const Success = () => {
   return (
     <div className="flex flex-col justify-center mx-[2rem] items-center h-[80vh] max-[400px]:my-[2rem]">
       <Image src="/pngegg.png" height={300} className="max-[400px]:w-48" width={300} />
+      <TbTruckDelivery size={23}/>
       <h1 className="font-semibold text-4xl max-[470px]:text-3xl text-center">
         Your order is on its way!
       </h1>

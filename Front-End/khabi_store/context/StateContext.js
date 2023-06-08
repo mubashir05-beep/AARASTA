@@ -13,28 +13,31 @@ export const StateContext = ({ children }) => {
   const [size, setSize] = useState("");
   const [showCart, setShowCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState({});
-
   // Address
-  let localAddress = "";
-  if (
-    typeof window !== "undefined" &&
-    localStorage.getItem(ADDRESS_STORAGE_KEY)
-  ) {
-    try {
-      localAddress = JSON.parse(localStorage.getItem(ADDRESS_STORAGE_KEY));
-    } catch (error) {
-      console.error("Error parsing address from localStorage:", error);
+  const [address, setAddress] = useState(() => {
+    let localAddress = "";
+    if (
+      typeof window !== "undefined" &&
+      localStorage.getItem(ADDRESS_STORAGE_KEY)
+    ) {
+      try {
+        localAddress = JSON.parse(localStorage.getItem(ADDRESS_STORAGE_KEY));
+      } catch (error) {
+        console.error("Error parsing address from localStorage:", error);
+      }
     }
-  }
-
-  const [address, setAddress] = useState({
-    name: "",
-    city: "",
-    phone: "",
-    zip: "",
-    email:'',
-    addressAll: "",
+  
+    return {
+      name: localAddress.name || "",
+      city: localAddress.city || "",
+      phone: localAddress.phone || "",
+      zip: localAddress.zip || "",
+      email: localAddress.email || "",
+      addressAll: localAddress.addressAll || "",
+    };
   });
+ 
+ 
 
   const localCart =
     (typeof window !== "undefined" &&
@@ -54,13 +57,13 @@ export const StateContext = ({ children }) => {
     0;
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [qty, setQty] = useState(1);
-  const [cartChange, setCartChange] = useState("");
+
 
   useEffect(() => {
     setCartItems(localCart);
     setTotalPrice(localPrice);
     setTotalQuantities(localQty);
-    setAddress(localAddress);
+    // setAddress(localAddress);
   }, []);
 
   useEffect(() => {
@@ -73,26 +76,69 @@ export const StateContext = ({ children }) => {
     localStorage.setItem(ADDRESS_STORAGE_KEY, JSON.stringify(address));
   }, [cartItems, totalQuantities, totalPrice, address]);
 
-  const onAdd = (product, quantity) => {
-    const checkProductInCart = cartItems.find(
-      (item) => item._id === product._id
-    );
+  // const onAdd = (product, quantity) => {
+  //   const checkProductInCart = cartItems.find(
+  //     (item) => item._id === product._id
+  //   );
 
+  //   if (checkProductInCart) {
+  //     const updatedCartItems = cartItems.map((cartProduct) =>
+  //       cartProduct._id === product._id
+  //         ? {
+  //             ...cartProduct,
+  //             quantity: cartProduct.quantity + quantity,
+  //             size: selectedSize[product._id] || "", // Use selected size from state
+  //           }
+  //         : cartProduct
+  //     );
+  //     setCartItems(updatedCartItems);
+  //     toast.success(
+  //       `${quantity} ${product.name} (${
+  //         selectedSize[product._id]
+  //       }) added to the cart`
+  //     );
+  //   } else {
+  //     setCartItems([
+  //       ...cartItems,
+  //       {
+  //         ...product,
+  //         quantity,
+  //         size: selectedSize[product._id] || "", // Use selected size from state
+  //       },
+  //     ]);
+  //     toast.success(
+  //       `${quantity} ${product.name} (${
+  //         selectedSize[product._id]
+  //       }) added to the cart`
+  //     );
+  //   }
+
+  //   setTotalQuantities((prev) => prev + quantity);
+  //   setTotalPrice((prev) => prev + product.price * quantity);
+  // };
+  const onAdd = (product, quantity) => {
+    const selectedProductSize = selectedSize[product._id]; // Retrieve the selected size for the product
+  
+    if (!selectedProductSize) {
+      alert("Please select a size!");
+      return;
+    }
+  
+    const checkProductInCart = cartItems.find((item) => item._id === product._id);
+  
     if (checkProductInCart) {
       const updatedCartItems = cartItems.map((cartProduct) =>
         cartProduct._id === product._id
           ? {
               ...cartProduct,
               quantity: cartProduct.quantity + quantity,
-              size: selectedSize[product._id] || "", // Use selected size from state
+              size: selectedProductSize, // Use selected size for the product
             }
           : cartProduct
       );
       setCartItems(updatedCartItems);
       toast.success(
-        `${quantity} ${product.name} (${
-          selectedSize[product._id]
-        }) added to the cart`
+        `${quantity} ${product.name} (${selectedProductSize}) added to the cart`
       );
     } else {
       setCartItems([
@@ -100,19 +146,18 @@ export const StateContext = ({ children }) => {
         {
           ...product,
           quantity,
-          size: selectedSize[product._id] || "", // Use selected size from state
+          size: selectedProductSize, // Use selected size for the product
         },
       ]);
       toast.success(
-        `${quantity} ${product.name} (${
-          selectedSize[product._id]
-        }) added to the cart`
+        `${quantity} ${product.name} (${selectedProductSize}) added to the cart`
       );
     }
-
+  
     setTotalQuantities((prev) => prev + quantity);
     setTotalPrice((prev) => prev + product.price * quantity);
   };
+  
 const deleteCart=()=>{
   setCartItems([]);
   setTotalQuantities(0);
