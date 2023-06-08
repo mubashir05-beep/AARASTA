@@ -400,7 +400,7 @@ const Cart = () => {
                   address.email === "" &&
                   address.city === "" &&
                   address.phone === "" &&
-                  address.addressAll === ""
+                  address.addressAll === "" 
                 ) && (
                   <div className="flex flex-col w-[100%]">
                     <div className="mt-4 w-[100%] flex items-center justify-between px-2 py-4 border-t rounded-t-md border-b">

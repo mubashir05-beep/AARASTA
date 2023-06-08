@@ -2,17 +2,10 @@ import { client, urlFor } from "@/lib/client";
 import React, { useState } from "react";
 import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
-import Image from 'next/image';
+import Image from "next/image";
 const Product = ({ products, product }) => {
-  const {
-    qty,
-    incQty,
-    decQty,
-    onAdd,
-    size,
-    onSizeChange,
-    selectedSize,
-  } = useStateContext();
+  const { qty, incQty, decQty, onAdd, size, onSizeChange, selectedSize } =
+    useStateContext();
   const [selected, setSelected] = useState("");
 
   return (
@@ -97,38 +90,34 @@ const Product = ({ products, product }) => {
         <div>
           {product.quantity ? (
             <div>
-            <button
-  onClick={() => {
-    if (selectedSize === "" || selectedSize === undefined) {
-      alert("Please select a size!");
-    } else {
-      onAdd(product, qty);
-    }
-  }}
-  className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
->
-  Add to Cart
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-6 w-6 ml-2"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-  
-  </svg>
-</button>
-{selectedSize === "" || selectedSize === undefined ? (
-  <button
-    onClick={() => {
-      alert("Please select a size!");
-    }}
-    className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
-  >
-    Buy Now
-  </button>
-
-
+              <button
+                onClick={() => {
+                  if (selectedSize === "" || selectedSize === undefined) {
+                    alert("Please select a size!");
+                  } else {
+                    onAdd(product, qty);
+                  }
+                }}
+                className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+              >
+                Add to Cart
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 ml-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                ></svg>
+              </button>
+              {selectedSize === "" || selectedSize === undefined ? (
+                <button
+                  onClick={() => {
+                    alert("Please select a size!");
+                  }}
+                  className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+                >
+                  Buy Now
+                </button>
               ) : (
                 <Link href={"/cart"}>
                   <button
@@ -192,12 +181,7 @@ const Product = ({ products, product }) => {
           bg-orange-600 h-[30px] w-[80px] text-white items-center rounded-md"
             target="_blank"
           >
-               <Image
-      src="/daraz.png"
-      alt='daraz'
-      width={25}
-      height={25}
-    />
+            <Image src="/daraz.png" alt="daraz" width={25} height={25} />
             Buy
           </a>
         </div>
