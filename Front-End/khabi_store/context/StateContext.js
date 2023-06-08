@@ -26,7 +26,7 @@ export const StateContext = ({ children }) => {
         console.error("Error parsing address from localStorage:", error);
       }
     }
-  
+
     return {
       name: localAddress.name || "",
       city: localAddress.city || "",
@@ -36,8 +36,6 @@ export const StateContext = ({ children }) => {
       addressAll: localAddress.addressAll || "",
     };
   });
- 
- 
 
   const localCart =
     (typeof window !== "undefined" &&
@@ -57,7 +55,6 @@ export const StateContext = ({ children }) => {
     0;
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [qty, setQty] = useState(1);
-
 
   useEffect(() => {
     setCartItems(localCart);
@@ -118,14 +115,16 @@ export const StateContext = ({ children }) => {
   // };
   const onAdd = (product, quantity) => {
     const selectedProductSize = selectedSize[product._id]; // Retrieve the selected size for the product
-  
+
     if (!selectedProductSize) {
       alert("Please select a size!");
       return;
     }
-  
-    const checkProductInCart = cartItems.find((item) => item._id === product._id);
-  
+
+    const checkProductInCart = cartItems.find(
+      (item) => item._id === product._id
+    );
+
     if (checkProductInCart) {
       const updatedCartItems = cartItems.map((cartProduct) =>
         cartProduct._id === product._id
@@ -153,16 +152,16 @@ export const StateContext = ({ children }) => {
         `${quantity} ${product.name} (${selectedProductSize}) added to the cart`
       );
     }
-  
+
     setTotalQuantities((prev) => prev + quantity);
     setTotalPrice((prev) => prev + product.price * quantity);
   };
-  
-const deleteCart=()=>{
-  setCartItems([]);
-  setTotalQuantities(0);
-  setTotalPrice(0);
-}
+
+  const deleteCart = () => {
+    setCartItems([]);
+    setTotalQuantities(0);
+    setTotalPrice(0);
+  };
   const incQty = () => {
     setQty((prev) => prev + 1);
   };
@@ -229,7 +228,7 @@ const deleteCart=()=>{
     <Context.Provider
       value={{
         showCart,
-   
+
         deleteCart,
         cartItems,
         setCartItems,
