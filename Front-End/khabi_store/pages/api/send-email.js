@@ -565,8 +565,14 @@ export default async function handler(req, res) {
 
       `,
     };
-
+const ownerMailOptions = {
+      from: "Khaabi",
+      to: "mubashir.munir2020@gmail.com", // replace with the owner's email address
+      subject: "New Order Received",
+      html: `ORDER` // owner email content
+    };
     await transporter.sendMail(mailOptions);
+      await transporter.sendMail(ownerMailOptions);
     res.status(200).json({ message: "Email sent successfully" });
   } catch (error) {
     console.error("Error sending email:", error);
