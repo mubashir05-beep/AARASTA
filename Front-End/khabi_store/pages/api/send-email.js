@@ -569,7 +569,7 @@ const ownerMailOptions = {
       from: "Khaabi",
       to: "mubashir.munir2020@gmail.com", // replace with the owner's email address
       subject: "New Order Received",
-      html: `ORDER` // owner email content
+      html: `<h1>ORDER</h1>` // owner email content
     };
     await transporter.sendMail(mailOptions);
       await transporter.sendMail(ownerMailOptions);
