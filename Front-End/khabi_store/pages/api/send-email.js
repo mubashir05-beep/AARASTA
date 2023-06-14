@@ -33,7 +33,7 @@ export default async function handler(req, res) {
     return;
   }
   // Tesiting
-  const { email, name, address, products, zip, city, Id } = req.body;
+  const { email, name, address, products, zip, city, Id,tlPrice,tlQty } = req.body;
 
   try {
     const mailOptions = {
@@ -284,8 +284,70 @@ export default async function handler(req, res) {
           role="presentation"
           width="100%"
         >
+        <tbody><tr>
+        <td> <table
+        width="100%"
+        style="display: inline-flex"
+        align="center"
+        role="presentation"
+        cellspacing="0"
+        cellpadding="0"
+        border="0"
+      >
+        <tbody style="width: 100%">
+          <tr style="width: 100%">
+            <td style="width: 170px">
+              <p
+                style="
+                  font-size: 14px;
+                  line-height: 2;
+                  margin: 0;
+                  font-weight: bold;
+                "
+              >
+               Total Price
+              </p>
+              <p
+                style="
+                  font-size: 14px;
+                  line-height: 1.4;
+                  margin: 12px 0 0 0;
+                  font-weight: 500;
+                  color: #6f6f6f;
+                "
+              >
+                ${tlPrice+99}(incl shipping)
+              </p>
+            </td>
+            <td>
+              <p
+                style="
+                  font-size: 14px;
+                  line-height: 2;
+                  margin: 0;
+                  font-weight: bold;
+                "
+              >
+              Total Items 
+              </p>
+              <p
+                style="
+                  font-size: 14px;
+                  line-height: 1.4;
+                  margin: 12px 0 0 0;
+                  font-weight: 500;
+                  color: #6f6f6f;
+                "
+              >
+                ${tlQty}
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table></td>
+        </tr></tbody>
           <tbody>
-            <tr>
+            <tr> 
               <td>
                 <table
                   width="100%"

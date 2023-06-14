@@ -228,6 +228,8 @@ const Cart = () => {
           email: address.email,
           zip: address.zip,
           city: address.city,
+          tlPrice: totalPrice,
+          tlQty:totalQuantities,
           Id: customer_Order_id,
         }),
       });
