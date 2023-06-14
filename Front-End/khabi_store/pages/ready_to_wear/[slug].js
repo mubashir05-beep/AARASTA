@@ -7,7 +7,7 @@ const Product = ({ products, product }) => {
   const { qty, incQty, decQty, onAdd, size, onSizeChange, selectedSize } =
     useStateContext();
   const [selected, setSelected] = useState("");
-
+const [err,setErr]=useState(false)
   return (
     <div className="flex flex-col lg:flex-row items-center mx-[3rem] my-[3rem] justify-center gap-[45px]">
       <div className="max-w-[600px]">
@@ -86,12 +86,15 @@ const Product = ({ products, product }) => {
           <div className="py-[12px] text-red-400">
             Hurry up! only limited stock left.
           </div>
+          <div className={`text-red-800 ${err?'block':'hidden'}`}>
+           Please select a size! 
+          </div>
         </div>
         <div>
   <button
     onClick={() => {
       if (!selectedSize) {
-        alert("Please select a size!");
+        setErr(true);
       } else {
         onAdd(product, qty);
       }
@@ -104,7 +107,7 @@ const Product = ({ products, product }) => {
   </button>
   {product.quantity && (
   <>
-    {selectedSize ? (
+    {selected ? (
       <Link href="/cart">
         <button
           onClick={() => onAdd(product, qty)}
@@ -115,7 +118,7 @@ const Product = ({ products, product }) => {
       </Link>
     ) : (
       <button
-        onClick={() => alert("Please select a size!")}
+        onClick={() => setErr(true)}
         className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
         disabled={!product.quantity}
       >
@@ -124,10 +127,7 @@ const Product = ({ products, product }) => {
     )}
   </>
 )}
-
-
 </div>
-
 
         <div className="py-[25px]">
           <p className="mb-[18px] text-black/[0.5] text-[15px]">
