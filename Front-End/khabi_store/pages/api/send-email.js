@@ -16,32 +16,31 @@ function generatePakistanDate() {
   var date = new Date();
   var offset = date.getTimezoneOffset();
   var pakistanOffset = 300; // Offset for Pakistan timezone in minutes (+5 hours * 60 minutes)
-  
+
   // Adjust the date by adding the offset
   date.setMinutes(date.getMinutes() + offset + pakistanOffset);
-  
+
   var year = date.getFullYear();
-  var month = String(date.getMonth() + 1).padStart(2, '0');
-  var day = String(date.getDate()).padStart(2, '0');
-  
-  return year + '-' + month + '-' + day;
+  var month = String(date.getMonth() + 1).padStart(2, "0");
+  var day = String(date.getDate()).padStart(2, "0");
+
+  return year + "-" + month + "-" + day;
 }
-let date=generatePakistanDate();
+let date = generatePakistanDate();
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ message: "Method Not Allowed" });
     return;
   }
-// Tesiting
-  const { email, name, address, products, zip, city,Id } = req.body;
+  // Tesiting
+  const { email, name, address, products, zip, city, Id } = req.body;
 
   try {
     const mailOptions = {
       from: "Khaabi",
       to: email,
       subject: "Order Confirmation",
-      html: `
-        
+      html: `     
   <div
   id="__react-email-preview"
   style="
@@ -449,7 +448,7 @@ export default async function handler(req, res) {
                             margin-bottom: 0;
                           "
                         >
-                          9 am - 6 pm (GMT+5)
+                          9am -6 pm (GMT+5)
                         </p>
                       </td>
                     </tr>
@@ -562,17 +561,16 @@ export default async function handler(req, res) {
       </td>
     </tr>
   </table>
-
       `,
     };
-const ownerMailOptions = {
+    const ownerMailOptions = {
       from: "Khaabi",
       to: "mubashir.munir2020@gmail.com", // replace with the owner's email address
       subject: "New Order Received",
-      html: `ORDER` // owner email content
+      html: `ORDER`, // owner email content
     };
     await transporter.sendMail(mailOptions);
-      await transporter.sendMail(ownerMailOptions);
+    await transporter.sendMail(ownerMailOptions);
     res.status(200).json({ message: "Email sent successfully" });
   } catch (error) {
     console.error("Error sending email:", error);
