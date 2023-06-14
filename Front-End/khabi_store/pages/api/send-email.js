@@ -316,7 +316,7 @@ export default async function handler(req, res) {
                   color: #6f6f6f;
                 "
               >
-                ${tlPrice+99}(incl shipping)
+               Rs${tlPrice+99}/-(incl shipping)
               </p>
             </td>
             <td>
