@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStateContext } from "@/context/StateContext";
 import { urlFor } from "@/lib/client";
 import { RxCross2 } from "react-icons/rx";
@@ -20,6 +20,8 @@ const Cart = () => {
     setSubmited,
     address,
     setAddress,
+    delivery ,setDelivery,
+  
   } = useStateContext();
   const [processing, setProcessing] = useState(false);
   const [orderCompleted, setOrderCompleted] = useState(false);
@@ -30,6 +32,14 @@ const Cart = () => {
   let shipping = "Shipping Details";
   const [isOpen, setIsOpen] = useState(false);
 
+useEffect(()=>{
+  if(totalPrice>=2500){
+    setDelivery(totalPrice);
+        }
+        else{
+          setDelivery(totalPrice+99);
+        }
+},[totalPrice])
   const openModal = () => {
     setIsOpen(true);
   };
@@ -228,7 +238,7 @@ const Cart = () => {
           email: address.email,
           zip: address.zip,
           city: address.city,
-          tlPrice: totalPrice,
+          tlPrice: delivery,
           tlQty:totalQuantities,
           Id: customer_Order_id,
         }),
@@ -659,13 +669,13 @@ const Cart = () => {
 
                     <div className="flex gap-2">
                       <p className="font-medium">Delivery Fee:</p>
-                      <div>PKR 99/-</div>
+                      <div>PKR {totalPrice>=2499?'0':'99'}/-</div>
                     </div>
 
                     <div className="flex items-center gap-2 w-[100%] bg-gray-600 text-white px-1">
                       <p className="font-medium text-[16px]  ">Grand Total:</p>
                       <div className=" text-[16px]">
-                        PKR {totalPrice + 99}/-{" "}
+                        PKR {delivery}/-{" "}
                         <span className="text-sm"> (incl shipping fee)</span>
                       </div>
                     </div>

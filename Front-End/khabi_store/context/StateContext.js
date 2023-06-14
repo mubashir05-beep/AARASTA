@@ -223,12 +223,12 @@ export const StateContext = ({ children }) => {
       [productId]: selectedSize,
     }));
   };
-
+  const [delivery ,setDelivery  ]=useState(0);
   return (
     <Context.Provider
       value={{
         showCart,
-
+        delivery ,setDelivery,
         deleteCart,
         cartItems,
         setCartItems,
@@ -246,6 +246,7 @@ export const StateContext = ({ children }) => {
         setAddress,
         submited,
         size,
+        setTotalPrice,
         setSize,
         setSubmited,
         onSizeChange,

@@ -8,7 +8,7 @@ const Header = () => {
     <>
       {shipFee && (
         <div className='text-center py-3 bg-red-200'>
-          Free shipping on orders above PKR. 2999/-
+          Free shipping on orders above PKR. 2499/-
         </div>
       )}
       <div className={`mx-[3rem] max-[500px]:mx-[1.5rem] my-[1rem]`}>

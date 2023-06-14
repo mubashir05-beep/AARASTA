@@ -613,7 +613,7 @@ export default async function handler(req, res) {
                     text-align: center;
                   "
                 >
-                  Khaabi, Zia Musjid, New Shakrials, Islamabad 44000,
+                  Khaabi, Zia Musjid, New Shakrial, Islamabad 44000,
                   Pakistan.
                 </p>
               </td>
@@ -629,7 +629,46 @@ export default async function handler(req, res) {
       from: "Khaabi",
       to: "mubashir.munir2020@gmail.com", // replace with the owner's email address
       subject: "New Order Received",
-      html: `ORDER`, // owner email content
+      html: `<div>
+      <h2>Order Received</h2>
+      <p>Order details:</p>
+      <table style="padding-left: 40px; padding-right: 40px; padding-top: 40px; padding-bottom: 40px;" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+        <ul>
+          ${products
+            .map(
+              (product) => `
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="max-width: 160px; padding-bottom: 12px;">
+                <img src=${product.imgSrc} alt="${product.name}" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
+              </div>
+              <div style="padding-left: 22px;">
+                <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
+                  <strong>${product.name}</strong>
+                </p>
+                <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                  Quantity: ${product.quantity}
+                </p>
+                <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                  Size: ${product.size}
+                </p>
+                <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                  Price: ${"RS " + product.price + "/-"}
+                </p>
+              </div>
+            </div>
+          `
+            )
+            .join("")}
+        </ul>
+      </table>
+    
+      <p>Total Qty: ${tlQty}</p>
+      <p>Total Price: Rs${tlPrice}</p>
+      <p>Please proceed with the order processing and shipping. Contact the customer if any additional information is required.</p>
+      <p>Thank you!</p>
+      <p>Your Company Name</p>
+    </div>
+    ` // owner email content
     };
     await transporter.sendMail(mailOptions);
     await transporter.sendMail(ownerMailOptions);
