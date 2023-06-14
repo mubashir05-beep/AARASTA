@@ -6,6 +6,38 @@
     <title>Document</title>
   </head>
   <body>
- 
+    <div style="padding: 40px 0; text-align: center; display:flex; flex-direction: column; align-items: center; width: 100%;">
+      <h2 style="font-size: 24px; margin-bottom: 16px;">Order Received</h2>
+      <p style="margin-bottom: 12px;">Order details:</p>
+      <table role="presentation">
+        <ul style="display: flex; align-items: center; padding:0px;">
+          ${products
+            .map(
+              (product) => `
+            <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <div style="max-width: 160px;">
+                  <img src=${product.imgSrc} alt="${product.name}" width="160px" style="display: block; outline: none; border: none;" />
+                </div>
+                <div style="padding-left: 22px;">
+                  <p style="font-size: 16px; font-weight: bold; margin-bottom: 4px;">${product.name}</p>
+                  <p style="font-size: 14px; line-height: 1.5; margin: 0; color: #747474; font-weight: 500;">Quantity: ${product.quantity}</p>
+                  <p style="font-size: 14px; line-height: 1.5; margin: 0; color: #747474; font-weight: 500;">Size: ${product.size}</p>
+                  <p style="font-size: 14px; line-height: 1.5; margin: 0; color: #747474; font-weight: 500;">Price: RS ${product.price}/-</p>
+                </div>
+              </div>
+            </li>
+          `
+            )
+            .join("")}
+        </ul>
+      </table>
+    
+      <p style="margin-top: 16px; font-weight: bold;">Total Qty: ${tlQty}</p>
+      <p style="font-weight: bold;">Total Price: Rs ${tlPrice}</p>
+      <p>Please proceed with the order processing and shipping. Contact the customer if any additional information is required.</p>
+      <p>Thank you!</p>
+      <p style="margin-top: 24px; font-weight: bold;">Your Company Name</p>
+    </div>
   </body>
 </html>

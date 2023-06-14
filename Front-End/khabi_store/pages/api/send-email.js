@@ -33,7 +33,8 @@ export default async function handler(req, res) {
     return;
   }
   // Tesiting
-  const { email, name, address, products, zip, city, Id,tlPrice,tlQty } = req.body;
+  const { email, name, address, products, zip, city, Id, tlPrice, tlQty } =
+    req.body;
 
   try {
     const mailOptions = {
@@ -316,7 +317,7 @@ export default async function handler(req, res) {
                   color: #6f6f6f;
                 "
               >
-               Rs${tlPrice+99}/-(incl shipping)
+               Rs${tlPrice + 99}/-(incl shipping)
               </p>
             </td>
             <td>
@@ -629,46 +630,42 @@ export default async function handler(req, res) {
       from: "Khaabi",
       to: "mubashir.munir2020@gmail.com", // replace with the owner's email address
       subject: "New Order Received",
-      html: `<div>
-      <h2>Order Received</h2>
-      <p>Order details:</p>
-      <table style="padding-left: 40px; padding-right: 40px; padding-top: 40px; padding-bottom: 40px;" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-        <ul>
+      html: `
+      <div style="padding: 40px 0; text-align: center; display:flex; flex-direction: column; align-items: center; width: 100%;">
+      <h2 style="font-size: 24px; margin-bottom: 16px;">Order Received</h2>
+      <p style="margin-bottom: 12px;">Order details:</p>
+      <table role="presentation">
+        <ul style="display: flex; align-items: center; padding: 0;">
           ${products
             .map(
               (product) => `
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-              <div style="max-width: 160px; padding-bottom: 12px;">
-                <img src=${product.imgSrc} alt="${product.name}" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
+            <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <div style="max-width: 160px;">
+                  <img src=${product.imgSrc} alt="${product.name}" width="160px" style="display: block; outline: none; border: none;" />
+                </div>
+                <div style="padding-left: 22px;">
+                  <p style="font-size: 16px; font-weight: bold; margin-bottom: 4px;">${product.name}</p>
+                  <p style="font-size: 14px; line-height: 1.5; margin: 0; color: #747474; font-weight: 500;">Quantity: ${product.quantity}</p>
+                  <p style="font-size: 14px; line-height: 1.5; margin: 0; color: #747474; font-weight: 500;">Size: ${product.size}</p>
+                  <p style="font-size: 14px; line-height: 1.5; margin: 0; color: #747474; font-weight: 500;">Price: RS ${product.price}/-</p>
+                </div>
               </div>
-              <div style="padding-left: 22px;">
-                <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
-                  <strong>${product.name}</strong>
-                </p>
-                <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                  Quantity: ${product.quantity}
-                </p>
-                <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                  Size: ${product.size}
-                </p>
-                <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                  Price: ${"RS " + product.price + "/-"}
-                </p>
-              </div>
-            </div>
+            </li>
           `
             )
             .join("")}
         </ul>
       </table>
     
-      <p>Total Qty: ${tlQty}</p>
-      <p>Total Price: Rs${tlPrice}</p>
+      <p style="margin-top: 16px; font-weight: bold;">Total Qty: ${tlQty}</p>
+      <p style="font-weight: bold;">Total Price: Rs ${tlPrice}</p>
       <p>Please proceed with the order processing and shipping. Contact the customer if any additional information is required.</p>
       <p>Thank you!</p>
-      <p>Your Company Name</p>
+      <p style="margin-top: 24px; font-weight: bold;">Your Company Name</p>
     </div>
-    ` // owner email content
+    
+    `, // owner email content
     };
     await transporter.sendMail(mailOptions);
     await transporter.sendMail(ownerMailOptions);
