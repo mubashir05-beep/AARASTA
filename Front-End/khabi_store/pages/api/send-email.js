@@ -422,7 +422,7 @@ export default async function handler(req, res) {
                                   style="
                                     font-size: 13.5px;
                                     line-height: 24px;
-                                    margin: 16px 0;
+                                    margin: 16px 4px;
                                     margin-top: 0;
                                     font-weight: 500;
                                     color: #000;
