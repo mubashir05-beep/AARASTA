@@ -511,7 +511,7 @@ export default async function handler(req, res) {
                             margin-bottom: 0;
                           "
                         >
-                          9am -6 pm (GMT+5)
+                          9am-6pm(GMT+5)
                         </p>
                       </td>
                     </tr>
@@ -630,42 +630,495 @@ export default async function handler(req, res) {
       from: "Khaabi",
       to: "mubashir.munir2020@gmail.com", // replace with the owner's email address
       subject: "New Order Received",
-      html: `
-      <div style="padding: 40px 0; text-align: center; display:flex; flex-direction: column; align-items: center; width: 100%;">
-      <h2 style="font-size: 24px; margin-bottom: 16px;">Order Received</h2>
-      <p style="margin-bottom: 12px;">Order details:</p>
-      <table role="presentation">
-        <ul style="display: flex; align-items: center; padding: 0;">
-          ${products
-            .map(
-              (product) => `
-            <li style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
-              <div style="display: flex; flex-direction: column; align-items: center;">
-                <div style="max-width: 160px;">
-                  <img src=${product.imgSrc} alt="${product.name}" width="160px" style="display: block; outline: none; border: none;" />
-                </div>
-                <div style="padding-left: 22px;">
-                  <p style="font-size: 16px; font-weight: bold; margin-bottom: 4px;">${product.name}</p>
-                  <p style="font-size: 14px; line-height: 1.5; margin: 0; color: #747474; font-weight: 500;">Quantity: ${product.quantity}</p>
-                  <p style="font-size: 14px; line-height: 1.5; margin: 0; color: #747474; font-weight: 500;">Size: ${product.size}</p>
-                  <p style="font-size: 14px; line-height: 1.5; margin: 0; color: #747474; font-weight: 500;">Price: RS ${product.price}/-</p>
-                </div>
-              </div>
-            </li>
-          `
-            )
-            .join("")}
-        </ul>
+      html: `<!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+      </head>
+      <body>
+           
+      <div
+      id="__react-email-preview"
+      style="
+        display: none;
+        overflow: hidden;
+        line-height: 1px;
+        opacity: 0;
+        max-height: 0;
+        max-width: 0;
+      "
+      >
+      Get your order summary, estimated delivery date and more
+      <div>
+         ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿
+      </div>
+      </div>
+      
+      <body
+      style="
+        background-color: #ffffff;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+      "
+      >
+      <table
+        align="center"
+        role="presentation"
+        cellspacing="0"
+        cellpadding="0"
+        border="0"
+        width="100%"
+        style="
+          max-width: 37.5em;
+          margin: 10px auto;
+          width: 600px;
+          border: 1px solid #e5e5e5;
+        "
+      >
+        <tr style="width: 100%">
+          <td>
+            <table
+              style="padding: 40px 74px; text-align: center"
+              align="center"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              width="100%"
+            >
+              <tbody>
+                <tr>
+                  <td>
+                    <p
+                      style="
+                        font-size: 32px;
+                        color: #5c5c5c;
+                        letter-spacing: 7px;
+                        line-height: 1.3;
+                        margin: 16px 0;
+                        font-weight: 700;
+                        text-align: center;
+                      "
+                    >
+                      KHAABI
+                    </p>
+      
+                    <h1
+                      style="
+                        font-size: 26px;
+                        line-height: 1.3;
+                        font-weight: 700;
+                        text-align: center;
+                        letter-spacing: -1px;
+                      "
+                    >
+                    You have recived an order.
+                    </h1>
+                  
+                 
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <hr
+              style="
+                width: 100%;
+                border: none;
+                border-top: 1px solid #eaeaea;
+                border-color: #e5e5e5;
+                margin: 0;
+              "
+            />
+            <table
+              style="
+                padding-left: 40px;
+                padding-right: 40px;
+                padding-top: 22px;
+                padding-bottom: 22px;
+              "
+              align="center"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              width="100%"
+            >
+              <tbody>
+                <tr>
+                  <td>
+                    <p
+                      style="
+                        font-size: 15px;
+                        line-height: 2;
+                        margin: 0;
+                        font-weight: bold;
+                      "
+                    >
+                     Customer Info: ${name}
+                    </p>
+                    <p
+                      style="
+                        font-size: 14px;
+                        line-height: 2;
+                        margin: 0;
+                        color: #747474;
+                        font-weight: 500;
+                      "
+                    >
+                      ${address + ", " + city + ", " + zip + "."}
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <hr
+              style="
+                width: 100%;
+                border: none;
+                border-top: 1px solid #eaeaea;
+                border-color: #e5e5e5;
+                margin: 0;
+              "
+            />
+            <table
+              style="
+                padding-left: 40px;
+                padding-right: 40px;
+                padding-top: 40px;
+                padding-bottom: 40px;
+              "
+              align="center"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              width="100%"
+            >
+            <ul>
+            ${products
+              .map(
+                (product) => `
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+      <div style="max-width: 160px; padding-bottom: 12px;">
+        <img src=${product.imgSrc} alt="${
+                  product.name
+                }" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
+      </div>
+      <div style="padding-left: 22px;">
+        <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
+          <strong>${product.name}</strong>
+        </p>
+        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+          Quantity: ${product.quantity}
+        </p>
+        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+          Size: ${product.size}
+        </p>
+        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+          Price: ${"RS " + product.price + "/-"}
+        </p>
+      </div>
+      </div>
+              `
+              )
+              .join("")}
+          </ul>
+            </table>
+            <hr
+              style="
+                width: 100%;
+                border: none;
+                border-top: 1px solid #eaeaea;
+                border-color: #e5e5e5;
+                margin: 0;
+              "
+            />
+          
+            
+            <hr
+              style="
+                width: 100%;
+                border: none;
+                border-top: 1px solid #eaeaea;
+                border-color: #e5e5e5;
+                margin: 0;
+              "
+            />
+            <table
+              style="
+                padding-left: 40px;
+                padding-right: 40px;
+                padding-top: 22px;
+                padding-bottom: 22px;
+              "
+              align="center"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              width="100%"
+            >
+            <tbody><tr>
+            <td> <table
+            width="100%"
+            style="display: inline-flex"
+            align="center"
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+          >
+            <tbody style="width: 100%">
+              <tr style="width: 100%">
+                <td style="width: 170px">
+                  <p
+                    style="
+                      font-size: 14px;
+                      line-height: 2;
+                      margin: 0;
+                      font-weight: bold;
+                    "
+                  >
+                   Total Price
+                  </p>
+                  <p
+                    style="
+                      font-size: 14px;
+                      line-height: 1.4;
+                      margin: 12px 0 0 0;
+                      font-weight: 500;
+                      color: #6f6f6f;
+                    "
+                  >
+                   Rs${tlPrice + 99}/-(incl shipping)
+                  </p>
+                </td>
+                <td>
+                  <p
+                    style="
+                      font-size: 14px;
+                      line-height: 2;
+                      margin: 0;
+                      font-weight: bold;
+                    "
+                  >
+                  Total Items 
+                  </p>
+                  <p
+                    style="
+                      font-size: 14px;
+                      line-height: 1.4;
+                      margin: 12px 0 0 0;
+                      font-weight: 500;
+                      color: #6f6f6f;
+                    "
+                  >
+                    ${tlQty}
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table></td>
+            </tr></tbody>
+              <tbody>
+                <tr> 
+                  <td>
+                    <table
+                      width="100%"
+                      style="display: inline-flex"
+                      align="center"
+                      role="presentation"
+                      cellspacing="0"
+                      cellpadding="0"
+                      border="0"
+                    >
+                      <tbody style="width: 100%">
+                        <tr style="width: 100%">
+                          <td style="width: 170px">
+                            <p
+                              style="
+                                font-size: 14px;
+                                line-height: 2;
+                                margin: 0;
+                                font-weight: bold;
+                              "
+                            >
+                              Order Number
+                            </p>
+                            <p
+                              style="
+                                font-size: 14px;
+                                line-height: 1.4;
+                                margin: 12px 0 0 0;
+                                font-weight: 500;
+                                color: #6f6f6f;
+                              "
+                            >
+                              ${Id}
+                            </p>
+                          </td>
+                          <td>
+                            <p
+                              style="
+                                font-size: 14px;
+                                line-height: 2;
+                                margin: 0;
+                                font-weight: bold;
+                              "
+                            >
+                              Order Date
+                            </p>
+                            <p
+                              style="
+                                font-size: 14px;
+                                line-height: 1.4;
+                                margin: 12px 0 0 0;
+                                font-weight: 500;
+                                color: #6f6f6f;
+                              "
+                            >
+                              ${date}
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <hr
+              style="
+                width: 100%;
+                border: none;
+                border-top: 1px solid #eaeaea;
+                border-color: #e5e5e5;
+                margin: 0;
+              "
+            />
+            <table
+              style="
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-top: 20px;
+                background-color: #f7f7f7;
+              "
+              align="center"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              width="100%"
+            >
+              <tbody>
+                <tr>
+                  <td>
+                    <table
+                      width="100%"
+                      style="
+                        padding-left: 20px;
+                        padding-right: 20px;
+                        padding-bottom: 22px;
+                      "
+                      align="center"
+                      role="presentation"
+                      cellspacing="0"
+                      cellpadding="0"
+                      border="0"
+                    >
+                      <tbody style="width: 100%">
+                        <tr style="width: 100%">
+                          <td>
+                        
+                          </td>
+                          <td>
+                            <p
+                              style="
+                                font-size: 13.5px;
+                                line-height: 24px;
+                                margin: 16px 0;
+                                margin-top: 0;
+                                font-weight: 500;
+                                color: #000;
+                                margin-bottom: 0;
+                              "
+                            >
+                            Check the Studio app for more info!
+                            </p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <hr
+              style="
+                width: 100%;
+                border: none;
+                border-top: 1px solid #eaeaea;
+                border-color: #e5e5e5;
+                margin: 0;
+              "
+            />
+            <table
+              style="padding-top: 22px; padding-bottom: 22px"
+              align="center"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              width="100%"
+            >
+              <tbody>
+                <tr>
+                  <td>
+                    <p
+                      style="
+                        font-size: 32px;
+                        letter-spacing: 7px;
+                        line-height: 1.3;
+                        margin: 16px 0;
+                        font-weight: 700;
+                        text-align: center;
+                      "
+                    >
+                      KHAABI
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <hr
+              style="
+                width: 100%;
+                border: none;
+                border-top: 1px solid #eaeaea;
+                border-color: #e5e5e5;
+                margin: 0;
+                margin-top: 12px;
+              "
+            />
+            <table
+              style="padding-top: 22px; padding-bottom: 22px"
+              align="center"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              width="100%"
+            >
+              
+            </table>
+          </td>
+        </tr>
       </table>
-    
-      <p style="margin-top: 16px; font-weight: bold;">Total Qty: ${tlQty}</p>
-      <p style="font-weight: bold;">Total Price: Rs ${tlPrice}</p>
-      <p>Please proceed with the order processing and shipping. Contact the customer if any additional information is required.</p>
-      <p>Thank you!</p>
-      <p style="margin-top: 24px; font-weight: bold;">Your Company Name</p>
-    </div>
-    
-    `, // owner email content
+          
+      </body>
+      </html>`, // owner email content
     };
     await transporter.sendMail(mailOptions);
     await transporter.sendMail(ownerMailOptions);
