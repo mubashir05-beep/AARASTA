@@ -272,7 +272,9 @@ const Cart = () => {
       try {
         await sendEmail();
         setProcessing(false);
-        router.push("/success");
+        setTimeout(() => {
+          router.push("/success");
+        }, 1000); // Wait for 1 second before redirecting
       } catch (error) {
         setProcessing(false);
         toast.error("Error processing order!");
@@ -282,9 +284,10 @@ const Cart = () => {
         }, 2000);
       }
     } else {
-      toast.error("Please fill out address form!");
+      toast.error("Please fill out the address form!");
     }
   };
+  
 
   return (
     <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
@@ -395,13 +398,15 @@ const Cart = () => {
                     </div>
                     <div className="w-[100px] md:block hidden">
                       <div className="w-[100px] md:block hidden">
-                        <RxCross2
-                          size={25}
-                          className={`cursor-pointer ${
-                            processing ? "opacity-50" : ""
-                          }`}
-                          onClick={!processing && (() => onRemove(items))}
-                        />
+                        <div className="w-[100px] md:block hidden">
+                          <RxCross2
+                            size={25}
+                            className={`cursor-pointer ${
+                              processing ? "opacity-50" : ""
+                            }`}
+                            onClick={() => !processing && onRemove(items)}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
