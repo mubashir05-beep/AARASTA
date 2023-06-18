@@ -24,7 +24,7 @@ const [err,setErr]=useState(false)
               <div className="text-black text-[16px]">{product.category}</div>
             </Link>
           </div>
-          {console.log(size)}
+     
           <div className="text-black/[0.7]">
             Product Code :
             <span className="text-[14px]">{product.productCode} </span>

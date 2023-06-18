@@ -10,6 +10,7 @@ const Context = createContext();
 
 export const StateContext = ({ children }) => {
   const [submited, setSubmited] = useState(false);
+const [mailState,setMailState]=useState(false);
   const [size, setSize] = useState("");
   const [showCart, setShowCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState({});
@@ -237,6 +238,7 @@ export const StateContext = ({ children }) => {
         setSelectedSize,
         totalQuantities,
         qty,
+        mailState,setMailState,
         onAdd,
         incQty,
         onRemove,

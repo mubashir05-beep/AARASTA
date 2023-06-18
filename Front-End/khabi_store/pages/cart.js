@@ -20,8 +20,10 @@ const Cart = () => {
     setSubmited,
     address,
     setAddress,
-    delivery ,setDelivery,
-  
+    delivery,
+    setDelivery,
+    mailState,
+    setMailState,
   } = useStateContext();
   const [processing, setProcessing] = useState(false);
   const [orderCompleted, setOrderCompleted] = useState(false);
@@ -32,14 +34,13 @@ const Cart = () => {
   let shipping = "Shipping Details";
   const [isOpen, setIsOpen] = useState(false);
 
-useEffect(()=>{
-  if(totalPrice>=2500){
-    setDelivery(totalPrice);
-        }
-        else{
-          setDelivery(totalPrice+99);
-        }
-},[totalPrice])
+  useEffect(() => {
+    if (totalPrice >= 2500) {
+      setDelivery(totalPrice);
+    } else {
+      setDelivery(totalPrice + 99);
+    }
+  }, [totalPrice]);
   const openModal = () => {
     setIsOpen(true);
   };
@@ -182,9 +183,9 @@ useEffect(()=>{
     customerAddress: `${
       address.addressAll + ", " + address.city + ", " + address.zip + "."
     }`,
-    customerName:address.name,
-    customerContactNumber:address.phone,
-    customerContactMail:address.email,
+    customerName: address.name,
+    customerContactNumber: address.phone,
+    customerContactMail: address.email,
     products: products,
     totalPrice: totalPrice,
   };
@@ -239,13 +240,18 @@ useEffect(()=>{
           zip: address.zip,
           city: address.city,
           tlPrice: delivery,
-          tlQty:totalQuantities,
+          tlQty: totalQuantities,
           Id: customer_Order_id,
         }),
       });
 
       if (response.ok) {
+        setMailState(true);
         toast.success("Email sent successfully!");
+
+        // Create the order here
+        await submitOrder(orderData);
+        toast.success("Your order has been completed!");
       } else {
         toast.error("Error sending email!");
       }
@@ -254,7 +260,9 @@ useEffect(()=>{
       toast.error("Error sending email!");
     }
   };
+
   const router = useRouter();
+  const [tryAgain, setTryAgain] = useState(false);
   const handleCheckout = async () => {
     if (
       (Object.keys(address).length !== 0 && cartItems.length >= 1) ||
@@ -263,18 +271,21 @@ useEffect(()=>{
       setProcessing(true);
       try {
         await sendEmail();
-        await submitOrder(orderData);
-        toast.success("Your order has been completed!");
-      } catch (error) {
-        toast.error("Error processing order!");
-      } finally {
         setProcessing(false);
         router.push("/success");
+      } catch (error) {
+        setProcessing(false);
+        toast.error("Error processing order!");
+        setTryAgain(true);
+        setTimeout(() => {
+          setTryAgain(false);
+        }, 2000);
       }
     } else {
       toast.error("Please fill out address form!");
     }
   };
+
   return (
     <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -383,11 +394,15 @@ useEffect(()=>{
                       </div>
                     </div>
                     <div className="w-[100px] md:block hidden">
-                      <RxCross2
-                        size={25}
-                        className="cursor-pointer"
-                        onClick={() => onRemove(items)}
-                      />
+                      <div className="w-[100px] md:block hidden">
+                        <RxCross2
+                          size={25}
+                          className={`cursor-pointer ${
+                            processing ? "opacity-50" : ""
+                          }`}
+                          onClick={!processing && (() => onRemove(items))}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -412,7 +427,7 @@ useEffect(()=>{
                   address.email === "" &&
                   address.city === "" &&
                   address.phone === "" &&
-                  address.addressAll === "" 
+                  address.addressAll === ""
                 ) && (
                   <div className="flex flex-col w-[100%]">
                     <div className="mt-4 w-[100%] flex items-center justify-between px-2 py-4 border-t rounded-t-md border-b">
@@ -669,7 +684,7 @@ useEffect(()=>{
 
                     <div className="flex gap-2">
                       <p className="font-medium">Delivery Fee:</p>
-                      <div>PKR {totalPrice>=2499?'0':'99'}/-</div>
+                      <div>PKR {totalPrice >= 2499 ? "0" : "99"}/-</div>
                     </div>
 
                     <div className="flex items-center gap-2 w-[100%] bg-gray-600 text-white px-1">
@@ -683,14 +698,18 @@ useEffect(()=>{
                 </div>
                 <button
                   onClick={handleCheckout}
-                  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300"
+                  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
                   disabled={processing}
                 >
-                  {processing
-                    ? "Processing..."
-                    : orderCompleted
-                    ? "Order Placed!"
-                    : "Proceed to Checkout"}
+                  {processing ? (
+                    <span>Processing...</span>
+                  ) : orderCompleted ? (
+                    "Order Placed!"
+                  ) : tryAgain ? (
+                    <span>Try Again</span>
+                  ) : (
+                    "Proceed to Checkout"
+                  )}
                 </button>
               </div>
             )}
