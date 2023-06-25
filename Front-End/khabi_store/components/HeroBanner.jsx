@@ -6,7 +6,7 @@ import { urlFor } from "@/lib/client";
 const HeroBanner = ({ setBannerData }) => {
   return (
     <div className="flex">
-      <div className="relative w-[50%]">
+      <div className="relative ">
         <Carousel
           autoPlay={true}
           infiniteLoop={true}
