@@ -12,14 +12,14 @@ const HeroBanner = ({ setBannerData }) => {
 
   return (
     <div
-      className="flex items-center justify-center mx-[3rem] max-[500px]:mx-[1.5rem] mt-[2rem] mb-[1rem]"
+      className="flex items-center  justify-between mx-[3rem] max-[500px]:mx-[1.5rem] mt-[3.5rem] mb-[2rem]"
       style={{
         backgroundImage: `url("/hero-background.jpg")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
-      <div className="relative w-[514px] h-[660px] border rounded-lg text-black">
+      <div className="relative min-w-[300px] h-[660px] ">
         {/* <Carousel
           autoPlay={true}
           infiniteLoop={true}
@@ -39,7 +39,7 @@ const HeroBanner = ({ setBannerData }) => {
             </div>
           ))}
         </Carousel> */}
-<canvas id="gradient-canvas" data-transition-in />
+        <canvas id="gradient-canvas" data-transition-in  className="rounded-tl-xl"/>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
           <h1 className="text-4xl font-bold text-white">
             Welcome to our store
