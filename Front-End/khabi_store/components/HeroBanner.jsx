@@ -33,7 +33,7 @@ const HeroBanner = ({ setBannerData }) => {
             </div>
           ))}
         </Carousel>
-        {/* <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
           <h1 className="text-4xl font-bold text-white">
             Welcome to our store
           </h1>
@@ -45,7 +45,7 @@ const HeroBanner = ({ setBannerData }) => {
           </button>
         </div>
       </div>
-      <div className="w-[50%] flex justify-center items-center">
+      <div className="w-[50%] flex justify-center items-center flex-col">
         <div className="text-black text-center">
           <h2 className="text-3xl font-semibold mb-4">Get Trendy</h2>
           <p className="text-lg">Discover the latest fashion trends</p>
@@ -53,8 +53,11 @@ const HeroBanner = ({ setBannerData }) => {
             Learn More
           </button>
         </div>
-      </div> */}
-    </div>
+        <div className="flex">
+          <div>1</div>
+          <div>2</div>
+        </div>
+      </div>
     </div>
   );
 };
