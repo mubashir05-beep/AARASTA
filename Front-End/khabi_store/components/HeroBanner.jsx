@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { urlFor } from "@/lib/client";
+import { Gradient } from "./Gradient.js";
 
 const HeroBanner = ({ setBannerData }) => {
+  useEffect(() => {
+    const gradient = new Gradient();
+    gradient.initGradient("#gradient-canvas");
+  }, []);
+
   return (
     <div
       className="flex items-center justify-center mx-[3rem] max-[500px]:mx-[1.5rem] mt-[2rem] mb-[1rem]"
@@ -13,8 +19,8 @@ const HeroBanner = ({ setBannerData }) => {
         backgroundPosition: "center",
       }}
     >
-      <div className="relative w-[500px]">
-        <Carousel
+      <div className="relative w-[514px] h-[660px] border rounded-lg text-black">
+        {/* <Carousel
           autoPlay={true}
           infiniteLoop={true}
           showThumbs={false}
@@ -32,7 +38,8 @@ const HeroBanner = ({ setBannerData }) => {
               />
             </div>
           ))}
-        </Carousel>
+        </Carousel> */}
+<canvas id="gradient-canvas" data-transition-in />
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
           <h1 className="text-4xl font-bold text-white">
             Welcome to our store
