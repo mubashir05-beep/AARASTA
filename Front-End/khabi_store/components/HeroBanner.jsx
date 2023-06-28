@@ -15,8 +15,8 @@ const HeroBanner = ({ setBannerData }) => {
   }, [ref]);
 
   return (
-    <div className="flex items-center justify-between mx-[3rem] max-[500px]:mx-[1.5rem] mt-[3.5rem] mb-[2rem]">
-      <div ref={ref} className="relative max-w-[50vw] h-[660px] ">
+    <div className="flex items-center justify-between h-[660px] mx-[3rem] gap-[8px]  max-[500px]:mx-[1.5rem] my-2">
+      <div ref={ref} className="relative max-w-[45vw] h-[660px] ">
         {/* <Carousel
           autoPlay={true}
           infiniteLoop={true}
@@ -58,21 +58,16 @@ const HeroBanner = ({ setBannerData }) => {
           </button>
         </div>
       </div>
-      <div className="w-[60vw] flex justify-center items-center flex-col max-w-[50vw]">
-        <div className="text-black text-center">
-        <video autoPlay muted loop controls style={{ width: '500px'}}>
-        <source src="hero_video.mp4" type="video/mp4" />
-      </video>
-          <h2 className="text-3xl font-semibold mb-4">Get Trendy</h2>
-          <p className="text-lg">Discover the latest fashion trends</p>
-          <button className="mt-6 px-6 py-2 bg-transparent border border-white text-white rounded-full hover:bg-white hover:text-black transition-colors duration-300">
-            Learn More
-          </button>
+      <div className="flex justify-between gap-[8px] items-center flex-col max-w-[55vw] h-[660px]">
+        <div className="text-black text-center ">
+          <video autoPlay muted loop className="rounded-tr-xl">
+            <source src="hero_video.mp4" type="video/mp4"  />
+          </video>
         </div>
-        
-        <div className="flex">
-          <div>1</div>
-          <div>2</div>
+
+        <div className="flex h-[330px] gap-[2vw] ">
+          <div className="w-[29vw] border flex items-center justify-center">1</div>
+          <div className="w-[29vw] border rounded-br-xl flex items-center justify-center">2</div>
         </div>
       </div>
     </div>
