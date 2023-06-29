@@ -16,7 +16,7 @@ const HeroBanner = ({ setBannerData }) => {
 
   return (
     <div className="flex items-center justify-between h-[660px] mx-[3rem] gap-[8px]  max-[500px]:mx-[1.5rem] my-2">
-      <div ref={ref} className="relative max-w-[45vw] h-[660px]">
+      <div ref={ref} className="relative  h-[660px]">
         <Carousel
           autoPlay={true}
           infiniteLoop={true}
@@ -27,11 +27,11 @@ const HeroBanner = ({ setBannerData }) => {
           showIndicators={false}
         >
           {setBannerData?.map((banner) => (
-            <div key={banner._id} className="rounded">
+            <div key={banner._id} >
               <img
                 src={urlFor(banner.image)}
                 alt="Slide"
-                className="rounded-lg h-[660px]"
+                className="rounded-tl-lg rounded-bl-lg h-[660px]"
               />
             </div>
           ))}
@@ -69,7 +69,7 @@ const HeroBanner = ({ setBannerData }) => {
           </div>
         </div>
 
-        <div className="flex h-[330px] gap-[8px] ">
+        <div className="flex gap-[8px] h-[181px] ">
           <div className="w-[26vw] border flex flex-col items-center justify-center relative">
             <img src="./fabric.jpg" alt="Fabric Photo" className="absolute inset-0 w-full h-full object-cover" />
             <div className="text-white text-center z-10">
@@ -82,13 +82,12 @@ const HeroBanner = ({ setBannerData }) => {
             </div>
           </div>
           
-          <div className="w-[26vw] border rounded-br-xl flex items-center justify-center">
+          <div className="w-[26vw] border rounded-br-xl flex items-center justify-center bg-slate-600">
             {/* Content for the second section */}
             <div className="text-white text-center">
-              <h2 className="text-3xl font-bold">Stylish Shirts</h2>
-              <p className="mt-4 text-lg">Discover our collection of stylish shirts for every occasion.</p>
-              <button className="mt-8 px-8 py-3 bg-white text-black rounded-full hover:bg-gray-300 transition-colors duration-300">
-                Shop Now
+            <div className="text-lg font-bold">Stylish Shirts</div>
+            <div className="text-sm">Discover our collection of stylish shirts for every occasion.</div >
+            <button className="mt-4 px-2 py-1 text-white underline hover:no-underline">Shop Now
               </button>
             </div>
           </div>
