@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { urlFor } from "@/lib/client";
@@ -14,6 +14,7 @@ const HeroBanner = ({ setBannerData }) => {
     }
   }, [ref]);
 
+  
   return (
     <>
     <div className="flex items-center justify-between mx-[3rem] gap-[8px] max-w-[500px]  my-6">

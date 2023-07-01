@@ -217,7 +217,7 @@ const [mailState,setMailState]=useState(false);
       setCartItems(newCartItems);
     }
   };
-
+  
   const onSizeChange = (productId, selectedSize) => {
     setSelectedSize((prevSelectedSize) => ({
       ...prevSelectedSize,
@@ -247,6 +247,7 @@ const [mailState,setMailState]=useState(false);
         address,
         setAddress,
         submited,
+      
         size,
         setTotalPrice,
         setSize,

@@ -33,6 +33,11 @@ export default {
         type: 'number',
       },
       { 
+        name: 'discount',
+        title: 'Discount',
+        type: 'number',
+      },
+      { 
         name: 'details',
         title: 'Details',
         type: 'string',
