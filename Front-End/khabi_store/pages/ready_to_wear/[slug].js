@@ -13,16 +13,16 @@ const { qty, incQty, decQty, onAdd, size, onSizeChange, selectedSize } =
   }
   const [err, setErr] = useState(false);
   return (
-    <>
-      <div className="flex flex-col lg:flex-row  mx-[3rem] my-[3rem] gap-[6px]">
-        <Link href='../' className='font-medium'>
-        Home
-        </Link>
-        /<Link href='./' className='font-medium'>
-        Shirts
-        </Link>/
-        <span className='font-medium'>{product.name}</span>
-      </div>
+    // <>
+    //   <div className="flex flex-col lg:flex-row  mx-[3rem] my-[3rem] gap-[6px]">
+    //     <Link href='../' className='font-medium'>
+    //     Home
+    //     </Link>
+    //     /<Link href='./' className='font-medium'>
+    //     Shirts
+    //     </Link>/
+    //     <span className='font-medium'>{product.name}</span>
+    //   </div>
       <div className="flex flex-col lg:flex-row items-center mx-[3rem] my-[3rem] justify-center gap-[45px]">
         <div className="max-w-[600px]">
           <img
@@ -185,7 +185,7 @@ const { qty, incQty, decQty, onAdd, size, onSizeChange, selectedSize } =
           </div>
         </div>
       </div>
-    </>
+     
   );
 };
 export default Product;

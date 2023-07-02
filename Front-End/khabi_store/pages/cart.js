@@ -287,8 +287,17 @@ const Cart = () => {
       toast.error("Please fill out the address form!");
     }
   };
+  const isAddressFormFilled = () => {
+    return (
+      address.name &&
+      address.city &&
+      address.phone &&
+      address.zip &&
+      address.email &&
+      address.addressAll
+    );
+  };
   
-
   return (
     <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -701,10 +710,25 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
-                <button
+                {/* {
+                  setSubmited ? <button
                   onClick={handleCheckout}
                   className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
-                  disabled={processing}
+                  disabled={processing || Object.keys(address).length === 0}
+                >
+                  {processing ? (
+                    <span>Processing...</span>
+                  ) : orderCompleted ? (
+                    "Order Placed!"
+                  ) : tryAgain ? (
+                    <span>Try Again</span>
+                  ) : (
+                    "Proceed to Checkout"
+                  )}
+                </button>: <button
+                  onClick={handleCheckout}
+                  className="bg-black text-white border-t rounded-lg w-full disabled h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
+                  disabled={processing || Object.keys(address).length === 0}
                 >
                   {processing ? (
                     <span>Processing...</span>
@@ -716,6 +740,23 @@ const Cart = () => {
                     "Proceed to Checkout"
                   )}
                 </button>
+                } */}
+                <button
+  onClick={handleCheckout}
+  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
+  disabled={processing || !isAddressFormFilled()}
+>
+  {processing ? (
+    <span>Processing...</span>
+  ) : orderCompleted ? (
+    "Order Placed!"
+  ) : tryAgain ? (
+    <span>Try Again</span>
+  ) : (
+    "Proceed to Checkout"
+  )}
+</button>
+
               </div>
             )}
           </div>
