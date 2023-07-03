@@ -180,7 +180,7 @@ const Cart = () => {
       _key: `product${item._id}`,
       product: item.name,
       size: item.size,
-      price: item.price,
+      price: item.price-item.price,
       quantity: item.quantity,
     }));
 
@@ -227,7 +227,7 @@ const Cart = () => {
     try {
       const products = cartItems.map((item) => ({
         name: item.name,
-        price: item.price,
+        price: item.price-item.discount,
         imgSrc: urlFor(item.image[0]).width(200).url(),
         size: item.size,
         quantity: item.quantity,
