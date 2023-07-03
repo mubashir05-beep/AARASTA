@@ -8,6 +8,7 @@ import { toast } from "react-hot-toast";
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Cart = () => {
   const {
@@ -23,11 +24,13 @@ const Cart = () => {
     delivery,
     setDelivery,
     mailState,
+    discountedPrice, useDiscountedPrice,
     setMailState,
   } = useStateContext();
   const [processing, setProcessing] = useState(false);
   const [orderCompleted, setOrderCompleted] = useState(false);
   const [dropAddress, setDropAddress] = useState(false);
+ 
   const handleDrop = () => {
     return setDropAddress(!dropAddress);
   };
@@ -297,7 +300,7 @@ const Cart = () => {
       address.addressAll
     );
   };
-  
+
   return (
     <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -341,13 +344,18 @@ const Cart = () => {
                     <div className="flex flex-col md:flex-row items-center min-[500px]:items-start">
                       <div className="flex flex-col gap-2 items-center min-[500px]:items-start md:my-6 w-[200px]">
                         <div className="font-semibold text-lg break-words">
-                          {items.name}
+                          <Link href={`./ready_to_wear/${items.slug.current}`}>
+                            {items.name}
+                          </Link>
                         </div>
                         <div className="text-[15px] text-gray-500">
                           Code: {items.productCode}
                         </div>
                         <div className="text-[15px] text-gray-500">
-                          {items.category}
+                          <Link href={`./ready_to_wear/`}>
+                            {items.category}
+                          </Link>
+                          {console.log(items.slug.current)}
                         </div>
                         <div className="text-[15px] flex gap-1 items-center py-1 text-gray-500">
                           {" "}
@@ -373,9 +381,29 @@ const Cart = () => {
                           <div className="font-[500] text-[15px] text-lg hidden md:block">
                             Per Price
                           </div>
-                          <div className="text-gray-600">
-                            PKR {items.price}/-
-                          </div>
+                          {items.discount ? (
+                            <div>
+                              {console.log(items.discount)}
+                              <div className="text-[20px] text-gray-600 flex gap-4 items-center">
+                                PKR {items.price- items.discount}
+                                <span className="border p-[4px] text-[14px] rounded-lg bg-red-500 text-white">
+                                  {(
+                                    (items.discount / items.price) *
+                                    100
+                                  ).toFixed(0)}
+                                  % OFF
+                                </span>
+                              </div>
+                              <div className="text-[16px] text-gray-600 line-through">
+                                PKR {items.price}
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="text-[22px] text-gray-600">
+                              PKR {items.price}
+                            </div>
+                          )}
+                         
                         </div>
                         <div className="flex flex-col md:my-1 gap-2  items-center ">
                           <div className="font-[500] text-[15px] text-lg hidden md:block">
@@ -742,21 +770,20 @@ const Cart = () => {
                 </button>
                 } */}
                 <button
-  onClick={handleCheckout}
-  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
-  disabled={processing || !isAddressFormFilled()}
->
-  {processing ? (
-    <span>Processing...</span>
-  ) : orderCompleted ? (
-    "Order Placed!"
-  ) : tryAgain ? (
-    <span>Try Again</span>
-  ) : (
-    "Proceed to Checkout"
-  )}
-</button>
-
+                  onClick={handleCheckout}
+                  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
+                  disabled={processing || !isAddressFormFilled()}
+                >
+                  {processing ? (
+                    <span>Processing...</span>
+                  ) : orderCompleted ? (
+                    "Order Placed!"
+                  ) : tryAgain ? (
+                    <span>Try Again</span>
+                  ) : (
+                    "Proceed to Checkout"
+                  )}
+                </button>
               </div>
             )}
           </div>
