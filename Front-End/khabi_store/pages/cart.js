@@ -337,7 +337,7 @@ const Cart = () => {
           >
             {cartItems.length >= 1 &&
               cartItems.map((items, index) => (
-                <div className="flex  border-b  py-5 " key={items._id}>
+                <div className="flex  border-b  border-l py-5 " key={items._id}>
                   <div className="flex min-[500px]:flex-row md:flex-row items-center md:items-start flex-col gap-6 md:gap-[3rem] md:justify-evenly w-[100%] ">
                     <div>
                       <div className="relative">
@@ -455,7 +455,7 @@ const Cart = () => {
           </div>
           <div className="flex flex-[0.5] border-l border-r justify-center border-b">
             {cartItems.length >= 1 && (
-              <div className="px-5 py-5 flex flex-col items-center justify-around">
+              <div className="px-5 py-5 flex flex-col items-center justify-start">
                 <div className="flex flex-col min-[1534px]:flex-row items-center bg-red-200 p-7 rounded-2xl w-[100%] text-black gap-5">
                   <div className="rounded-full border-black border-2">
                     <AiOutlineExclamation size={20} />
