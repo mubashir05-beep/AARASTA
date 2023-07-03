@@ -41,22 +41,27 @@ export const StateContext = ({ children }) => {
     (typeof window !== "undefined" &&
       JSON.parse(localStorage.getItem(CART_ITEMS_STORAGE_KEY))) ||
     [];
-  const [cartItems, setCartItems] = useState(localCart);
+  const [cartItems, setCartItems] = useState(0);
 
   const localPrice =
     (typeof window !== "undefined" &&
       JSON.parse(localStorage.getItem(TOTAL_PRICE_STORAGE_KEY))) ||
     0;
-  const [totalPrice, setTotalPrice] = useState(localPrice);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const localQty =
     (typeof window !== "undefined" &&
       JSON.parse(localStorage.getItem(TOTAL_QUANTITIES_STORAGE_KEY))) ||
     0;
-  const [totalQuantities, setTotalQuantities] = useState(localQty);
+  const [totalQuantities, setTotalQuantities] = useState(0);
 
   const [qty, setQty] = useState(1);
-
+  useEffect(() => {
+    setCartItems(localCart);
+    setTotalPrice(localPrice);
+    setTotalQuantities(localQty);
+    // setAddress(localAddress);
+  }, []);
   useEffect(() => {
     localStorage.setItem(CART_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
     localStorage.setItem(
