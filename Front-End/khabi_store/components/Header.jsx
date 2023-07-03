@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <>
       {shipFee && (
-        <div className='text-center text-sm py-1 bg-red-200'>
+        <div className='text-center text-[16px] py-3 bg-red-200'>
           Free shipping on orders above PKR. 2499/-
         </div>
       )}

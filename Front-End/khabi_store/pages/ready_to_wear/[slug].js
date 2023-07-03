@@ -26,13 +26,13 @@ const Product = ({ products, product }) => {
   return (
     <>
       <div className="flex flex-col lg:flex-row  mx-[3rem] my-[3rem] gap-[6px]">
-        <Link href='../' className='font-medium'>
+        <Link href='../' className='font-medium hover:underline'>
         Home
         </Link>
-        /<Link href='./' className='font-medium'>
+        /<Link href='./' className='font-mediumhover:underline'>
         Shirts
         </Link>/
-        <span className='font-medium'>{product.name}</span>
+        <span className='font-medium '>{product.name}</span>
       </div>
     <div className="flex flex-col lg:flex-row items-center mx-[3rem] my-[3rem] justify-center gap-[45px]">
       <div className="max-w-[600px]">
@@ -40,6 +40,9 @@ const Product = ({ products, product }) => {
           src={urlFor(product.image && product.image[0])}
           alt={product.name}
         />
+         <span className="border p-[4px] text-[14px] rounded-lg bg-red-500 text-white">
+                    {((product.discount / product.price) * 100).toFixed(0)}% OFF
+                  </span>
       </div>
       <div className="flex flex-col md:w-[450px]">
         <div className="flex flex-col gap-[1px] my-[12px]">
@@ -61,9 +64,7 @@ const Product = ({ products, product }) => {
               <div>
                 <div className="text-[20px] flex gap-4 items-center">
                   PKR {product.price - discountedPrice}
-                  <span className="border p-[4px] text-[14px] rounded-lg bg-red-500 text-white">
-                    {((product.discount / product.price) * 100).toFixed(0)}% OFF
-                  </span>
+                 
                 </div>
                 <div className="text-[16px] line-through">
                   PKR {product.price}
