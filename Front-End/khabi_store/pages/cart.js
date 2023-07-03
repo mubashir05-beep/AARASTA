@@ -24,13 +24,14 @@ const Cart = () => {
     delivery,
     setDelivery,
     mailState,
-    discountedPrice, useDiscountedPrice,
+    discountedPrice,
+    useDiscountedPrice,
     setMailState,
   } = useStateContext();
   const [processing, setProcessing] = useState(false);
   const [orderCompleted, setOrderCompleted] = useState(false);
   const [dropAddress, setDropAddress] = useState(false);
- 
+
   const handleDrop = () => {
     return setDropAddress(!dropAddress);
   };
@@ -173,13 +174,15 @@ const Cart = () => {
   }
   let customer_Order_id = generateOrderId();
   // Data for Order schema
-  const products = cartItems.map((item) => ({
-    _key: `product${item._id}`,
-    product: item.name,
-    size: item.size,
-    price: item.price,
-    quantity: item.quantity,
-  }));
+  const products =
+    cartItems &&
+    cartItems.map((item) => ({
+      _key: `product${item._id}`,
+      product: item.name,
+      size: item.size,
+      price: item.price,
+      quantity: item.quantity,
+    }));
 
   const orderData = {
     orderId: customer_Order_id,
@@ -336,11 +339,20 @@ const Cart = () => {
               cartItems.map((items, index) => (
                 <div className="flex  border-b  py-5 " key={items._id}>
                   <div className="flex min-[500px]:flex-row md:flex-row items-center md:items-start flex-col gap-6 md:gap-[3rem] md:justify-evenly w-[100%] ">
-                    <img
-                      src={urlFor(items?.image[0])}
-                      width={"200px"}
-                      className="rounded-lg"
-                    />
+                    <div>
+                      <div className="relative">
+                        <img
+                          src={urlFor(items?.image[0])}
+                          width={"200px"}
+                          className="rounded-lg"
+                        />
+                       { items.discount && <span className="absolute top-0 right-0 z-10 bg-red-500 rounded-tr-lg text-white px-2 py-1 text-xs font-bold">
+                          {((items.discount / items.price) * 100).toFixed(0)}%
+                          OFF
+                        </span>}
+                      </div>
+                    </div>
+
                     <div className="flex flex-col md:flex-row items-center min-[500px]:items-start">
                       <div className="flex flex-col gap-2 items-center min-[500px]:items-start md:my-6 w-[200px]">
                         <div className="font-semibold text-lg break-words">
@@ -377,33 +389,24 @@ const Cart = () => {
                         </div>
                       </div>
                       <div className="flex flex-col  gap-2 md:w-[100px] md:items-center md:my-6">
-                        <div className="flex flex-col gap-2 md:my-1  items-center">
+                        <div className="flex flex-col gap-2 md:my-1 items-center">
                           <div className="font-[500] text-[15px] text-lg hidden md:block">
                             Per Price
                           </div>
                           {items.discount ? (
-                            <div>
-                              {console.log(items.discount)}
-                              <div className="text-[20px] text-gray-600 flex gap-4 items-center">
-                                PKR {items.price- items.discount}
-                                <span className="border p-[4px] text-[14px] rounded-lg bg-red-500 text-white">
-                                  {(
-                                    (items.discount / items.price) *
-                                    100
-                                  ).toFixed(0)}
-                                  % OFF
-                                </span>
+                            <div className="flex flex-col items-center justify-start  ">
+                              <div className="text-[18px] text-gray-600 items-center">
+                                PKR {items.price - items.discount}
                               </div>
-                              <div className="text-[16px] text-gray-600 line-through">
+                              <div className="text-[14px] text-gray-600 line-through">
                                 PKR {items.price}
                               </div>
                             </div>
                           ) : (
-                            <div className="text-[22px] text-gray-600">
+                            <div className="text-[16px] text-gray-600">
                               PKR {items.price}
                             </div>
                           )}
-                         
                         </div>
                         <div className="flex flex-col md:my-1 gap-2  items-center ">
                           <div className="font-[500] text-[15px] text-lg hidden md:block">

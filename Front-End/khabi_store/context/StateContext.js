@@ -94,22 +94,32 @@ export const StateContext = ({ children }) => {
         `${quantity} ${selectedProduct.name} (${selectedProductSize}) added to the cart`
       );
     } else {
-      setCartItems([
-        ...cartItems,
-        {
-          ...selectedProduct,
-          quantity,
-          size: selectedProductSize,
-        },
-      ]);
+      const newCartItem = {
+        ...selectedProduct,
+        quantity,
+        size: selectedProductSize,
+      };
+
+      if (selectedProduct.discount) {
+        newCartItem.discountedPrice =
+          selectedProduct.price - selectedProduct.discount;
+        setTotalPrice(
+          (prevTotalPrice) =>
+            prevTotalPrice + newCartItem.discountedPrice * quantity
+        );
+      } else {
+        setTotalPrice(
+          (prevTotalPrice) => prevTotalPrice + selectedProduct.price * quantity
+        );
+      }
+
+      setCartItems([...cartItems, newCartItem]);
       toast.success(
         `${quantity} ${selectedProduct.name} (${selectedProductSize}) added to the cart`
       );
     }
 
-    const discountedPrice = selectedProduct.price - selectedProduct.discount;
-    setTotalQuantities((prev) => prev + quantity);
-    setTotalPrice((prev) => prev + discountedPrice * quantity);
+    setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
   };
 
   const deleteCart = () => {
@@ -117,19 +127,27 @@ export const StateContext = ({ children }) => {
     setTotalQuantities(0);
     setTotalPrice(0);
   };
-
+  
   const incQty = () => {
     setQty((prev) => {
-      if (prev + 1 == 5) return 1;
-     return prev + 1});
-  };
-
-  const decQty = () => {
-    setQty((prev) => {
-      if (prev - 1 < 1) return 1;
-      return prev - 1;
+      if (prev + 1 <= 5) {
+        return prev + 1;
+      } else {
+        return prev;
+      }
     });
   };
+  
+  const decQty = () => {
+    setQty((prev) => {
+      if (prev - 1 >= 1) {
+        return prev - 1;
+      } else {
+        return prev;
+      }
+    });
+  };
+  
 
   const onRemove = (product) => {
     const removedProducts = cartItems.filter(
@@ -142,10 +160,13 @@ export const StateContext = ({ children }) => {
         0
       );
 
-      const removedPrice = removedProducts.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
+      const removedPrice = removedProducts.reduce((total, item) => {
+        if (item.discount) {
+          return total + (item.discountedPrice || item.price) * item.quantity;
+        } else {
+          return total + item.price * item.quantity;
+        }
+      }, 0);
 
       setTotalPrice((prevTotalPrice) => {
         const newTotalPrice = prevTotalPrice - removedPrice;
@@ -164,14 +185,13 @@ export const StateContext = ({ children }) => {
 
     setCartItems(updatedCartItems);
   };
-
   const toggleCartItemQuanitity = (id, value) => {
     const foundProduct = cartItems.find((item) => item._id === id);
-
+  
     if (foundProduct) {
       const newCartItems = [...cartItems];
       const index = newCartItems.findIndex((product) => product._id === id);
-
+  
       if (value === "inc") {
         newCartItems[index] = {
           ...foundProduct,
@@ -187,15 +207,20 @@ export const StateContext = ({ children }) => {
           newCartItems.splice(index, 1);
         }
       }
-
+  
       setCartItems(newCartItems);
-
-      const totalPrice = newCartItems.reduce(
-        (acc, item) => acc + (item.price - item.discount) * item.quantity,
-        0
-      );
+  
+      const totalPrice = newCartItems.reduce((acc, item) => {
+        if (item.discount) {
+          const discountedPrice = item.price - item.discount;
+          return acc + discountedPrice * item.quantity;
+        } else {
+          return acc + item.price * item.quantity;
+        }
+      }, 0);
+  
       setTotalPrice(totalPrice);
-
+  
       const totalQuantities = newCartItems.reduce(
         (acc, item) => acc + item.quantity,
         0
@@ -203,7 +228,7 @@ export const StateContext = ({ children }) => {
       setTotalQuantities(totalQuantities);
     }
   };
-
+  
   const onSizeChange = (productId, selectedSize) => {
     setSelectedSize((prevSelectedSize) => ({
       ...prevSelectedSize,
@@ -240,7 +265,8 @@ export const StateContext = ({ children }) => {
         setTotalPrice,
         setSubmited,
         onSizeChange,
-        discountedPrice, setDiscountedPrice
+        discountedPrice,
+        setDiscountedPrice,
       }}
     >
       {children}
