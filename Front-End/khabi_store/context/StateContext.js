@@ -193,10 +193,12 @@ export const StateContext = ({ children }) => {
       const index = newCartItems.findIndex((product) => product._id === id);
   
       if (value === "inc") {
-        newCartItems[index] = {
-          ...foundProduct,
-          quantity: foundProduct.quantity + 1,
-        };
+        if (foundProduct.quantity < 5) {
+          newCartItems[index] = {
+            ...foundProduct,
+            quantity: foundProduct.quantity + 1,
+          };
+        }
       } else if (value === "dec") {
         if (foundProduct.quantity > 1) {
           newCartItems[index] = {
@@ -228,6 +230,7 @@ export const StateContext = ({ children }) => {
       setTotalQuantities(totalQuantities);
     }
   };
+  
   
   const onSizeChange = (productId, selectedSize) => {
     setSelectedSize((prevSelectedSize) => ({
