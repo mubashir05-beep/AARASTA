@@ -222,39 +222,46 @@ export default async function handler(req, res) {
           width="100%"
         >
         <ul>
-        ${products
-          .map(
-            (product) => `
+        ${products.map(
+          (product) => `
             <div style="display: flex; align-items: center; justify-content: space-between;">
-  <div style="max-width: 160px; padding-bottom: 12px;">
-    <img src=${product.imgSrc} alt="${
-              product.name
-            }" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
-  </div>
-  <div style="padding-left: 22px;">
-    <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
-      <strong>${product.name}</strong>
-    </p>
-    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-      Quantity: ${product.quantity}
-    </p>
-    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-      Size: ${product.size}
-    </p>
-    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-     Orignal Price: ${"RS " + product.price+product.discount + "/-"}
-    </p>
-    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-    Discount: ${"RS " + product.discount + "/-"}
-  </p>
-  <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-  Price After Discount: ${"RS " + product.price + "/-"}
-</p>
-  </div>
-</div>
+              <div style="position: relative; max-width: 160px; padding-bottom: 12px;">
+                <img src="${product.imgSrc}" alt="${
+            product.name
+          }" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
+              </div>
+        
+              <div style="padding-left: 22px;">
+                <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
+                  <strong>${product.name}</strong>
+                </p>
+                <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                  Quantity: ${product.quantity}
+                </p>
+                <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                  Size: ${product.size}
+                </p>
+                    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500; ">
+                  Price: RS <span style='text-decoration:line-through;'>${
+                    product.orgPrice
+                  } </span>${parseInt(product.price)} /-
+                    </p>
+                    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                     
+                    </p>
+                    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                     ${
+                       product.discount != "" &&
+                       product.discount != undefined &&
+                       "Discount:" + product.discount
+                     }%
+                    </p>
+                 
+                </div>
+              </div>
+            </div>
           `
-          )
-          .join("")}
+        ).join("")}
       </ul>
         </table>
         <hr
@@ -803,39 +810,46 @@ export default async function handler(req, res) {
               width="100%"
             >
             <ul>
-            ${products
-              .map(
-                (product) => `
+            ${products.map(
+              (product) => `
                 <div style="display: flex; align-items: center; justify-content: space-between;">
-      <div style="max-width: 160px; padding-bottom: 12px;">
-        <img src=${product.imgSrc} alt="${
-                  product.name
-                }" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
-      </div>
-      <div style="padding-left: 22px;">
-        <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
-          <strong>${product.name}</strong>
-        </p>
-        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-          Quantity: ${product.quantity}
-        </p>
-        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-          Size: ${product.size}
-        </p>
-        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-        Orignal Price: ${"RS " + product.price + product.discount + "/-"}
-       </p>
-       <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-       Discount: ${"RS " + product.discount + "/-"}
-     </p>
-     <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-     Price After Discount: ${"RS " + product.price + "/-"}
-   </p>
-      </div>
-      </div>
+                  <div style="position: relative; max-width: 160px; padding-bottom: 12px;">
+                    <img src="${product.imgSrc}" alt="${
+                product.name
+              }" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
+                  </div>
+            
+                  <div style="padding-left: 22px;">
+                    <p style="font-size: 14px; line-height: 2; margin: 0; font-weight: 500;">
+                      <strong>${product.name}</strong>
+                    </p>
+                    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                      Quantity: ${product.quantity}
+                    </p>
+                    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                      Size: ${product.size}
+                    </p>
+                        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500; ">
+                      Price: RS <span style='text-decoration:line-through;'>${
+                        product.orgPrice
+                      } </span>${parseInt(product.price)} /-
+                        </p>
+                        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                         
+                        </p>
+                        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                         ${
+                           product.discount != "" &&
+                           product.discount != undefined &&
+                           "Discount:" + product.discount
+                         }%
+                        </p>
+                     
+                    </div>
+                  </div>
+                </div>
               `
-              )
-              .join("")}
+            ).join("")}
           </ul>
             </table>
             <hr

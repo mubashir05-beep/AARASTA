@@ -231,7 +231,8 @@ const Cart = () => {
         imgSrc: urlFor(item.image[0]).width(200).url(),
         size: item.size,
         quantity: item.quantity,
-        discount:item.discount
+        discount: item.discount && ((item.discount / item.price) * 100).toFixed(0),
+        orgPrice:item.price,
       }));
 
       const response = await fetch("/api/send-email", {
