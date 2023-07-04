@@ -242,8 +242,14 @@ export default async function handler(req, res) {
       Size: ${product.size}
     </p>
     <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-      Price: ${"RS " + product.price + "/-"}
+     Orignal Price: ${"RS " + product.price+ product.discount + "/-"}
     </p>
+    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+    Discount: ${"RS " + product.discount + "/-"}
+  </p>
+  <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+  Price After Discount: ${"RS " + product.price + "/-"}
+</p>
   </div>
 </div>
           `
