@@ -232,6 +232,7 @@ const Cart = () => {
         size: item.size,
         quantity: item.quantity,
         discount: item.discount && ((item.discount / item.price) * 100).toFixed(0),
+        dis:item.discount ? item.discount:0,
         orgPrice:item.price,
       }));
 

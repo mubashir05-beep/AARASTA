@@ -226,9 +226,7 @@ export default async function handler(req, res) {
           (product) => `
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <div style="position: relative; max-width: 160px; padding-bottom: 12px;">
-                <img src="${product.imgSrc}" alt="${
-            product.name
-          }" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
+                <img src="${product.imgSrc}" alt="${product.name}" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
               </div>
         
               <div style="padding-left: 22px;">
@@ -241,27 +239,21 @@ export default async function handler(req, res) {
                 <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
                   Size: ${product.size}
                 </p>
-                    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500; ">
-                  Price: RS <span style='text-decoration:line-through;'>${
-                    product.orgPrice
-                  } </span>${parseInt(product.price)} /-
-                    </p>
-                    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                     
-                    </p>
-                    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                     ${
-                       product.discount != "" &&
-                       product.discount != undefined &&
-                       "Discount:" + product.discount
-                     }%
-                    </p>
-                 
-                </div>
+        
+                <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                Price: RS ${
+                  !product.dis>0 ? `<span>${product.orgPrice} /-</span>` : `<span style="text-decoration: line-through;">
+                  ${product.orgPrice}
+                </span> ${product.price}`
+                }
+                </p>
+
+                ${product.discount ? `<p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">Discount: ${product.discount}%</p>` : ''}
               </div>
             </div>
           `
         ).join("")}
+        
       </ul>
         </table>
         <hr
@@ -331,6 +323,29 @@ export default async function handler(req, res) {
                 "
               >
                Rs${tlPrice}/-(incl shipping)
+              </p>
+            </td>
+            <td style="width: 170px">
+              <p
+                style="
+                  font-size: 14px;
+                  line-height: 2;
+                  margin: 0;
+                  font-weight: bold;
+                "
+              >
+                Shipping Fee: 
+              </p>
+              <p
+                style="
+                  font-size: 14px;
+                  line-height: 1.4;
+                  margin: 12px 0 0 0;
+                  font-weight: 500;
+                  color: #6f6f6f;
+                "
+              >
+               Rs 99/-
               </p>
             </td>
             <td>
@@ -637,7 +652,10 @@ export default async function handler(req, res) {
       </td>
     </tr>
   </table>
-      `,
+  </div
+</body>
+</html>`
+    
     };
     const ownerMailOptions = {
       from: "Khaabi",
@@ -814,9 +832,7 @@ export default async function handler(req, res) {
               (product) => `
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                   <div style="position: relative; max-width: 160px; padding-bottom: 12px;">
-                    <img src="${product.imgSrc}" alt="${
-                product.name
-              }" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
+                    <img src="${product.imgSrc}" alt="${product.name}" width="160px" style="display: block; outline: none; border: none; text-decoration: none;" />
                   </div>
             
                   <div style="padding-left: 22px;">
@@ -829,27 +845,22 @@ export default async function handler(req, res) {
                     <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
                       Size: ${product.size}
                     </p>
-                        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500; ">
-                      Price: RS <span style='text-decoration:line-through;'>${
-                        product.orgPrice
-                      } </span>${parseInt(product.price)} /-
-                        </p>
-                        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                         
-                        </p>
-                        <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-                         ${
-                           product.discount != "" &&
-                           product.discount != undefined &&
-                           "Discount:" + product.discount
-                         }%
-                        </p>
-                     
-                    </div>
+            
+                    <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+                    Price: RS ${
+                      !product.dis>0 ? `<span>${product.orgPrice} /-</span>` : `<span style="text-decoration: line-through;">
+                      ${product.orgPrice}
+                    </span> ${product.price}`
+                    }
+                    </p>
+
+                    ${product.discount ? `<p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">Discount: ${product.discount}%</p>` : ''}
                   </div>
                 </div>
               `
             ).join("")}
+            
+            
           </ul>
             </table>
             <hr
@@ -1142,7 +1153,7 @@ export default async function handler(req, res) {
           </td>
         </tr>
       </table>
-          
+          </div>
       </body>
       </html>`, // owner email content
     };
