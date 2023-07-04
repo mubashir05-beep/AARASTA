@@ -242,7 +242,7 @@ export default async function handler(req, res) {
       Size: ${product.size}
     </p>
     <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-     Orignal Price: ${"RS " + product.price+ product.discount + "/-"}
+     Orignal Price: ${"RS " + product.price+product.discount + "/-"}
     </p>
     <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
     Discount: ${"RS " + product.discount + "/-"}
@@ -823,8 +823,14 @@ export default async function handler(req, res) {
           Size: ${product.size}
         </p>
         <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
-          Price: ${"RS " + product.price + "/-"}
-        </p>
+        Orignal Price: ${"RS " + product.price + product.discount + "/-"}
+       </p>
+       <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+       Discount: ${"RS " + product.discount + "/-"}
+     </p>
+     <p style="font-size: 14px; line-height: 2; margin: 0; color: #747474; font-weight: 500;">
+     Price After Discount: ${"RS " + product.price + "/-"}
+   </p>
       </div>
       </div>
               `
@@ -898,7 +904,7 @@ export default async function handler(req, res) {
                       color: #6f6f6f;
                     "
                   >
-                   Rs${tlPrice + 99}/-(incl shipping)
+                   Rs${tlPrice}/-(incl shipping)
                   </p>
                 </td>
                 <td>

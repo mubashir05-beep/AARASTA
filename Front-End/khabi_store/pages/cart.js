@@ -180,7 +180,7 @@ const Cart = () => {
       _key: `product${item._id}`,
       product: item.name,
       size: item.size,
-      price: item.price-item.price,
+      price: item.price,
       quantity: item.quantity,
     }));
 
@@ -231,6 +231,7 @@ const Cart = () => {
         imgSrc: urlFor(item.image[0]).width(200).url(),
         size: item.size,
         quantity: item.quantity,
+        discount:item.discount
       }));
 
       const response = await fetch("/api/send-email", {
