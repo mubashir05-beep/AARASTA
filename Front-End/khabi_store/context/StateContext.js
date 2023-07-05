@@ -269,6 +269,7 @@ export const StateContext = ({ children }) => {
         setSubmited,
         onSizeChange,
         discountedPrice,
+        coupon,setCoupon,
         setDiscountedPrice,
       }}
     >

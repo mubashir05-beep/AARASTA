@@ -9,10 +9,12 @@ import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { client } from "@/lib/client";
 
-const Cart = () => {
+const Cart = ({ coupons }) => {
   const {
     totalPrice,
+    setTotalPrice,
     totalQuantities,
     cartItems,
     onRemove,
@@ -26,6 +28,8 @@ const Cart = () => {
     mailState,
     discountedPrice,
     useDiscountedPrice,
+    coupon,
+    setCoupon,
     setMailState,
   } = useStateContext();
   const [processing, setProcessing] = useState(false);
@@ -45,9 +49,13 @@ const Cart = () => {
       setDelivery(totalPrice + 99);
     }
   }, [totalPrice]);
+  useEffect(() => {
+    setCoupon(coupons);
+  }, [coupons]);
   const openModal = () => {
     setIsOpen(true);
   };
+
   const [deleted, setDelete] = useState(false);
   const deleteForm = () => {
     shipping = "";
@@ -275,6 +283,7 @@ const Cart = () => {
   const router = useRouter();
   const [tryAgain, setTryAgain] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [couponStatus, setCouponStatus] = useState(false);
   const handleCheckout = async () => {
     if (
       (Object.keys(address).length !== 0 && cartItems.length >= 1) ||
@@ -319,7 +328,34 @@ const Cart = () => {
       address.addressAll
     );
   };
+  const [customerCoupon, setCustomerCoupon] = useState("");
 
+  const submitCoupon = (e) => {
+    e.preventDefault();
+
+    coupon.map((coupon) => {
+      if (customerCoupon === coupon.couponCode) {
+        if (coupon.couponDiscountPKR) {
+          const discountPKR = Number(coupon.couponDiscountPKR);
+          setTotalPrice(totalPrice - discountPKR);
+          setCouponStatus(true);
+        } else if (coupon.couponDiscountPercentage) {
+          const discountPercentage = Number(coupon.couponDiscountPercentage);
+          const discountAmount = (totalPrice * discountPercentage) / 100;
+          const discountedPrice = totalPrice - discountAmount;
+          setTotalPrice(discountedPrice);
+          setCouponStatus(true);
+        }
+      }
+    });
+
+    console.log(totalPrice);
+  };
+
+  const handleCoupon = (e) => {
+    e.preventDefault();
+    setCustomerCoupon(e.target.value);
+  };
   return (
     <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
@@ -385,7 +421,6 @@ const Cart = () => {
                           <Link href={`./ready_to_wear/`}>
                             {items.category}
                           </Link>
-                          {console.log(items.slug.current)}
                         </div>
                         <div className="text-[15px] flex gap-1 items-center py-1 text-gray-500">
                           {" "}
@@ -483,7 +518,7 @@ const Cart = () => {
                     for other areas. Thank you for choosing us.
                   </div>
                 </div>
-                {console.log(address.phone)}
+
                 {/* Address Modal */}
                 {!(
                   address.name === "" &&
@@ -735,8 +770,36 @@ const Cart = () => {
                     </div>
                   )}
                 </div>
+                <div className="flex flex-col gap-5 border-t w-full px-2 border-b py-5">
+                  <div className="text-lg font-semibold underline underline-offset-8">
+                    Have a Coupon?
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="couponInput" className="text-sm">
+                      Enter your coupon code:
+                    </label>
+                    <input
+                      type="text"
+                      id="couponInput"
+                      className={`border ${
+                        couponStatus ? "border-green-500" : "border-red-500"
+                      } rounded-lg py-2 px-4`}
+                      placeholder="Enter coupon code"
+                      onChange={handleCoupon}
+                      onSubmit={submitCoupon}
+                      disabled={couponStatus}
+                    />
+                    <button
+                      onClick={submitCoupon}
+                      className="bg-black text-white rounded-lg py-2 px-4 hover:bg-gray-600"
+                      disabled={couponStatus}
+                    >
+                      Apply Coupon
+                    </button>
+                  </div>
+                </div>
 
-                <div className="flex flex-col gap-5 border-t w-[100%] border-b py-5">
+                <div className="flex flex-col gap-5 border-t w-[100%] border-b py-5 px-2 ">
                   <div className="text-lg font-semibold underline underline-offset-8">
                     Order Summary
                   </div>
@@ -786,3 +849,12 @@ const Cart = () => {
 };
 
 export default Cart;
+export const getServerSideProps = async () => {
+  const query = '*[_type=="coupon"]';
+  const coupons = await client.fetch(query);
+  return {
+    props: {
+      coupons,
+    },
+  };
+};

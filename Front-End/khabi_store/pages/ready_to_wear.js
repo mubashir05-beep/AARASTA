@@ -4,6 +4,7 @@ import Products from "@/components/Products";
 import Link from "next/link";
 
 const ready_to_wear = ({ products }) => {
+
   return (
     <>
     <div className="flex flex-col lg:flex-row  mx-[3rem] my-[3rem] gap-[6px]">
