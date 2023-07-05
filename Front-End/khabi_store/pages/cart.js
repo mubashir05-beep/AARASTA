@@ -331,66 +331,67 @@ const Cart = ({ coupons }) => {
   const [customerCoupon, setCustomerCoupon] = useState("");
 const [couponStatus, setCouponStatus] = useState(false);
 const [couponSubmit, setCouponSubmit] = useState(false);
-const [originalPrice, setOriginalPrice] = useState(0);
-const [originalCart, setOriginalCart] = useState(0);
-
-const applyCoupon = (couponItem) => {
-  if (couponItem.couponDiscountPKR) {
-    const discountPKR = Number(couponItem.couponDiscountPKR);
-    setTotalPrice(totalPrice - discountPKR);
-    setCouponStatus(true);
-  } else if (couponItem.couponDiscountPercentage) {
-    const discountPercentage = Number(couponItem.couponDiscountPercentage);
-    const discountAmount = (totalPrice * discountPercentage) / 100;
-    const discountedPrice = totalPrice - discountAmount;
-    setTotalPrice(discountedPrice);
-    setCouponStatus(true);
-  }
-};
-
-const removeCoupon = () => {
-  setTotalPrice(originalPrice);
-  setCouponStatus(false);
-  setCustomerCoupon("");
-};
-
+const [originalPrice, setOriginalPrice] = useState(totalPrice);
+const [originalCart, setOriginalCart] = useState();
+const [lock, setLock] = useState(false);
+console.log(lock)
 const submitCoupon = (e) => {
   e.preventDefault();
-  setOriginalCart(cartItems.length);
   setCouponSubmit(true);
-};
 
-useEffect(() => {
-  if (couponSubmit) {
-    coupon && coupon.map((couponItem) => {
-      if (totalPrice >= couponItem.minCouponPrice && customerCoupon === couponItem.couponCode) {
-        applyCoupon(couponItem);
-        return;
+  coupon.map((coupon) => {
+    if (totalPrice >= coupon.minCouponPrice && customerCoupon === coupon.couponCode) {
+      setLock(true);
+      if (coupon.couponDiscountPKR) {
+        const discountPKR = Number(coupon.couponDiscountPKR);
+ 
+        console.log(lock)
+        setTotalPrice(totalPrice - discountPKR);
+        setCouponStatus(true);
+        setOriginalPrice(totalPrice);
+        setOriginalCart(cartItems.length);
+      } else if (coupon.couponDiscountPercentage) {
+        const discountPercentage = Number(coupon.couponDiscountPercentage);
+        const discountAmount = (totalPrice * discountPercentage) / 100;
+        const discountedPrice = totalPrice - discountAmount;
+        setTotalPrice(discountedPrice);
+        setCouponStatus(true);
+        setOriginalPrice(totalPrice);
+        setOriginalCart(cartItems.length);
       }
-    });
-    setCouponSubmit(false);
-  }
-}, [couponSubmit, totalPrice, coupon, customerCoupon]);
+    }
+  });
+};
 
 useEffect(() => {
   if (cartItems.length !== originalCart) {
     setOriginalCart(cartItems.length);
+
     if (cartItems.length === 0) {
-      setTotalPrice(originalPrice);
+      setTotalPrice(0); // Reset total price to 0 when cart is empty
       setCouponStatus(false);
       setCustomerCoupon("");
+    } else {
+      setTotalPrice(originalPrice); // Reset total price to original value when cart items change
+     coupon&& coupon.map((coupon) => {
+        if (totalPrice >= coupon.minCouponPrice && customerCoupon === coupon.couponCode) {
+          if (coupon.couponDiscountPKR) {
+            const discountPKR = Number(coupon.couponDiscountPKR);
+            setTotalPrice(totalPrice - discountPKR);
+            setCouponStatus(true);
+          } else if (coupon.couponDiscountPercentage) {
+            const discountPercentage = Number(coupon.couponDiscountPercentage);
+            const discountAmount = (totalPrice * discountPercentage) / 100;
+            const discountedPrice = totalPrice - discountAmount;
+            setTotalPrice(discountedPrice);
+            setCouponStatus(true);
+          }
+        }
+      });
     }
   }
+}, [cartItems.length, originalCart, originalPrice, coupon, customerCoupon, totalPrice]);
 
-  coupon && coupon.map((couponItem) => {
-    if (totalPrice >= couponItem.minCouponPrice && customerCoupon === couponItem.couponCode) {
-      applyCoupon(couponItem);
-      return;
-    }
-  });
-}, [cartItems.length, originalCart, totalPrice, originalPrice, coupon, customerCoupon]);
-
-  
   const handleCoupon = (e) => {
     e.preventDefault();
     setCustomerCoupon(e.target.value);
@@ -423,9 +424,7 @@ useEffect(() => {
       )}
       {cartItems.length >= 1 && (
         <div className="flex flex-col min-[996px]:flex-row">
-          <div
-            className={`flex flex-col justify-start scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300  scrollbar-hide flex-[1.5]  scrollbar-track-rounded-full `}
-          >
+        <div className={`flex flex-col justify-start scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-300 scrollbar-hide flex-[1.5] scrollbar-track-rounded-full ${lock ? "opacity-50 pointer-events-none" : ""}`}>
             {cartItems.length >= 1 &&
               cartItems.map((items, index) => (
                 <div className="flex  border-b  border-l py-5 " key={items._id}>
@@ -510,6 +509,7 @@ useEffect(() => {
                               onClick={() =>
                                 toggleCartItemQuanitity(items._id, "dec")
                               }
+                              disabled={lock}
                             >
                               -
                             </button>
@@ -521,6 +521,7 @@ useEffect(() => {
                               onClick={() =>
                                 toggleCartItemQuanitity(items._id, "inc")
                               }
+                              disabled={lock}
                             >
                               +
                             </button>
@@ -536,6 +537,7 @@ useEffect(() => {
                             className={`cursor-pointer ${
                               processing ? "opacity-50" : ""
                             }`}
+                            disabled={lock}
                             onClick={() => !processing && onRemove(items)}
                           />
                         </div>
@@ -851,11 +853,11 @@ useEffect(() => {
                       className="bg-black text-white rounded-lg py-2 px-4 hover:bg-gray-600"
                       disabled={couponStatus}
                     >
-                      Apply Coupon
+                     Lock Items & Apply Coupon
                     </button>
                     <div className=" text-sm text-gray-500">
-                      *Coupon can only be applied within the specified limit and
-                      before adding the shipping fee.
+                      *Coupon can only be applied within the specified limit, 
+                      before adding the shipping fee & item will also be locked!
                     </div>
                   </div>
                 </div>
