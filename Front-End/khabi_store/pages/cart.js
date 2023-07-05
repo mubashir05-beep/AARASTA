@@ -331,9 +331,12 @@ const Cart = ({ coupons }) => {
   const [customerCoupon, setCustomerCoupon] = useState("");
   const [couponStatus, setCouponStatus] = useState(false);
   const [couponSubmit, setCouponSubmit] = useState(false);
-  console.log(cartItems);
+const [orignalPrice,setOriginalPrice]=useState(0);
+const [orignalCart,setOriginalCart]=useState(0);
   const submitCoupon = (e) => {
-    
+
+    setOriginalPrice(totalPrice);
+setOriginalCart(cartItems.length);
     e.preventDefault();
     setCouponSubmit(true);
     coupon.map((coupon) => {
@@ -354,7 +357,11 @@ const Cart = ({ coupons }) => {
       }
     });
   };
-
+useEffect(()=>{
+  if(cartItems.length<=orignalCart){
+    setTotalPrice(orignalPrice);
+  }
+},[cartItems.length])
   const handleCoupon = (e) => {
     e.preventDefault();
     setCustomerCoupon(e.target.value);
@@ -781,27 +788,34 @@ const Cart = ({ coupons }) => {
                     <label htmlFor="couponInput" className="text-sm">
                       Enter your coupon code:
                     </label>
-                    {couponSubmit ?couponStatus ? (
-                      <div className="text-sm text-green-500">
-                        Coupon Applied!
-                      </div>
+                    {couponSubmit ? (
+                      couponStatus ? (
+                        <div className="text-sm text-green-500">
+                          Coupon Applied!
+                        </div>
+                      ) : (
+                        <div className="text-sm text-red-500">
+                          Invalid coupon code. Please try again.
+                        </div>
+                      )
                     ) : (
-                      <div className="text-sm text-red-500">
-                        Invalid coupon code. Please try again.
-                      </div>
-                    ):''}
-                   <input
-  type="text"
-  id="couponInput"
-  className={`border border-gray-400 ${
-    couponSubmit ? (couponStatus ? "border-green-500" : "border-red-500") : ""
-  } rounded-lg py-2 px-4`}
-  placeholder="Enter coupon code"
-  onChange={handleCoupon}
-  onSubmit={submitCoupon}
-  disabled={couponStatus}
-/>
-
+                      ""
+                    )}
+                    <input
+                      type="text"
+                      id="couponInput"
+                      className={`border border-gray-400 ${
+                        couponSubmit
+                          ? couponStatus
+                            ? "border-green-500"
+                            : "border-red-500"
+                          : ""
+                      } rounded-lg py-2 px-4`}
+                      placeholder="Enter coupon code"
+                      onChange={handleCoupon}
+                      onSubmit={submitCoupon}
+                      disabled={couponStatus}
+                    />
 
                     <button
                       onClick={submitCoupon}
