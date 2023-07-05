@@ -329,39 +329,68 @@ const Cart = ({ coupons }) => {
     );
   };
   const [customerCoupon, setCustomerCoupon] = useState("");
-  const [couponStatus, setCouponStatus] = useState(false);
-  const [couponSubmit, setCouponSubmit] = useState(false);
-const [orignalPrice,setOriginalPrice]=useState(0);
-const [orignalCart,setOriginalCart]=useState(0);
-  const submitCoupon = (e) => {
+const [couponStatus, setCouponStatus] = useState(false);
+const [couponSubmit, setCouponSubmit] = useState(false);
+const [originalPrice, setOriginalPrice] = useState(0);
+const [originalCart, setOriginalCart] = useState(0);
 
-    setOriginalPrice(totalPrice);
-setOriginalCart(cartItems.length);
-    e.preventDefault();
-    setCouponSubmit(true);
-    coupon.map((coupon) => {
-      if (totalPrice >= coupon.minCouponPrice) {
-        if (customerCoupon === coupon.couponCode) {
-          if (coupon.couponDiscountPKR) {
-            const discountPKR = Number(coupon.couponDiscountPKR);
-            setTotalPrice(totalPrice - discountPKR);
-            setCouponStatus(true);
-          } else if (coupon.couponDiscountPercentage) {
-            const discountPercentage = Number(coupon.couponDiscountPercentage);
-            const discountAmount = (totalPrice * discountPercentage) / 100;
-            const discountedPrice = totalPrice - discountAmount;
-            setTotalPrice(discountedPrice);
-            setCouponStatus(true);
-          }
-        }
+const applyCoupon = (couponItem) => {
+  if (couponItem.couponDiscountPKR) {
+    const discountPKR = Number(couponItem.couponDiscountPKR);
+    setTotalPrice(totalPrice - discountPKR);
+    setCouponStatus(true);
+  } else if (couponItem.couponDiscountPercentage) {
+    const discountPercentage = Number(couponItem.couponDiscountPercentage);
+    const discountAmount = (totalPrice * discountPercentage) / 100;
+    const discountedPrice = totalPrice - discountAmount;
+    setTotalPrice(discountedPrice);
+    setCouponStatus(true);
+  }
+};
+
+const removeCoupon = () => {
+  setTotalPrice(originalPrice);
+  setCouponStatus(false);
+  setCustomerCoupon("");
+};
+
+const submitCoupon = (e) => {
+  e.preventDefault();
+  setOriginalCart(cartItems.length);
+  setCouponSubmit(true);
+};
+
+useEffect(() => {
+  if (couponSubmit) {
+    coupon && coupon.map((couponItem) => {
+      if (totalPrice >= couponItem.minCouponPrice && customerCoupon === couponItem.couponCode) {
+        applyCoupon(couponItem);
+        return;
       }
     });
-  };
-useEffect(()=>{
-  if(cartItems.length<=orignalCart){
-    setTotalPrice(orignalPrice);
+    setCouponSubmit(false);
   }
-},[cartItems.length])
+}, [couponSubmit, totalPrice, coupon, customerCoupon]);
+
+useEffect(() => {
+  if (cartItems.length !== originalCart) {
+    setOriginalCart(cartItems.length);
+    if (cartItems.length === 0) {
+      setTotalPrice(originalPrice);
+      setCouponStatus(false);
+      setCustomerCoupon("");
+    }
+  }
+
+  coupon && coupon.map((couponItem) => {
+    if (totalPrice >= couponItem.minCouponPrice && customerCoupon === couponItem.couponCode) {
+      applyCoupon(couponItem);
+      return;
+    }
+  });
+}, [cartItems.length, originalCart, totalPrice, originalPrice, coupon, customerCoupon]);
+
+  
   const handleCoupon = (e) => {
     e.preventDefault();
     setCustomerCoupon(e.target.value);
