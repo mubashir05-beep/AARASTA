@@ -227,13 +227,14 @@ const Cart = () => {
     try {
       const products = cartItems.map((item) => ({
         name: item.name,
-        price: item.price-item.discount,
+        price: item.price - item.discount,
         imgSrc: urlFor(item.image[0]).width(200).url(),
         size: item.size,
         quantity: item.quantity,
-        discount: item.discount && ((item.discount / item.price) * 100).toFixed(0),
-        dis:item.discount ? item.discount:0,
-        orgPrice:item.price,
+        discount:
+          item.discount && ((item.discount / item.price) * 100).toFixed(0),
+        dis: item.discount ? item.discount : 0,
+        orgPrice: item.price,
       }));
 
       const response = await fetch("/api/send-email", {
@@ -246,6 +247,7 @@ const Cart = () => {
           address: address.addressAll,
           products: products,
           email: address.email,
+          phone: address.phone,
           zip: address.zip,
           city: address.city,
           tlPrice: delivery,
@@ -272,15 +274,23 @@ const Cart = () => {
 
   const router = useRouter();
   const [tryAgain, setTryAgain] = useState(false);
+  const [disable, setDisable] = useState(false);
   const handleCheckout = async () => {
     if (
       (Object.keys(address).length !== 0 && cartItems.length >= 1) ||
       submited === true
     ) {
+      if (disable) {
+        return; // Exit the function if the button is already disabled
+      }
+
       setProcessing(true);
+      setDisable(true); // Disable the button
+
       try {
         await sendEmail();
         setProcessing(false);
+
         setTimeout(() => {
           router.push("/success");
         }, 1000); // Wait for 1 second before redirecting
@@ -288,14 +298,17 @@ const Cart = () => {
         setProcessing(false);
         toast.error("Error processing order!");
         setTryAgain(true);
+
         setTimeout(() => {
           setTryAgain(false);
+          setDisable(false); // Re-enable the button after an error
         }, 2000);
       }
     } else {
       toast.error("Please fill out the address form!");
     }
   };
+
   const isAddressFormFilled = () => {
     return (
       address.name &&
@@ -349,10 +362,12 @@ const Cart = () => {
                           width={"200px"}
                           className="rounded-lg"
                         />
-                       { items.discount && <span className="absolute top-0 right-0 z-10 bg-red-500 rounded-tr-lg text-white px-2 py-1 text-xs font-bold">
-                          {((items.discount / items.price) * 100).toFixed(0)}%
-                          OFF
-                        </span>}
+                        {items.discount && (
+                          <span className="absolute top-0 right-0 z-10 bg-red-500 rounded-tr-lg text-white px-2 py-1 text-xs font-bold">
+                            {((items.discount / items.price) * 100).toFixed(0)}%
+                            OFF
+                          </span>
+                        )}
                       </div>
                     </div>
 
@@ -468,6 +483,7 @@ const Cart = () => {
                     for other areas. Thank you for choosing us.
                   </div>
                 </div>
+                {console.log(address.phone)}
                 {/* Address Modal */}
                 {!(
                   address.name === "" &&
@@ -744,41 +760,11 @@ const Cart = () => {
                     </div>
                   </div>
                 </div>
-                {/* {
-                  setSubmited ? <button
-                  onClick={handleCheckout}
-                  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
-                  disabled={processing || Object.keys(address).length === 0}
-                >
-                  {processing ? (
-                    <span>Processing...</span>
-                  ) : orderCompleted ? (
-                    "Order Placed!"
-                  ) : tryAgain ? (
-                    <span>Try Again</span>
-                  ) : (
-                    "Proceed to Checkout"
-                  )}
-                </button>: <button
-                  onClick={handleCheckout}
-                  className="bg-black text-white border-t rounded-lg w-full disabled h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
-                  disabled={processing || Object.keys(address).length === 0}
-                >
-                  {processing ? (
-                    <span>Processing...</span>
-                  ) : orderCompleted ? (
-                    "Order Placed!"
-                  ) : tryAgain ? (
-                    <span>Try Again</span>
-                  ) : (
-                    "Proceed to Checkout"
-                  )}
-                </button>
-                } */}
+
                 <button
                   onClick={handleCheckout}
                   className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
-                  disabled={processing || !isAddressFormFilled()}
+                  disabled={disable || !isAddressFormFilled()}
                 >
                   {processing ? (
                     <span>Processing...</span>

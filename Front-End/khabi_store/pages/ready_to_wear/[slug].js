@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
 import Image from "next/image";
+import { useRouter } from "next/router";
+
 import { useEffect } from "react";
 const Product = ({ products, product }) => {
   const {
@@ -19,7 +21,20 @@ const Product = ({ products, product }) => {
   const [selected, setSelected] = useState("");
   useEffect(() => setDiscountedPrice(() => product.discount), []);
 
+  const router = useRouter();
   const [err, setErr] = useState(false);
+  const handleBuyNow = (event) => {
+    event.preventDefault();
+    
+    if (!selectedSize) {
+      setErr(true);
+    } else {
+      onAdd(product, qty);
+      router.push("/cart");
+    }
+  };
+  
+
   return (
     <>
       <div className="flex flex-col lg:flex-row  mx-[3rem] my-[3rem] gap-[6px]">
@@ -38,12 +53,11 @@ const Product = ({ products, product }) => {
             src={urlFor(product.image && product.image[0])}
             alt={product.name}
           />
-          {product.discount &&
+          {product.discount && (
             <span className="absolute top-0 right-0 z-10 bg-red-500 text-white px-2 py-1  text-xs font-bold">
-            {((product.discount / product.price) * 100).toFixed(0)}% OFF
-          </span>
-          }
-          
+              {((product.discount / product.price) * 100).toFixed(0)}% OFF
+            </span>
+          )}
         </div>
 
         <div className="flex flex-col md:w-[450px]">
@@ -155,16 +169,16 @@ const Product = ({ products, product }) => {
             {product.quantity && (
               <>
                 {selected ? (
-                  <Link href="/cart">
-                    <button
-                      onClick={() => onAdd(product, qty)}
-                      className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
-                    >
-                      Buy Now
-                    </button>
-                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleBuyNow}
+                    className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+                  >
+                    Buy Now
+                  </button>
                 ) : (
                   <button
+                    type="button"
                     onClick={() => setErr(true)}
                     className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
                     disabled={!product.quantity}

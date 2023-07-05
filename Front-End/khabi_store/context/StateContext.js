@@ -14,7 +14,7 @@ export const StateContext = ({ children }) => {
   const [showCart, setShowCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState({});
   const [discountedPrice, setDiscountedPrice] = useState(0);
-
+  const [coupon,setCoupon]=useState('');
   const [address, setAddress] = useState(() => {
     let localAddress = {
       name: "",
