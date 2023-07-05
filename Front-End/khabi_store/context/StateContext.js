@@ -14,7 +14,13 @@ export const StateContext = ({ children }) => {
   const [showCart, setShowCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState({});
   const [discountedPrice, setDiscountedPrice] = useState(0);
-  const [coupon,setCoupon]=useState('');
+  const [coupon, setCoupon] = useState("");
+  const [customerCoupon, setCustomerCoupon] = useState("");
+  const [couponStatus, setCouponStatus] = useState(false);
+  const [couponSubmit, setCouponSubmit] = useState(false);
+  const [originalPrice, setOriginalPrice] = useState(0);
+  const [originalCart, setOriginalCart] = useState(0);
+  const [lock, setLock] = useState(false);
   const [address, setAddress] = useState(() => {
     let localAddress = {
       name: "",
@@ -127,7 +133,7 @@ export const StateContext = ({ children }) => {
     setTotalQuantities(0);
     setTotalPrice(0);
   };
-  
+
   const incQty = () => {
     setQty((prev) => {
       if (prev + 1 <= 5) {
@@ -137,7 +143,7 @@ export const StateContext = ({ children }) => {
       }
     });
   };
-  
+
   const decQty = () => {
     setQty((prev) => {
       if (prev - 1 >= 1) {
@@ -147,7 +153,6 @@ export const StateContext = ({ children }) => {
       }
     });
   };
-  
 
   const onRemove = (product) => {
     const removedProducts = cartItems.filter(
@@ -187,11 +192,11 @@ export const StateContext = ({ children }) => {
   };
   const toggleCartItemQuanitity = (id, value) => {
     const foundProduct = cartItems.find((item) => item._id === id);
-  
+
     if (foundProduct) {
       const newCartItems = [...cartItems];
       const index = newCartItems.findIndex((product) => product._id === id);
-  
+
       if (value === "inc") {
         if (foundProduct.quantity < 5) {
           newCartItems[index] = {
@@ -209,9 +214,9 @@ export const StateContext = ({ children }) => {
           newCartItems.splice(index, 1);
         }
       }
-  
+
       setCartItems(newCartItems);
-  
+
       const totalPrice = newCartItems.reduce((acc, item) => {
         if (item.discount) {
           const discountedPrice = item.price - item.discount;
@@ -220,9 +225,9 @@ export const StateContext = ({ children }) => {
           return acc + item.price * item.quantity;
         }
       }, 0);
-  
+
       setTotalPrice(totalPrice);
-  
+
       const totalQuantities = newCartItems.reduce(
         (acc, item) => acc + item.quantity,
         0
@@ -230,8 +235,7 @@ export const StateContext = ({ children }) => {
       setTotalQuantities(totalQuantities);
     }
   };
-  
-  
+
   const onSizeChange = (productId, selectedSize) => {
     setSelectedSize((prevSelectedSize) => ({
       ...prevSelectedSize,
@@ -269,8 +273,21 @@ export const StateContext = ({ children }) => {
         setSubmited,
         onSizeChange,
         discountedPrice,
-        coupon,setCoupon,
+        coupon,
+        setCoupon,
         setDiscountedPrice,
+        customerCoupon,
+        setCustomerCoupon,
+        couponStatus,
+        setCouponStatus,
+        couponSubmit,
+        setCouponSubmit,
+        originalPrice,
+        setOriginalPrice,
+        originalCart,
+        setOriginalCart,
+        lock,
+        setLock,
       }}
     >
       {children}
