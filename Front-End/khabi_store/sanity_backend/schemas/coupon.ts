@@ -26,6 +26,11 @@ const coupon = {
         title: 'Coupon_Discount_PKR',
         type: 'number',
       },
+      {
+        name: 'minCouponPrice',
+        title: 'Min_Coupon_Price',
+        type: 'number',
+      },
       
     ],
   };

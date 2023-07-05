@@ -283,7 +283,7 @@ const Cart = ({ coupons }) => {
   const router = useRouter();
   const [tryAgain, setTryAgain] = useState(false);
   const [disable, setDisable] = useState(false);
-  const [couponStatus, setCouponStatus] = useState(false);
+
   const handleCheckout = async () => {
     if (
       (Object.keys(address).length !== 0 && cartItems.length >= 1) ||
@@ -329,27 +329,30 @@ const Cart = ({ coupons }) => {
     );
   };
   const [customerCoupon, setCustomerCoupon] = useState("");
-
+  const [couponStatus, setCouponStatus] = useState(false);
+  const [couponSubmit, setCouponSubmit] = useState(false);
+  console.log(cartItems);
   const submitCoupon = (e) => {
+    
     e.preventDefault();
-
+    setCouponSubmit(true);
     coupon.map((coupon) => {
-      if (customerCoupon === coupon.couponCode) {
-        if (coupon.couponDiscountPKR) {
-          const discountPKR = Number(coupon.couponDiscountPKR);
-          setTotalPrice(totalPrice - discountPKR);
-          setCouponStatus(true);
-        } else if (coupon.couponDiscountPercentage) {
-          const discountPercentage = Number(coupon.couponDiscountPercentage);
-          const discountAmount = (totalPrice * discountPercentage) / 100;
-          const discountedPrice = totalPrice - discountAmount;
-          setTotalPrice(discountedPrice);
-          setCouponStatus(true);
+      if (totalPrice >= coupon.minCouponPrice) {
+        if (customerCoupon === coupon.couponCode) {
+          if (coupon.couponDiscountPKR) {
+            const discountPKR = Number(coupon.couponDiscountPKR);
+            setTotalPrice(totalPrice - discountPKR);
+            setCouponStatus(true);
+          } else if (coupon.couponDiscountPercentage) {
+            const discountPercentage = Number(coupon.couponDiscountPercentage);
+            const discountAmount = (totalPrice * discountPercentage) / 100;
+            const discountedPrice = totalPrice - discountAmount;
+            setTotalPrice(discountedPrice);
+            setCouponStatus(true);
+          }
         }
       }
     });
-
-    console.log(totalPrice);
   };
 
   const handleCoupon = (e) => {
@@ -778,17 +781,28 @@ const Cart = ({ coupons }) => {
                     <label htmlFor="couponInput" className="text-sm">
                       Enter your coupon code:
                     </label>
-                    <input
-                      type="text"
-                      id="couponInput"
-                      className={`border ${
-                        couponStatus ? "border-green-500" : "border-red-500"
-                      } rounded-lg py-2 px-4`}
-                      placeholder="Enter coupon code"
-                      onChange={handleCoupon}
-                      onSubmit={submitCoupon}
-                      disabled={couponStatus}
-                    />
+                    {couponSubmit ?couponStatus ? (
+                      <div className="text-sm text-green-500">
+                        Coupon Applied!
+                      </div>
+                    ) : (
+                      <div className="text-sm text-red-500">
+                        Invalid coupon code. Please try again.
+                      </div>
+                    ):''}
+                   <input
+  type="text"
+  id="couponInput"
+  className={`border border-gray-400 ${
+    couponSubmit ? (couponStatus ? "border-green-500" : "border-red-500") : ""
+  } rounded-lg py-2 px-4`}
+  placeholder="Enter coupon code"
+  onChange={handleCoupon}
+  onSubmit={submitCoupon}
+  disabled={couponStatus}
+/>
+
+
                     <button
                       onClick={submitCoupon}
                       className="bg-black text-white rounded-lg py-2 px-4 hover:bg-gray-600"
@@ -796,6 +810,10 @@ const Cart = ({ coupons }) => {
                     >
                       Apply Coupon
                     </button>
+                    <div className=" text-sm text-gray-500">
+                      *Coupon can only be applied within the specified limit and
+                      before adding the shipping fee.
+                    </div>
                   </div>
                 </div>
 
