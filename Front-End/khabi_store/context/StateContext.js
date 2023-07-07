@@ -42,7 +42,6 @@ export const StateContext = ({ children }) => {
     }
     return localAddress;
   });
-
   const localCart =
     (typeof window !== "undefined" &&
       JSON.parse(localStorage.getItem(CART_ITEMS_STORAGE_KEY))) ||
@@ -62,12 +61,15 @@ export const StateContext = ({ children }) => {
   const [totalQuantities, setTotalQuantities] = useState(0);
 
   const [qty, setQty] = useState(1);
+
+
   useEffect(() => {
     setCartItems(localCart);
     setTotalPrice(localPrice);
     setTotalQuantities(localQty);
     // setAddress(localAddress);
   }, []);
+
   useEffect(() => {
     localStorage.setItem(CART_ITEMS_STORAGE_KEY, JSON.stringify(cartItems));
     localStorage.setItem(
