@@ -550,147 +550,134 @@ const Cart = ({ coupons }) => {
                       </div>
                     </div>
                   </div>
-                  <button
+                  {/* <button
                     className="bg-gray-800 text-white rounded-lg py-2 px-4 hover:bg-gray-600"
                     type="submit"
                     onClick={handleSubmit}
                   >
                     Submit
-                  </button>
+                  </button> */}
                 </form>
+                <div className="w-full flex pb-3 gap-4">
+  <div className="font-medium">Your Address:</div>
+  <div className="flex flex-col gap-2 mx-2">
+    {address.name && (
+      <span className="break-words text-gray-600 text-sm">
+        <strong>Name:</strong> {address.name}
+      </span>
+    )}
+    {address.phone && (
+      <span className="break-words text-gray-600 text-sm">
+        <strong>Phone:</strong> {address.phone}
+      </span>
+    )}
+    {address.email && (
+      <span className="break-words text-gray-600 text-sm">
+        <strong>Email:</strong> {address.email}
+      </span>
+    )}
+    {address.addressAll && address.city && address.zip && (
+      <span className="break-words max-w-[150px] sm:max-w-[300px] md:max-w-[600px] text-gray-600 text-sm">
+        <strong>Address:</strong> {address.addressAll}, {address.city}, {address.zip}
+      </span>
+    )}
+  </div>
+</div>
+
               </div>
             )}
           </div>
           <div className={`flex flex-col justify-start flex-[1]`}>
-            <div className="flex flex-col bg-gray-100 rounded-lg p-4 w-full">
+            <div className="flex flex-col  rounded-lg p-4 w-full">
               <div className="text-xl font-semibold underline text-gray-800 mb-4">
                 Order Summary
               </div>
               {cartItems.length >= 1 && (
-                <div className="my-4">
-                  {cartItems.map((item) => (
-                    <div
-                      className="flex items-center border-b py-2 px-4"
-                      key={item._id}
-                    >
-                      <div className="relative">
-                        <img
-                          src={urlFor(item?.image[0])}
-                          width={"200px"}
-                          className="rounded-lg"
-                          alt={item.name}
-                        />
-                        {item.discount && (
-                          <span className="absolute top-0 right-0 z-10 bg-red-500 rounded-tr-lg text-white px-2 py-1 text-sm ">
-                            {((item.discount / item.price) * 100).toFixed(0)}%
-                            OFF
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex flex-col ml-3">
-                        <div className="font-semibold text-lg break-words">
-                          <Link href={`./ready_to_wear/${item.slug.current}`}>
-                            {item.name}
-                          </Link>
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          Code: {item.productCode} | Category:{" "}
-                          <Link href={`./ready_to_wear/`}>{item.category}</Link>
-                        </div>
-                        <div className="text-sm flex items-center py-1 text-gray-500">
-                          Size:
-                          <span className="w-[18px] h-[18px] text-[10px] text-black rounded-full bg-black/[0.1] flex items-center justify-center ml-1">
-                            {item.size}
-                          </span>
-                        </div>
-                        <div className="text-sm flex items-center py-1">
-                          {item.quantity ? (
-                            <div className="text-green-400">In Stock</div>
-                          ) : (
-                            <div className="text-red-400">Out of Stock</div>
-                          )}
-                          <div className="font-[500] hidden md:block ml-2">
-                            {item.quantity ? `Quantity: ${item.quantity}` : ""}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex flex-col ml-auto">
-                        <div className="flex flex-col items-end">
-                          <div className="text-xl text-gray-600">
-                            PKR{" "}
-                            {item.discount
-                              ? item.price - item.discount
-                              : item.price}
-                            {item.discount && (
-                              <span className="ml-1 text-xs text-red-500">
-                                (
-                                {((item.discount / item.price) * 100).toFixed(
-                                  0
-                                )}
-                                % OFF)
-                              </span>
-                            )}
-                          </div>
-                          <div className="font-[500] hidden md:block">
-                            Per Price
-                          </div>
-                        </div>
-                        <div className="flex flex-col items-end mt-1">
-                          <div className="flex items-center">
-                            <button
-                              className="px-1 bg-gray-200 text-gray-700 rounded-l text-xs"
-                              onClick={() =>
-                                toggleCartItemQuanitity(item._id, "dec")
-                              }
-                            >
-                              -
-                            </button>
-                            <span className="mx-1 text-lg text-gray-600">
-                              {item.quantity}
-                            </span>
-                            <button
-                              className="px-1 bg-gray-200 text-gray-700 rounded-r text-xs"
-                              onClick={() =>
-                                toggleCartItemQuanitity(item._id, "inc")
-                              }
-                            >
-                              +
-                            </button>
-                          </div>
-                          <div className="font-[500] hidden md:block">
-                            Quantity
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center">
-                  <p className="font-medium text-gray-800 text-base">
-                    Items Total:
-                  </p>
-                  <div className="text-base">{totalQuantities}</div>
-                </div>
-                <div className="flex items-center">
-                  <p className="font-medium text-gray-800 text-base">
-                    Delivery Fee:
-                  </p>
-                  <div className="text-base">
-                    PKR {totalPrice >= 2499 ? "0" : "99"}/-
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col mt-2">
-                <div className="bg-gray-800 text-white rounded-lg py-2 px-3">
-                  <p className="font-medium text-lg">Grand Total:</p>
-                  <div className="text-lg">
-                    PKR {delivery}/-{" "}
-                    <span className="text-sm">(incl. shipping fee)</span>
-                  </div>
-                </div>
-              </div>
+  <div className="my-4">
+    {cartItems.map((item) => (
+      <div className="flex items-center py-4 border-b border-gray-200" key={item._id}>
+        <img
+          src={urlFor(item?.image[0])}
+          width="100"
+          className="rounded-lg"
+          alt={item.name}
+        />
+        <div className="flex flex-col ml-3">
+          <div className="text-lg font-semibold">
+            <Link href={`./ready_to_wear/${item.slug.current}`}>
+              {item.name}
+            </Link>
+          </div>
+          {item.productCode && <div className="text-sm text-gray-500">
+            Code: {item.productCode}
+          </div>}
+          <div className="text-sm flex items-center">
+            Size:
+            <span className="w-4 h-4 text-xs text-black rounded-full bg-black/[0.1] flex items-center justify-center ml-1">
+              {item.size}
+            </span>
+          </div>
+          <div className="text-sm flex items-center mt-2">
+            Quantity:
+            <div className="flex items-center ml-2">
+              <button
+                className="px-1.5 py-0.5 bg-slate-200  text-gray-700 rounded-l text-xs hover:bg-gray-300"
+                onClick={() => toggleCartItemQuanitity(item._id, "dec")}
+              >
+                -
+              </button>
+              <span className="px-2 py-1 text-lg text-gray-600 ">
+                {item.quantity}
+              </span>
+              <button
+                className="px-1.5 py-0.5 bg-slate-200   text-gray-700 rounded-r text-xs hover:bg-gray-300"
+                onClick={() => toggleCartItemQuanitity(item._id, "inc")}
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="ml-auto">
+          <div className="text-xl text-gray-600">
+            PKR{" "}
+            {item.discount ? item.price - item.discount : item.price}
+            {item.discount && (
+              <span className="ml-2 text-xs text-red-500">
+                {((item.discount / item.price) * 100).toFixed(0)}% OFF
+              </span>
+            )}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+
+
+<div className="flex flex-col gap-4">
+  <div className="flex items-center justify-between">
+    <p className="font-semibold text-gray-800 text-lg">Items Total:</p>
+    <div className="text-lg">{totalQuantities}</div>
+  </div>
+  <div className="flex items-center justify-between">
+    <p className="font-semibold text-gray-800 text-lg">Delivery Fee:</p>
+    <div className="text-lg">
+      PKR {totalPrice >= 2499 ? "0" : "99"}/-
+    </div>
+  </div>
+  <div className="flex flex-col mt-4">
+    <div className="bg-gray-800 text-white rounded-lg py-4 px-6">
+      <p className="font-medium text-lg">Grand Total:</p>
+      <div className="text-2xl font-bold">
+        PKR {delivery}/-{" "}
+        <span className="text-sm">(incl. shipping fee)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
               <div>
                 <button
                   className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
@@ -797,10 +784,10 @@ const Cart = ({ coupons }) => {
                                         </div>
                                         <div className="flex flex-col items-end">
                                           <span className="text-lg text-blue-600 font-semibold">
-                                            PKR {totalPrice + 99}/-
+                                            PKR {totalPrice>=2499 ? totalPrice :totalPrice + 99}/-
                                           </span>
                                           <span className="text-xs line-through text-gray-500">
-                                            PKR {storedPrice + 99}/-
+                                            PKR {storedPrice>=2499 ? storedPrice :storedPrice + 99}/-
                                           </span>
                                         </div>
                                       </div>
