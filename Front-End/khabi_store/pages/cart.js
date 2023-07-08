@@ -37,7 +37,8 @@ const Cart = ({ coupons }) => {
     setOriginalCart,
     lock,
     setLock,
-    addCoupon, setAddCoupon,
+    addCoupon,
+    setAddCoupon,
     coupon,
     setCoupon,
     setMailState,
@@ -350,7 +351,7 @@ const Cart = ({ coupons }) => {
   const submitCoupon = (e) => {
     e.preventDefault();
     setCouponSubmit(true);
-  
+
     if (customerCoupon.trim() === "") {
       // Clear coupon information when no coupon is entered
       setCouponStatus(false);
@@ -364,7 +365,7 @@ const Cart = ({ coupons }) => {
           customerCoupon === couponItem.couponCode
         ) {
           setStoredPrice(totalPrice);
-  
+
           if (couponItem.couponDiscountPKR) {
             const discountPKR = Number(couponItem.couponDiscountPKR);
             const discountedPrice = totalPrice - discountPKR;
@@ -373,7 +374,9 @@ const Cart = ({ coupons }) => {
             setOriginalCart(cartItems);
             setCouponStatus(true);
           } else if (couponItem.couponDiscountPercentage) {
-            const discountPercentage = Number(couponItem.couponDiscountPercentage);
+            const discountPercentage = Number(
+              couponItem.couponDiscountPercentage
+            );
             const discountAmount = (totalPrice * discountPercentage) / 100;
             const discountedPrice = totalPrice - discountAmount;
             setTotalPrice(discountedPrice);
@@ -385,38 +388,33 @@ const Cart = ({ coupons }) => {
       });
     }
   };
-  useEffect(
-    () => {
-      if (cartItems.length !== originalCart) {
-        if (cartItems.length === 0) {
-          setTotalPrice(0); // Reset total price to 0 when cart is empty
-          setCouponStatus(false);
-          setCustomerCoupon("");
-        }
-        coupon &&
-          coupon.map((couponItem) => {
-            if (totalPrice >= couponItem.minCouponPrice) {
-              if (coupon.couponDiscountPKR) {
-                const discountPKR = Number(coupon.couponDiscountPKR);
-                setTotalPrice(totalPrice - discountPKR);
-                setCouponStatus(true);
-             
-              } else if (coupon.couponDiscountPercentage) {
-                const discountPercentage = Number(
-                  coupon.couponDiscountPercentage
-                );
-                const discountAmount = (totalPrice * discountPercentage) / 100;
-                const discountedPrice = totalPrice - discountAmount;
-                setTotalPrice(discountedPrice);
-                setCouponStatus(true);
-               
-              }
-            }
-          });
+  useEffect(() => {
+    if (cartItems.length !== originalCart) {
+      if (cartItems.length === 0) {
+        setTotalPrice(0); // Reset total price to 0 when cart is empty
+        setCouponStatus(false);
+        setCustomerCoupon("");
       }
-    },
-    [cartItems.length,totalPrice]
-  );
+      coupon &&
+        coupon.map((couponItem) => {
+          if (totalPrice >= couponItem.minCouponPrice) {
+            if (coupon.couponDiscountPKR) {
+              const discountPKR = Number(coupon.couponDiscountPKR);
+              setTotalPrice(totalPrice - discountPKR);
+              setCouponStatus(true);
+            } else if (coupon.couponDiscountPercentage) {
+              const discountPercentage = Number(
+                coupon.couponDiscountPercentage
+              );
+              const discountAmount = (totalPrice * discountPercentage) / 100;
+              const discountedPrice = totalPrice - discountAmount;
+              setTotalPrice(discountedPrice);
+              setCouponStatus(true);
+            }
+          }
+        });
+    }
+  }, [cartItems.length, totalPrice]);
   const handleCoupon = (e) => {
     e.preventDefault();
     setCustomerCoupon(e.target.value);
@@ -454,125 +452,105 @@ const Cart = ({ coupons }) => {
               lock ? "opacity-50 pointer-events-none" : ""
             }`}
           >
-            {cartItems.length >= 1 &&
-              cartItems.map((items, index) => (
-                <div className="flex  border-b  border-l py-5 " key={items._id}>
-                  <div className="flex min-[500px]:flex-row md:flex-row items-center md:items-start flex-col gap-6 md:gap-[3rem] md:justify-evenly w-[100%] ">
-                    <div>
-                      <div className="relative">
-                        <img
-                          src={urlFor(items?.image[0])}
-                          width={"200px"}
-                          className="rounded-lg"
-                        />
-                        {items.discount && (
-                          <span className="absolute top-0 right-0 z-10 bg-red-500 rounded-tr-lg text-white px-2 py-1 text-xs font-bold">
-                            {((items.discount / items.price) * 100).toFixed(0)}%
-                            OFF
-                          </span>
-                        )}
-                      </div>
-                    </div>
+          {cartItems.length >= 1 &&
+  cartItems.map((items, index) => (
+    <div className="flex items-center py-5 border-b border-l" key={items._id}>
+      <div className="flex items-center gap-6 w-full">
+        <div>
+          <div className="relative">
+            <img
+              src={urlFor(items?.image[0])}
+              width={"200px"}
+              className="rounded-lg"
+            />
+            {items.discount && (
+              <span className="absolute top-0 right-0 z-10 bg-red-500 rounded-tr-lg text-white px-2 py-1 text-xs font-bold">
+                {((items.discount / items.price) * 100).toFixed(0)}% OFF
+              </span>
+            )}
+          </div>
+        </div>
 
-                    <div className="flex flex-col md:flex-row items-center min-[500px]:items-start">
-                      <div className="flex flex-col gap-2 items-center min-[500px]:items-start md:my-6 w-[200px]">
-                        <div className="font-semibold text-lg break-words">
-                          <Link href={`./ready_to_wear/${items.slug.current}`}>
-                            {items.name}
-                          </Link>
-                        </div>
-                        <div className="text-[15px] text-gray-500">
-                          Code: {items.productCode}
-                        </div>
-                        <div className="text-[15px] text-gray-500">
-                          <Link href={`./ready_to_wear/`}>
-                            {items.category}
-                          </Link>
-                        </div>
-                        <div className="text-[15px] flex gap-1 items-center py-1 text-gray-500">
-                          {" "}
-                          Size:
-                          <span className="w-[20px] h-[20px] text-[12px] text-black rounded-full bg-black/[0.1] flex items-center justify-center">
-                            {items.size}
-                          </span>
-                        </div>
-                        <div className="hidden md:block">
-                          {items.quantity ? (
-                            <div className="text-green-400 text-[14px]">
-                              In Stock
-                            </div>
-                          ) : (
-                            <div className="text-red-400 text-[14px]">
-                              Out of Stock
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex flex-col  gap-2 md:w-[100px] md:items-center md:my-6">
-                        <div className="flex flex-col gap-2 md:my-1 items-center">
-                          <div className="font-[500] text-[15px] text-lg hidden md:block">
-                            Per Price
-                          </div>
-                          {items.discount ? (
-                            <div className="flex flex-col items-center justify-start  ">
-                              <div className="text-[18px] text-gray-600 items-center">
-                                PKR {items.price - items.discount}
-                              </div>
-                              <div className="text-[14px] text-gray-600 line-through">
-                                PKR {items.price}
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="text-[16px] text-gray-600">
-                              PKR {items.price}
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex flex-col md:my-1 gap-2  items-center ">
-                          <div className="font-[500] text-[15px] text-lg hidden md:block">
-                            Quantity
-                          </div>
-                          <div className="flex items-center ">
-                            <button
-                              className="px-2 bg-gray-200 text-gray-700 rounded-l"
-                              onClick={() =>
-                                toggleCartItemQuanitity(items._id, "dec")
-                              }
-                            >
-                              -
-                            </button>
-                            <span className="mx-2 text-lg text-gray-600">
-                              {items.quantity}
-                            </span>
-                            <button
-                              className="px-2 bg-gray-200 text-gray-700 rounded-r"
-                              onClick={() =>
-                                toggleCartItemQuanitity(items._id, "inc")
-                              }
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="w-[100px] md:block hidden">
-                      <div className="w-[100px] md:block hidden">
-                        <div className="w-[100px] md:block hidden">
-                          <RxCross2
-                            size={25}
-                            className={`cursor-pointer ${
-                              processing ? "opacity-50" : ""
-                            }`}
-                            disabled={lock}
-                            onClick={() => !processing && onRemove(items)}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+        <div className="flex flex-col gap-4 md:gap-6">
+          <div className="font-semibold text-lg break-words">
+            <Link href={`./ready_to_wear/${items.slug.current}`}>
+              {items.name}
+            </Link>
+          </div>
+          <div className="text-sm text-gray-500">
+            Code: {items.productCode}
+          </div>
+          <div className="text-sm text-gray-500">
+            <Link href={`./ready_to_wear/`}>{items.category}</Link>
+          </div>
+          <div className="text-sm flex gap-1 items-center py-1 text-gray-500">
+            Size:
+            <span className="w-6 h-6 text-xs text-white rounded-full bg-black/20 flex items-center justify-center">
+              {items.size}
+            </span>
+          </div>
+          <div className="hidden md:block">
+            {items.quantity ? (
+              <div className="text-green-400 text-sm">In Stock</div>
+            ) : (
+              <div className="text-red-400 text-sm">Out of Stock</div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4 md:gap-6">
+          <div className="flex flex-col items-start">
+            <div className="font-medium text-base text-gray-600">
+              Per Price
+            </div>
+            {items.discount ? (
+              <div className="flex flex-col items-start">
+                <div className="text-xl text-gray-600">
+                  PKR {items.price - items.discount}
                 </div>
-              ))}
+                <div className="text-sm text-gray-400 line-through">
+                  PKR {items.price}
+                </div>
+              </div>
+            ) : (
+              <div className="text-xl text-gray-600">PKR {items.price}</div>
+            )}
+          </div>
+
+          <div className="flex items-center">
+            <div className="font-medium text-base text-gray-600">Quantity</div>
+            <div className="flex items-center ml-2">
+              <button
+                className="px-3 py-1 bg-gray-200 text-gray-700 rounded-l"
+                onClick={() => toggleCartItemQuanitity(items._id, "dec")}
+              >
+                -
+              </button>
+              <span className="px-3 py-1 text-lg text-gray-600">
+                {items.quantity}
+              </span>
+              <button
+                className="px-3 py-1 bg-gray-200 text-gray-700 rounded-r"
+                onClick={() => toggleCartItemQuanitity(items._id, "inc")}
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="hidden md:block">
+          <RxCross2
+            size={25}
+            className={`cursor-pointer ${processing ? "opacity-50" : ""}`}
+            disabled={lock}
+            onClick={() => !processing && onRemove(items)}
+          />
+        </div>
+      </div>
+    </div>
+  ))}
+
           </div>
           <div className="flex flex-[0.5] border-l border-r justify-center border-b">
             {cartItems.length >= 1 && (
@@ -837,30 +815,36 @@ const Cart = ({ coupons }) => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col gap-5 border-t w-[100%] border-b py-5 px-2 ">
-                  <div className="text-lg font-semibold underline underline-offset-8">
-                    Order Summary
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <div className="flex gap-2">
-                      <p className="font-medium">Items Total:</p>
-                      <div>{totalQuantities}</div>
-                    </div>
+                <div className="flex flex-col bg-gray-100 rounded-lg p-4 w-72">
+  <div className="text-xl font-semibold underline text-gray-800 mb-4">
+    Order Summary
+  </div>
+  <div className="flex flex-col gap-3">
+    <div className="flex items-center">
+      <p className="font-medium text-gray-800 text-base">Items Total:</p>
+      <div className="text-base">{totalQuantities}</div>
+    </div>
 
-                    <div className="flex gap-2">
-                      <p className="font-medium">Delivery Fee:</p>
-                      <div>PKR {totalPrice >= 2499 ? "0" : "99"}/-</div>
-                    </div>
+    <div className="flex items-center">
+      <p className="font-medium text-gray-800 text-base">Delivery Fee:</p>
+      <div className="text-base">PKR {totalPrice >= 2499 ? "0" : "99"}/-</div>
+    </div>
+  </div>
 
-                    <div className="flex items-center gap-2 w-[100%] bg-gray-600 text-white px-1">
-                      <p className="font-medium text-[16px]  ">Grand Total:</p>
-                      <div className=" text-[16px]">
-                        PKR {delivery}/-{" "}
-                        <span className="text-sm"> (incl shipping fee)</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+  <div className="flex flex-col mt-4">
+    <div className="bg-gray-600 text-white rounded-lg py-3 px-4">
+      <p className="font-medium text-lg">Grand Total:</p>
+      <div className="text-lg">
+        PKR {delivery}/- <span className="text-sm">(incl. shipping fee)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
 
                 <div>
                   <button
@@ -971,10 +955,10 @@ const Cart = ({ coupons }) => {
                                           </div>
                                           <div className="flex flex-col items-end">
                                             <span className="text-lg text-blue-600 font-semibold">
-                                              PKR {totalPrice}/-
+                                              PKR {totalPrice+99}/-
                                             </span>
                                             <span className="text-xs line-through text-gray-500">
-                                              PKR {storedPrice}/-
+                                              PKR {storedPrice+99}/-
                                             </span>
                                           </div>
                                         </div>
