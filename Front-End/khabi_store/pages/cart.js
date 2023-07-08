@@ -430,235 +430,242 @@ const Cart = ({ coupons }) => {
 
       {cartItems.length >= 1 && (
         <div className="flex flex-col min-[996px]:flex-row">
-          <div className="flex flex-[1] border-l border-r  border-b">
-          {cartItems.length >= 1 && (
-  <div className="px-5 py-5 flex flex-col">
-    <form onSubmit={handleSubmit}>
-      <div className="flex flex-col gap-6 items-center justify-center p-6">
-        <div className="flex flex-col">
-          <label htmlFor="name" className="font-semibold">
-            Full Name:
-          </label>
-          <div className="flex">
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={address.name}
-              onChange={handleChange}
-              placeholder="Enter your full name"
-              className="border rounded-lg px-4 py-2 mt-1 flex-grow"
-              required
-            />
-            <div className="text-red-600 text-sm ml-2">{address.nameErr}</div>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-6">
-          <div className="flex flex-col flex-grow">
-            <label htmlFor="phone" className="font-semibold">
-              Phone:
-            </label>
-            <input
-              type="text"
-              id="phone"
-              name="phone"
-              value={address.phone}
-              onChange={handleChange}
-              placeholder="Enter your phone number"
-              className="border rounded-lg px-4 py-2 mt-1 flex-grow"
-              required
-            />
-            <div className="text-red-600 text-sm">{address.phoneErr}</div>
-          </div>
-          <div className="flex flex-col flex-grow">
-            <label htmlFor="email" className="font-semibold">
-              Email:
-            </label>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              value={address.email}
-              onChange={handleChange}
-              placeholder="Enter your email address"
-              className="border rounded-lg px-4 py-2 mt-1 flex-grow"
-              required
-            />
-            <div className="text-red-600 text-sm">{address.emailErr}</div>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-6">
-          <div className="flex flex-col flex-grow">
-            <label htmlFor="zip" className="font-semibold">
-              ZIP Code:
-            </label>
-            <input
-              type="text"
-              id="zip"
-              name="zip"
-              value={address.zip}
-              onChange={handleChange}
-              placeholder="Enter your ZIP code"
-              className="border rounded-lg px-4 py-2 mt-1 flex-grow"
-              required
-            />
-            <div className="text-red-600 text-sm">{address.zipErr}</div>
-          </div>
-          <div className="flex flex-col flex-grow">
-            <label htmlFor="city" className="font-semibold">
-              City:
-            </label>
-            <input
-              type="text"
-              id="city"
-              name="city"
-              value={address.city}
-              onChange={handleChange}
-              placeholder="Enter your city"
-              className="border rounded-lg px-4 py-2 mt-1 flex-grow"
-              required
-            />
-            <div className="text-red-600 text-sm">{address.cityErr}</div>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-6">
-          <div className="flex flex-col flex-grow">
-            <label htmlFor="addressAll" className="font-semibold">
-              Address:
-            </label>
-            <textarea
-              id="addressAll"
-              name="addressAll"
-              value={address.addressAll}
-              onChange={handleChange}
-              placeholder="Enter your address"
-              rows={6}
-              className="border rounded-lg px-4 py-2 mt-1 resize-none flex-grow"
-              required
-            />
-            <div className="text-red-600 text-sm">{address.addressErr}</div>
-          </div>
-        </div>
-        <button
-          className="bg-black text-white rounded-lg py-2 px-4 hover:bg-gray-600"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
-      </div>
-    </form>
-  </div>
-)}
-
-
-          </div>
-          <div
-            className={`flex flex-col justify-start scrollbar-thin scrollbar-thumb-gray-700 flex-[1] `}
-          >
+          <div className="flex  border-l border-r flex-1 border-b">
             {cartItems.length >= 1 && (
-              <div>
-                {cartItems.map((items, index) => (
-                  <div
-                    className="flex items-center border-b py-3"
-                    key={items._id}
-                  >
-                    <div className="relative">
-                      <img
-                        src={urlFor(items?.image[0])}
-                        width={"200px"}
-                        className="rounded-lg"
+              <div className="px-5 py-5 flex flex-1 flex-col">
+                <form onSubmit={handleSubmit}>
+                  <div className="flex flex-col items-baseline my-4 flex-grow ">
+                    <label htmlFor="name" className="font-semibold">
+                      Full Name:
+                    </label>
+                    <div className="flex  flex-col justify-start items-start">
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={address.name}
+                        onChange={handleChange}
+                        placeholder="Enter your full name"
+                        className="border rounded-lg px-4 py-2 mt-1 flex-grow w-[50vw]"
+                        required
                       />
-                      {items.discount && (
-                        <span className="absolute top-0 right-0 z-10 bg-red-500 rounded-tr-lg text-white px-2 py-1 text-xs font-bold">
-                          {((items.discount / items.price) * 100).toFixed(0)}%
-                          OFF
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex flex-col ml-4">
-                      <div className="font-semibold text-base break-words">
-                        <Link href={`./ready_to_wear/${items.slug.current}`}>
-                          {items.name}
-                        </Link>
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        Code: {items.productCode}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        <Link href={`./ready_to_wear/`}>{items.category}</Link>
-                      </div>
-                      <div className="text-xs flex items-center py-1 text-gray-500">
-                        Size:
-                        <span className="w-[18px] h-[18px] text-[10px] text-black rounded-full bg-black/[0.1] flex items-center justify-center ml-1">
-                          {items.size}
-                        </span>
-                      </div>
-                      <div className="hidden md:block">
-                        {items.quantity ? (
-                          <div className="text-green-400 text-xs">In Stock</div>
-                        ) : (
-                          <div className="text-red-400 text-xs">
-                            Out of Stock
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex flex-col ml-auto">
-                      <div className="flex flex-col items-end">
-                        <div className="font-[500] text-xs hidden md:block">
-                          Per Price
-                        </div>
-                        {items.discount ? (
-                          <div className="flex flex-col items-end">
-                            <div className="text-[14px] text-gray-600">
-                              PKR {items.price - items.discount}
-                            </div>
-                            <div className="text-[12px] text-gray-600 line-through">
-                              PKR {items.price}
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="text-[12px] text-gray-600">
-                            PKR {items.price}
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex flex-col items-end mt-1">
-                        <div className="font-[500] text-xs  hidden md:block">
-                          Quantity
-                        </div>
-                        <div className="flex items-center">
-                          <button
-                            className="px-1 bg-gray-200 text-gray-700 rounded-l text-xs"
-                            onClick={() =>
-                              toggleCartItemQuanitity(items._id, "dec")
-                            }
-                          >
-                            -
-                          </button>
-                          <span className="mx-1 text-sm text-gray-600">
-                            {items.quantity}
-                          </span>
-                          <button
-                            className="px-1 bg-gray-200 text-gray-700 rounded-r text-xs"
-                            onClick={() =>
-                              toggleCartItemQuanitity(items._id, "inc")
-                            }
-                          >
-                            +
-                          </button>
-                        </div>
+                      <div className="text-red-600 text-sm ml-2">
+                        {address.nameErr}
                       </div>
                     </div>
                   </div>
-                ))}
+                  <div className="flex flex-wrap gap-6 my-4">
+                    <div className="flex flex-col flex-grow">
+                      <label htmlFor="phone" className="font-semibold">
+                        Phone:
+                      </label>
+                      <input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        value={address.phone}
+                        onChange={handleChange}
+                        placeholder="Enter your phone number"
+                        className="border rounded-lg px-4 py-2 mt-1 flex-grow"
+                        required
+                      />
+                      <div className="text-red-600 text-sm">
+                        {address.phoneErr}
+                      </div>
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <label htmlFor="email" className="font-semibold">
+                        Email:
+                      </label>
+                      <input
+                        type="text"
+                        id="email"
+                        name="email"
+                        value={address.email}
+                        onChange={handleChange}
+                        placeholder="Enter your email address"
+                        className="border rounded-lg px-4 py-2 mt-1 flex-grow"
+                        required
+                      />
+                      <div className="text-red-600 text-sm">
+                        {address.emailErr}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-6 my-4">
+                    <div className="flex flex-col flex-grow">
+                      <label htmlFor="zip" className="font-semibold">
+                        ZIP Code:
+                      </label>
+                      <input
+                        type="text"
+                        id="zip"
+                        name="zip"
+                        value={address.zip}
+                        onChange={handleChange}
+                        placeholder="Enter your ZIP code"
+                        className="border rounded-lg px-4 py-2 mt-1 flex-grow"
+                        required
+                      />
+                      <div className="text-red-600 text-sm">
+                        {address.zipErr}
+                      </div>
+                    </div>
+                    <div className="flex flex-col flex-grow">
+                      <label htmlFor="city" className="font-semibold">
+                        City:
+                      </label>
+                      <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        value={address.city}
+                        onChange={handleChange}
+                        placeholder="Enter your city"
+                        className="border rounded-lg px-4 py-2 mt-1 flex-grow"
+                        required
+                      />
+                      <div className="text-red-600 text-sm">
+                        {address.cityErr}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-6 my-4">
+                    <div className="flex flex-col flex-grow">
+                      <label htmlFor="addressAll" className="font-semibold">
+                        Address:
+                      </label>
+                      <textarea
+                        id="addressAll"
+                        name="addressAll"
+                        value={address.addressAll}
+                        onChange={handleChange}
+                        placeholder="Enter your address"
+                        rows={4}
+                        className="border rounded-lg px-4 py-2 mt-1 resize-none flex-grow"
+                        required
+                      />
+                      <div className="text-red-600 text-sm">
+                        {address.addressErr}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    className="bg-gray-800 text-white rounded-lg py-2 px-4 hover:bg-gray-600"
+                    type="submit"
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </button>
+                </form>
               </div>
             )}
-            <div className="flex flex-col bg-gray-100 rounded-lg p-4 w-[100%]">
+          </div>
+          <div className={`flex flex-col justify-start flex-[1]`}>
+            <div className="flex flex-col bg-gray-100 rounded-lg p-4 w-full">
               <div className="text-xl font-semibold underline text-gray-800 mb-4">
                 Order Summary
               </div>
+              {cartItems.length >= 1 && (
+                <div className="my-4">
+                  {cartItems.map((item) => (
+                    <div
+                      className="flex items-center border-b py-2 px-4"
+                      key={item._id}
+                    >
+                      <div className="relative">
+                        <img
+                          src={urlFor(item?.image[0])}
+                          width={"200px"}
+                          className="rounded-lg"
+                          alt={item.name}
+                        />
+                        {item.discount && (
+                          <span className="absolute top-0 right-0 z-10 bg-red-500 rounded-tr-lg text-white px-2 py-1 text-sm ">
+                            {((item.discount / item.price) * 100).toFixed(0)}%
+                            OFF
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex flex-col ml-3">
+                        <div className="font-semibold text-lg break-words">
+                          <Link href={`./ready_to_wear/${item.slug.current}`}>
+                            {item.name}
+                          </Link>
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          Code: {item.productCode} | Category:{" "}
+                          <Link href={`./ready_to_wear/`}>{item.category}</Link>
+                        </div>
+                        <div className="text-sm flex items-center py-1 text-gray-500">
+                          Size:
+                          <span className="w-[18px] h-[18px] text-[10px] text-black rounded-full bg-black/[0.1] flex items-center justify-center ml-1">
+                            {item.size}
+                          </span>
+                        </div>
+                        <div className="text-sm flex items-center py-1">
+                          {item.quantity ? (
+                            <div className="text-green-400">In Stock</div>
+                          ) : (
+                            <div className="text-red-400">Out of Stock</div>
+                          )}
+                          <div className="font-[500] hidden md:block ml-2">
+                            {item.quantity ? `Quantity: ${item.quantity}` : ""}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex flex-col ml-auto">
+                        <div className="flex flex-col items-end">
+                          <div className="text-xl text-gray-600">
+                            PKR{" "}
+                            {item.discount
+                              ? item.price - item.discount
+                              : item.price}
+                            {item.discount && (
+                              <span className="ml-1 text-xs text-red-500">
+                                (
+                                {((item.discount / item.price) * 100).toFixed(
+                                  0
+                                )}
+                                % OFF)
+                              </span>
+                            )}
+                          </div>
+                          <div className="font-[500] hidden md:block">
+                            Per Price
+                          </div>
+                        </div>
+                        <div className="flex flex-col items-end mt-1">
+                          <div className="flex items-center">
+                            <button
+                              className="px-1 bg-gray-200 text-gray-700 rounded-l text-xs"
+                              onClick={() =>
+                                toggleCartItemQuanitity(item._id, "dec")
+                              }
+                            >
+                              -
+                            </button>
+                            <span className="mx-1 text-lg text-gray-600">
+                              {item.quantity}
+                            </span>
+                            <button
+                              className="px-1 bg-gray-200 text-gray-700 rounded-r text-xs"
+                              onClick={() =>
+                                toggleCartItemQuanitity(item._id, "inc")
+                              }
+                            >
+                              +
+                            </button>
+                          </div>
+                          <div className="font-[500] hidden md:block">
+                            Quantity
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
               <div className="flex flex-col gap-2">
                 <div className="flex items-center">
                   <p className="font-medium text-gray-800 text-base">
@@ -677,162 +684,166 @@ const Cart = ({ coupons }) => {
               </div>
               <div className="flex flex-col mt-2">
                 <div className="bg-gray-800 text-white rounded-lg py-2 px-3">
-                  <p className="font-medium text-[17px]">Grand Total:</p>
-                  <div className="text-[17px]">
+                  <p className="font-medium text-lg">Grand Total:</p>
+                  <div className="text-lg">
                     PKR {delivery}/-{" "}
                     <span className="text-sm">(incl. shipping fee)</span>
                   </div>
                 </div>
               </div>
+              <div>
+                <button
+                  className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
+                  onClick={opencouponFunc}
+                  disabled={disable || !isAddressFormFilled()}
+                >
+                  Proceed to Checkout
+                </button>
+                {processingModal && (
+                  <div className="fixed z-10 inset-0 overflow-y-auto">
+                    <div className="flex items-center justify-center min-h-screen">
+                      <div className="fixed inset-0 transition-opacity">
+                        <div
+                          className="absolute inset-0 bg-black opacity-75"
+                          onClick={closecouponFunc}
+                        ></div>
+                      </div>
+                      <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-[25rem] sm:w-full">
+                        <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                            <div className="absolute left-6 top-6">
+                              <button
+                                onClick={closecouponFunc}
+                                className="underline underline-offset-4 text-sm"
+                              >
+                                Go Back
+                              </button>
+                            </div>
+                          </div>
+                          <div className="sm:flex sm:items-start">
+                            <div className="mt-3 flex flex-col gap-6 sm:mt-0 sm:ml-4 sm:text-left">
+                              <div className="mt-2 flex flex-col items-center gap-6">
+                                <div className="flex flex-col gap-5 border-t w-full px-2 border-b py-5">
+                                  <div className="flex items-center justify-between min-w-[300px]">
+                                    <div className="text-lg font-semibold underline underline-offset-8 px-8px">
+                                      Have a Coupon?
+                                    </div>
+                                    <div
+                                      onClick={() => setAddCoupon(!addCoupon)}
+                                    >
+                                      {!addCoupon ? (
+                                        <AiFillCaretDown className="text-2xl cursor-pointer" />
+                                      ) : (
+                                        <AiFillCaretUp className="text-2xl cursor-pointer" />
+                                      )}
+                                    </div>
+                                  </div>
+                                  {addCoupon && (
+                                    <div className="flex flex-col gap-2">
+                                      {couponSubmit ? (
+                                        couponStatus ? (
+                                          <div className="text-sm text-green-500">
+                                            Coupon Applied!
+                                          </div>
+                                        ) : (
+                                          <div className="text-sm text-red-500">
+                                            Invalid coupon code. Please try
+                                            again.
+                                          </div>
+                                        )
+                                      ) : (
+                                        ""
+                                      )}
+                                      <input
+                                        type="text"
+                                        id="couponInput"
+                                        className={`border border-gray-400 ${
+                                          couponSubmit
+                                            ? couponStatus
+                                              ? "border-green-500"
+                                              : "border-red-500"
+                                            : ""
+                                        } rounded-lg py-2px-4`}
+                                        value={customerCoupon}
+                                        placeholder="Enter coupon code"
+                                        onChange={handleCoupon}
+                                        onSubmit={submitCoupon}
+                                        disabled={couponStatus}
+                                      />
+                                      <button
+                                        onClick={submitCoupon}
+                                        className="bg-gray-800 text-white rounded-lg py-2 px-4 hover:bg-gray-600"
+                                        disabled={couponStatus}
+                                      >
+                                        Apply Coupon
+                                      </button>
+                                      <div className="text-sm text-gray-500">
+                                        *Coupon can only be applied within the
+                                        specified limit, before adding the
+                                        shipping fee.
+                                      </div>
+                                    </div>
+                                  )}
+                                  {couponStatus && (
+                                    <div className="flex flex-col bg-gray-100 p-4 rounded-lg">
+                                      <div className="flex items-center justify-between mb-2">
+                                        <div className="flex items-start flex-col gap-1">
+                                          <span className="text-base font-semibold">
+                                            Total Price
+                                          </span>
+                                          <span className="text-xs text-gray-500">
+                                            (incl. shipping fee):
+                                          </span>
+                                        </div>
+                                        <div className="flex flex-col items-end">
+                                          <span className="text-lg text-blue-600 font-semibold">
+                                            PKR {totalPrice + 99}/-
+                                          </span>
+                                          <span className="text-xs line-through text-gray-500">
+                                            PKR {storedPrice + 99}/-
+                                          </span>
+                                        </div>
+                                      </div>
+                                      <div className="flex items-center">
+                                        <span className="text-xs text-gray-600 mr-2">
+                                          Quantity:
+                                        </span>
+                                        <span className="text-base text-gray-800 font-semibold">
+                                          {totalQuantities}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <button
+                                  onClick={handleCheckout}
+                                  className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
+                                  disabled={disable || !isAddressFormFilled()}
+                                >
+                                  {processing ? (
+                                    <span>Processing...</span>
+                                  ) : orderCompleted ? (
+                                    "Order Placed!"
+                                  ) : tryAgain ? (
+                                    <span>Try Again</span>
+                                  ) : (
+                                    "Continue"
+                                  )}
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
       )}
-      <div>
-        <button
-          className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
-          onClick={opencouponFunc}
-          disabled={disable || !isAddressFormFilled()}
-        >
-          Proceed to Checkout
-        </button>
-        {processingModal && (
-          <div className="fixed z-10 inset-0 overflow-y-auto">
-            <div className="flex items-center justify-center min-h-screen">
-              <div className="fixed inset-0 transition-opacity">
-                <div
-                  className="absolute inset-0 bg-black opacity-75"
-                  onClick={closecouponFunc}
-                ></div>
-              </div>
-              <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-[25rem] sm:w-full">
-                <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                  <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <div className="absolute left-6 top-6">
-                      <button
-                        onClick={closecouponFunc}
-                        className="underline underline-offset-4 text-sm"
-                      >
-                        Go Back
-                      </button>
-                    </div>
-                  </div>
-                  <div className="sm:flex sm:items-start">
-                    <div className="mt-3 flex flex-col gap-6 sm:mt-0 sm:ml-4 sm:text-left">
-                      <div className="mt-2 flex flex-col items-center gap-6">
-                        <div className="flex flex-col gap-5 border-t w-full px-2 border-b py-5">
-                          <div className="flex items-center justify-between min-w-[300px]">
-                            <div className="text-lg font-semibold underline underline-offset-8 px-8px">
-                              Have a Coupon?
-                            </div>
-                            <div onClick={() => setAddCoupon(!addCoupon)}>
-                              {!addCoupon ? (
-                                <AiFillCaretDown className="text-2xl cursor-pointer" />
-                              ) : (
-                                <AiFillCaretUp className="text-2xl cursor-pointer" />
-                              )}
-                            </div>
-                          </div>
-                          {addCoupon && (
-                            <div className="flex flex-col gap-2">
-                              {couponSubmit ? (
-                                couponStatus ? (
-                                  <div className="text-sm text-green-500">
-                                    Coupon Applied!
-                                  </div>
-                                ) : (
-                                  <div className="text-sm text-red-500">
-                                    Invalid coupon code. Please try again.
-                                  </div>
-                                )
-                              ) : (
-                                ""
-                              )}
-                              <input
-                                type="text"
-                                id="couponInput"
-                                className={`border border-gray-400 ${
-                                  couponSubmit
-                                    ? couponStatus
-                                      ? "border-green-500"
-                                      : "border-red-500"
-                                    : ""
-                                } rounded-lg py-2px-4`}
-                                value={customerCoupon}
-                                placeholder="Enter coupon code"
-                                onChange={handleCoupon}
-                                onSubmit={submitCoupon}
-                                disabled={couponStatus}
-                              />
-                              <button
-                                onClick={submitCoupon}
-                                className="bg-gray-800 text-white rounded-lg py-2 px-4 hover:bg-gray-600"
-                                disabled={couponStatus}
-                              >
-                                Apply Coupon
-                              </button>
-                              <div className="text-sm text-gray-500">
-                                *Coupon can only be applied within the specified
-                                limit, before adding the shipping fee.
-                              </div>
-                            </div>
-                          )}
-                          {couponStatus && (
-                            <div className="flex flex-col bg-gray-100 p-4 rounded-lg">
-                              <div className="flex items-center justify-between mb-2">
-                                <div className="flex items-start flex-col gap-1">
-                                  <span className="text-base font-semibold">
-                                    Total Price
-                                  </span>
-                                  <span className="text-xs text-gray-500">
-                                    (incl. shipping fee):
-                                  </span>
-                                </div>
-                                <div className="flex flex-col items-end">
-                                  <span className="text-lg text-blue-600 font-semibold">
-                                    PKR {totalPrice + 99}/-
-                                  </span>
-                                  <span className="text-xs line-through text-gray-500">
-                                    PKR {storedPrice + 99}/-
-                                  </span>
-                                </div>
-                              </div>
-                              <div className="flex items-center">
-                                <span className="text-xs text-gray-600 mr-2">
-                                  Quantity:
-                                </span>
-                                <span className="text-base text-gray-800 font-semibold">
-                                  {totalQuantities}
-                                </span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        <button
-                          onClick={handleCheckout}
-                          className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
-                          disabled={disable || !isAddressFormFilled()}
-                        >
-                          {processing ? (
-                            <span>Processing...</span>
-                          ) : orderCompleted ? (
-                            "Order Placed!"
-                          ) : tryAgain ? (
-                            <span>Try Again</span>
-                          ) : (
-                            "Continue"
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
     </div>
   );
 };
