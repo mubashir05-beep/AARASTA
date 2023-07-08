@@ -8,9 +8,9 @@ const TOTAL_PRICE_STORAGE_KEY = "totalPrice";
 const ADDRESS_STORAGE_KEY = "address";
 const COUPON_STATUS = "couponStatus";
 const COUPON_SUBMIT = "couponSubmit";
-// const ORG_PRICE = "originalPrice";
+const ORG_PRICE = "originalPrice";
 // const ORG_CART = "originalCart";
-const CUS_COUPON='customerCoupon';
+const CUS_COUPON = "customerCoupon";
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
@@ -74,13 +74,15 @@ export const StateContext = ({ children }) => {
     (typeof window !== "undefined" &&
       JSON.parse(localStorage.getItem(COUPON_SUBMIT))) ||
     false;
-    const localCustomerCoupon =(
-      typeof window !=='undefined' && JSON.parse(localStorage.getItem(CUS_COUPON))) || '';
-    
-  // const localOriginalPrice =
-  //   (typeof window !== "undefined" &&
-  //     JSON.parse(localStorage.getItem(ORG_PRICE))) ||
-  //   0;
+  const localCustomerCoupon =
+    (typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem(CUS_COUPON))) ||
+    "";
+
+  const localOriginalPrice =
+    (typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem(ORG_PRICE))) ||
+    0;
   // const localOriginalCart =
   //   (typeof window !== "undefined" &&
   //     JSON.parse(localStorage.getItem(ORG_CART))) ||
@@ -92,8 +94,8 @@ export const StateContext = ({ children }) => {
     setTotalQuantities(localQty);
     setCouponStatus(localcouponStatus);
     setCouponSubmit(localCouponSubmit);
-    setCustomerCoupon(localCustomerCoupon)
-    // setOriginalPrice(localOriginalPrice);
+    setCustomerCoupon(localCustomerCoupon);
+    setOriginalPrice(localOriginalPrice);
     // setOriginalCart(localOriginalCart);
     // setAddress(localAddress);
   }, []);
@@ -108,10 +110,18 @@ export const StateContext = ({ children }) => {
     localStorage.setItem(ADDRESS_STORAGE_KEY, JSON.stringify(address));
     localStorage.setItem(COUPON_STATUS, JSON.stringify(couponStatus));
     localStorage.setItem(COUPON_SUBMIT, JSON.stringify(couponSubmit));
-    localStorage.setItem(CUS_COUPON,JSON.stringify(customerCoupon));
-    // localStorage.setItem(ORG_PRICE, JSON.stringify(originalPrice));
+    localStorage.setItem(CUS_COUPON, JSON.stringify(customerCoupon));
+    localStorage.setItem(ORG_PRICE, JSON.stringify(originalPrice));
     // localStorage.setItem(ORG_CART, JSON.stringify(originalCart));
-  }, [cartItems, totalQuantities, totalPrice, address,couponStatus,couponSubmit,customerCoupon]);
+  }, [
+    cartItems,
+    totalQuantities,
+    totalPrice,
+    address,
+    couponStatus,
+    couponSubmit,
+    customerCoupon,
+  ]);
 
   const onAdd = (selectedProduct, quantity) => {
     const selectedProductSize = selectedSize[selectedProduct._id];
