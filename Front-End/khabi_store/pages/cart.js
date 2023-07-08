@@ -558,8 +558,8 @@ const Cart = ({ coupons }) => {
                     Submit
                   </button> */}
                 </form>
-                <div className="w-full flex pb-3 gap-4">
-  <div className="font-medium">Your Address:</div>
+                <div className="w-full flex flex-col pb-3 gap-4 bg-gray-100 rounded-lg p-4">
+  <div className="text-xl font-semibold text-gray-800 mb-2">Your Address:</div>
   <div className="flex flex-col gap-2 mx-2">
     {address.name && (
       <span className="break-words text-gray-600 text-sm">
@@ -593,90 +593,104 @@ const Cart = ({ coupons }) => {
                 Order Summary
               </div>
               {cartItems.length >= 1 && (
-  <div className="my-4">
-    {cartItems.map((item) => (
-      <div className="flex items-center py-4 border-b border-gray-200" key={item._id}>
-        <img
-          src={urlFor(item?.image[0])}
-          width="100"
-          className="rounded-lg"
-          alt={item.name}
-        />
-        <div className="flex flex-col ml-3">
-          <div className="text-lg font-semibold">
-            <Link href={`./ready_to_wear/${item.slug.current}`}>
-              {item.name}
-            </Link>
-          </div>
-          {item.productCode && <div className="text-sm text-gray-500">
-            Code: {item.productCode}
-          </div>}
-          <div className="text-sm flex items-center">
-            Size:
-            <span className="w-4 h-4 text-xs text-black rounded-full bg-black/[0.1] flex items-center justify-center ml-1">
-              {item.size}
-            </span>
-          </div>
-          <div className="text-sm flex items-center mt-2">
-            Quantity:
-            <div className="flex items-center ml-2">
-              <button
-                className="px-1.5 py-0.5 bg-slate-200  text-gray-700 rounded-l text-xs hover:bg-gray-300"
-                onClick={() => toggleCartItemQuanitity(item._id, "dec")}
-              >
-                -
-              </button>
-              <span className="px-2 py-1 text-lg text-gray-600 ">
-                {item.quantity}
-              </span>
-              <button
-                className="px-1.5 py-0.5 bg-slate-200   text-gray-700 rounded-r text-xs hover:bg-gray-300"
-                onClick={() => toggleCartItemQuanitity(item._id, "inc")}
-              >
-                +
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="ml-auto">
-          <div className="text-xl text-gray-600">
-            PKR{" "}
-            {item.discount ? item.price - item.discount : item.price}
-            {item.discount && (
-              <span className="ml-2 text-xs text-red-500">
-                {((item.discount / item.price) * 100).toFixed(0)}% OFF
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
-    ))}
-  </div>
-)}
+                <div className="my-4">
+                  {cartItems.map((item) => (
+                    <div
+                      className="flex items-center py-4 border-b border-gray-200"
+                      key={item._id}
+                    >
+                      <img
+                        src={urlFor(item?.image[0])}
+                        width="100"
+                        className="rounded-lg"
+                        alt={item.name}
+                      />
+                      <div className="flex flex-col ml-3">
+                        <div className="text-lg font-semibold">
+                          <Link href={`./ready_to_wear/${item.slug.current}`}>
+                            {item.name}
+                          </Link>
+                        </div>
+                        {item.productCode && (
+                          <div className="text-sm text-gray-500">
+                            Code: {item.productCode}
+                          </div>
+                        )}
+                        <div className="text-sm flex items-center">
+                          Size:
+                          <span className="w-4 h-4 text-xs text-black rounded-full bg-black/[0.1] flex items-center justify-center ml-1">
+                            {item.size}
+                          </span>
+                        </div>
+                        <div className="text-sm flex items-center mt-2">
+                          Quantity:
+                          <div className="flex items-center ml-2">
+                            <button
+                              className="px-1.5 py-0.5 bg-slate-200  text-gray-700 rounded-l text-xs hover:bg-gray-300"
+                              onClick={() =>
+                                toggleCartItemQuanitity(item._id, "dec")
+                              }
+                            >
+                              -
+                            </button>
+                            <span className="px-2 py-1 text-lg text-gray-600 ">
+                              {item.quantity}
+                            </span>
+                            <button
+                              className="px-1.5 py-0.5 bg-slate-200   text-gray-700 rounded-r text-xs hover:bg-gray-300"
+                              onClick={() =>
+                                toggleCartItemQuanitity(item._id, "inc")
+                              }
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="ml-auto">
+                        <div className="text-xl text-gray-600">
+                          PKR{" "}
+                          {item.discount
+                            ? item.price - item.discount
+                            : item.price}
+                          {item.discount && (
+                            <span className="ml-2 text-xs text-red-500">
+                              {((item.discount / item.price) * 100).toFixed(0)}%
+                              OFF
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
 
-
-<div className="flex flex-col gap-4">
-  <div className="flex items-center justify-between">
-    <p className="font-semibold text-gray-800 text-lg">Items Total:</p>
-    <div className="text-lg">{totalQuantities}</div>
-  </div>
-  <div className="flex items-center justify-between">
-    <p className="font-semibold text-gray-800 text-lg">Delivery Fee:</p>
-    <div className="text-lg">
-      PKR {totalPrice >= 2499 ? "0" : "99"}/-
-    </div>
-  </div>
-  <div className="flex flex-col mt-4">
-    <div className="bg-gray-800 text-white rounded-lg py-4 px-6">
-      <p className="font-medium text-lg">Grand Total:</p>
-      <div className="text-2xl font-bold">
-        PKR {delivery}/-{" "}
-        <span className="text-sm">(incl. shipping fee)</span>
-      </div>
-    </div>
-  </div>
-</div>
-
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold text-gray-800 text-lg">
+                    Items Total:
+                  </p>
+                  <div className="text-lg">{totalQuantities}</div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold text-gray-800 text-lg">
+                    Delivery Fee:
+                  </p>
+                  <div className="text-lg">
+                    PKR {totalPrice >= 2499 ? "0" : "99"}/-
+                  </div>
+                </div>
+                <div className="flex flex-col mt-4">
+                  <div className="bg-gray-800 text-white rounded-lg py-4 px-6">
+                    <p className="font-medium text-lg">Grand Total:</p>
+                    <div className="text-2xl font-bold">
+                      PKR {delivery}/-{" "}
+                      <span className="text-sm">(incl. shipping fee)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div>
                 <button
@@ -784,10 +798,18 @@ const Cart = ({ coupons }) => {
                                         </div>
                                         <div className="flex flex-col items-end">
                                           <span className="text-lg text-blue-600 font-semibold">
-                                            PKR {totalPrice>=2499 ? totalPrice :totalPrice + 99}/-
+                                            PKR{" "}
+                                            {totalPrice >= 2499
+                                              ? totalPrice
+                                              : totalPrice + 99}
+                                            /-
                                           </span>
                                           <span className="text-xs line-through text-gray-500">
-                                            PKR {storedPrice>=2499 ? storedPrice :storedPrice + 99}/-
+                                            PKR{" "}
+                                            {storedPrice >= 2499
+                                              ? storedPrice
+                                              : storedPrice + 99}
+                                            /-
                                           </span>
                                         </div>
                                       </div>
