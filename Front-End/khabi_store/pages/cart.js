@@ -835,11 +835,11 @@ const Cart = ({ coupons }) => {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col bg-gray-100 rounded-lg p-4 w-72">
-  <div className="text-xl font-semibold underline text-gray-800 mb-4">
+                <div className="flex flex-col bg-gray-100 rounded-lg p-4 w-[100%]">
+  <div className="text-xl font-semibold underline text-gray-800 mb-4 ">
     Order Summary
   </div>
-  <div className="flex flex-col gap-3">
+  <div className="flex flex-col gap-2">
     <div className="flex items-center">
       <p className="font-medium text-gray-800 text-base">Items Total:</p>
       <div className="text-base">{totalQuantities}</div>
@@ -851,8 +851,8 @@ const Cart = ({ coupons }) => {
     </div>
   </div>
 
-  <div className="flex flex-col mt-4">
-    <div className="bg-gray-600 text-white rounded-lg py-3 px-4">
+  <div className="flex flex-col mt-2">
+    <div className="bg-gray-600 text-white rounded-lg py-2 px-3">
       <p className="font-medium text-lg">Grand Total:</p>
       <div className="text-lg">
         PKR {delivery}/- <span className="text-sm">(incl. shipping fee)</span>
