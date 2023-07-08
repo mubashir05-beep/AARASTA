@@ -9,7 +9,7 @@ const ADDRESS_STORAGE_KEY = "address";
 const COUPON_STATUS = "couponStatus";
 const COUPON_SUBMIT = "couponSubmit";
 const ORG_PRICE = "originalPrice";
-// const ORG_CART = "originalCart";
+const ORG_CART = "originalCart";
 const CUS_COUPON = "customerCoupon";
 const Context = createContext();
 
@@ -24,6 +24,7 @@ export const StateContext = ({ children }) => {
   const [couponStatus, setCouponStatus] = useState(false);
   const [couponSubmit, setCouponSubmit] = useState(false);
   const [originalPrice, setOriginalPrice] = useState(0);
+  const [addCoupon, setAddCoupon] = useState(false);
   const [originalCart, setOriginalCart] = useState(0);
   const [lock, setLock] = useState(false);
   const [address, setAddress] = useState(() => {
@@ -83,10 +84,10 @@ export const StateContext = ({ children }) => {
     (typeof window !== "undefined" &&
       JSON.parse(localStorage.getItem(ORG_PRICE))) ||
     0;
-  // const localOriginalCart =
-  //   (typeof window !== "undefined" &&
-  //     JSON.parse(localStorage.getItem(ORG_CART))) ||
-  //   0;
+  const localOriginalCart =
+    (typeof window !== "undefined" &&
+      JSON.parse(localStorage.getItem(ORG_CART))) ||
+    0;
 
   useEffect(() => {
     setCartItems(localCart);
@@ -96,7 +97,7 @@ export const StateContext = ({ children }) => {
     setCouponSubmit(localCouponSubmit);
     setCustomerCoupon(localCustomerCoupon);
     setOriginalPrice(localOriginalPrice);
-    // setOriginalCart(localOriginalCart);
+    setOriginalCart(localOriginalCart);
     // setAddress(localAddress);
   }, []);
 
@@ -112,7 +113,7 @@ export const StateContext = ({ children }) => {
     localStorage.setItem(COUPON_SUBMIT, JSON.stringify(couponSubmit));
     localStorage.setItem(CUS_COUPON, JSON.stringify(customerCoupon));
     localStorage.setItem(ORG_PRICE, JSON.stringify(originalPrice));
-    // localStorage.setItem(ORG_CART, JSON.stringify(originalCart));
+    localStorage.setItem(ORG_CART, JSON.stringify(originalCart));
   }, [
     cartItems,
     totalQuantities,
@@ -236,32 +237,31 @@ export const StateContext = ({ children }) => {
     setCartItems(updatedCartItems);
   };
   const toggleCartItemQuanitity = (id, value) => {
+    setCouponStatus(false);
+    setCustomerCoupon("");
+    setAddCoupon(false);
+
+    setCouponSubmit(false);
+    setOriginalCart([]);
+    setOriginalPrice(0);
     const foundProduct = cartItems.find((item) => item._id === id);
-
+  
     if (foundProduct) {
-      const newCartItems = [...cartItems];
-      const index = newCartItems.findIndex((product) => product._id === id);
-
-      if (value === "inc") {
-        if (foundProduct.quantity < 5) {
-          newCartItems[index] = {
-            ...foundProduct,
-            quantity: foundProduct.quantity + 1,
-          };
+      const newCartItems = cartItems.map((item) => {
+        if (item._id === id) {
+          if (value === "inc") {
+            if (item.quantity < 5) {
+              return { ...item, quantity: item.quantity + 1 };
+            }
+          } else if (value === "dec") {
+            if (item.quantity > 1) {
+              return { ...item, quantity: item.quantity - 1 };
+            }
+          }
         }
-      } else if (value === "dec") {
-        if (foundProduct.quantity > 1) {
-          newCartItems[index] = {
-            ...foundProduct,
-            quantity: foundProduct.quantity - 1,
-          };
-        } else {
-          newCartItems.splice(index, 1);
-        }
-      }
-
-      setCartItems(newCartItems);
-
+        return item;
+      });
+  
       const totalPrice = newCartItems.reduce((acc, item) => {
         if (item.discount) {
           const discountedPrice = item.price - item.discount;
@@ -270,17 +270,19 @@ export const StateContext = ({ children }) => {
           return acc + item.price * item.quantity;
         }
       }, 0);
-
-      setTotalPrice(totalPrice);
-
+  
       const totalQuantities = newCartItems.reduce(
         (acc, item) => acc + item.quantity,
         0
       );
+  
+      setCartItems(newCartItems);
+      setTotalPrice(totalPrice);
       setTotalQuantities(totalQuantities);
     }
   };
-
+  
+  
   const onSizeChange = (productId, selectedSize) => {
     setSelectedSize((prevSelectedSize) => ({
       ...prevSelectedSize,
@@ -329,6 +331,8 @@ export const StateContext = ({ children }) => {
         setCouponSubmit,
         originalPrice,
         setOriginalPrice,
+        addCoupon,
+        setAddCoupon,
         originalCart,
         setOriginalCart,
         lock,

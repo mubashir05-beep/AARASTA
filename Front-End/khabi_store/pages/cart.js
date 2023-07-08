@@ -37,6 +37,7 @@ const Cart = ({ coupons }) => {
     setOriginalCart,
     lock,
     setLock,
+    addCoupon, setAddCoupon,
     coupon,
     setCoupon,
     setMailState,
@@ -45,9 +46,8 @@ const Cart = ({ coupons }) => {
   const [orderCompleted, setOrderCompleted] = useState(false);
   const [dropAddress, setDropAddress] = useState(false);
   const [showcoupon, setShowCoupon] = useState(false);
-useEffect(()=>{
-  setOriginalPrice(totalPrice);
-},[totalPrice])
+  const [storedPrice, setStoredPrice] = useState(totalPrice);
+
   const handleDrop = () => {
     return setDropAddress(!dropAddress);
   };
@@ -73,7 +73,7 @@ useEffect(()=>{
   const openModal = () => {
     setIsOpen(true);
   };
-  const [addCoupon, setAddCoupon] = useState(false);
+
   const [deleted, setDelete] = useState(false);
   const deleteForm = () => {
     shipping = "";
@@ -346,66 +346,77 @@ useEffect(()=>{
       address.addressAll
     );
   };
-
+  const [priceSetter, setPriceSetter] = useState(0);
   const submitCoupon = (e) => {
     e.preventDefault();
     setCouponSubmit(true);
-    coupon.map((coupon) => {
-      if (
-        totalPrice >= coupon.minCouponPrice &&
-        customerCoupon === coupon.couponCode
-      ) {
-       
-        if (coupon.couponDiscountPKR) {
-         
-          const discountPKR = Number(coupon.couponDiscountPKR);
-          setTotalPrice(totalPrice - discountPKR);
-          setShowCoupon(true);
-          setCouponStatus(true);
-        } else if (coupon.couponDiscountPercentage) {
-          const discountPercentage = Number(coupon.couponDiscountPercentage);
-          const discountAmount = (totalPrice * discountPercentage) / 100;
-          const discountedPrice = totalPrice - discountAmount;
-          setTotalPrice(discountedPrice);
-          setCouponStatus(true);
-          setShowCoupon(true);
-        }
-      }
-    });
-  };
-
-  useEffect(() => {
-    if (cartItems.length !== originalCart) {
-      if (cartItems.length === 0) {
-        setTotalPrice(0); // Reset total price to 0 when cart is empty
-        setCouponStatus(false);
-        setCustomerCoupon("");
-        setCouponStatus(false);
-        setCouponSubmit(false);
-      }
-      coupon &&
-        coupon.map((couponItem) => {
-
-          if (totalPrice >= couponItem.minCouponPrice) {
-        
-            if (coupon.couponDiscountPKR) {
-              const discountPKR = Number(coupon.couponDiscountPKR);
-              setTotalPrice(totalPrice - discountPKR);
-              setCouponStatus(true);
-            } else if (coupon.couponDiscountPercentage) {
-              const discountPercentage = Number(
-                coupon.couponDiscountPercentage
-              );
-              const discountAmount = (totalPrice * discountPercentage) / 100;
-              const discountedPrice = totalPrice - discountAmount;
-              setTotalPrice(discountedPrice);
-              setCouponStatus(true);
-            }
+  
+    if (customerCoupon.trim() === "") {
+      // Clear coupon information when no coupon is entered
+      setCouponStatus(false);
+      setOriginalCart([]);
+      setOriginalPrice(0);
+      setTotalPrice(storedPrice);
+    } else {
+      coupon.forEach((couponItem) => {
+        if (
+          totalPrice >= couponItem.minCouponPrice &&
+          customerCoupon === couponItem.couponCode
+        ) {
+          setStoredPrice(totalPrice);
+  
+          if (couponItem.couponDiscountPKR) {
+            const discountPKR = Number(couponItem.couponDiscountPKR);
+            const discountedPrice = totalPrice - discountPKR;
+            setTotalPrice(discountedPrice);
+            setShowCoupon(true);
+            setOriginalCart(cartItems);
+            setCouponStatus(true);
+          } else if (couponItem.couponDiscountPercentage) {
+            const discountPercentage = Number(couponItem.couponDiscountPercentage);
+            const discountAmount = (totalPrice * discountPercentage) / 100;
+            const discountedPrice = totalPrice - discountAmount;
+            setTotalPrice(discountedPrice);
+            setCouponStatus(true);
+            setShowCoupon(true);
+            setOriginalCart(cartItems);
           }
-        });
+        }
+      });
     }
-  }, [cartItems.length, totalPrice]);
-
+  };
+  useEffect(
+    () => {
+      if (cartItems.length !== originalCart) {
+        if (cartItems.length === 0) {
+          setTotalPrice(0); // Reset total price to 0 when cart is empty
+          setCouponStatus(false);
+          setCustomerCoupon("");
+        }
+        coupon &&
+          coupon.map((couponItem) => {
+            if (totalPrice >= couponItem.minCouponPrice) {
+              if (coupon.couponDiscountPKR) {
+                const discountPKR = Number(coupon.couponDiscountPKR);
+                setTotalPrice(totalPrice - discountPKR);
+                setCouponStatus(true);
+             
+              } else if (coupon.couponDiscountPercentage) {
+                const discountPercentage = Number(
+                  coupon.couponDiscountPercentage
+                );
+                const discountAmount = (totalPrice * discountPercentage) / 100;
+                const discountedPrice = totalPrice - discountAmount;
+                setTotalPrice(discountedPrice);
+                setCouponStatus(true);
+               
+              }
+            }
+          });
+      }
+    },
+    [cartItems.length,totalPrice]
+  );
   const handleCoupon = (e) => {
     e.preventDefault();
     setCustomerCoupon(e.target.value);
@@ -516,6 +527,32 @@ useEffect(()=>{
                               PKR {items.price}
                             </div>
                           )}
+                        </div>
+                        <div className="flex flex-col md:my-1 gap-2  items-center ">
+                          <div className="font-[500] text-[15px] text-lg hidden md:block">
+                            Quantity
+                          </div>
+                          <div className="flex items-center ">
+                            <button
+                              className="px-2 bg-gray-200 text-gray-700 rounded-l"
+                              onClick={() =>
+                                toggleCartItemQuanitity(items._id, "dec")
+                              }
+                            >
+                              -
+                            </button>
+                            <span className="mx-2 text-lg text-gray-600">
+                              {items.quantity}
+                            </span>
+                            <button
+                              className="px-2 bg-gray-200 text-gray-700 rounded-r"
+                              onClick={() =>
+                                toggleCartItemQuanitity(items._id, "inc")
+                              }
+                            >
+                              +
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -825,27 +862,12 @@ useEffect(()=>{
                   </div>
                 </div>
 
-                <button
-                  onClick={handleCheckout}
-                  className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
-                  disabled={disable || !isAddressFormFilled()}
-                >
-                  {processing ? (
-                    <span>Processing...</span>
-                  ) : orderCompleted ? (
-                    "Order Placed!"
-                  ) : tryAgain ? (
-                    <span>Try Again</span>
-                  ) : (
-                    "Proceed to Checkout"
-                  )}
-                </button>
                 <div>
                   <button
-                    className="bg-black text-white border-t w-[150px] mb-4 mt-4  rounded-lg h-11 hover:bg-gray-600 duration-300"
+                    className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
                     onClick={opencouponFunc}
                   >
-                    open Coupon
+                    Proceed to Checkout
                   </button>
 
                   {processingModal && (
@@ -857,18 +879,21 @@ useEffect(()=>{
                             onClick={closecouponFunc}
                           ></div>
                         </div>
-                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all  sm:max-w-[25rem] sm:w-full">
+                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-[25rem] sm:w-full">
                           <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div className=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                              <div className="absolute right-6 top-6">
-                                <button onClick={closecouponFunc}>
-                                  <RxCross2 size={24} />
+                            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                              <div className="absolute left-6 top-6">
+                                <button
+                                  onClick={closecouponFunc}
+                                  className="underline underline-offset-4 text-sm"
+                                >
+                                  Go Back
                                 </button>
                               </div>
                             </div>
 
                             <div className="sm:flex sm:items-start">
-                              <div className="mt-3 flex flex-col gap-6  sm:mt-0 sm:ml-4 sm:text-left">
+                              <div className="mt-3 flex flex-col gap-6 sm:mt-0 sm:ml-4 sm:text-left">
                                 <div className="mt-2 flex flex-col items-center gap-6">
                                   <div className="flex flex-col gap-5 border-t w-full px-2 border-b py-5">
                                     <div className="flex items-center justify-between min-w-[300px]">
@@ -925,7 +950,7 @@ useEffect(()=>{
                                         >
                                           Apply Coupon
                                         </button>
-                                        <div className=" text-sm text-gray-500">
+                                        <div className="text-sm text-gray-500">
                                           *Coupon can only be applied within the
                                           specified limit, before adding the
                                           shipping fee.
@@ -934,31 +959,51 @@ useEffect(()=>{
                                     )}
 
                                     {couponStatus && (
-                                      <div className="flex flex-col">
-                                        <div>
-                                          Total Price{" "}
-                                          <span className="text-sm text-gray-500">
-                                            (Before)
-                                          </span>
-                                          <span>{originalPrice}</span>
+                                      <div className="flex flex-col bg-gray-100 p-4 rounded-lg">
+                                        <div className="flex items-center justify-between mb-2">
+                                          <div className="flex items-start flex-col gap-1">
+                                            <span className="text-base font-semibold">
+                                              Total Price
+                                            </span>
+                                            <span className="text-xs text-gray-500">
+                                              (incl. shipping fee):
+                                            </span>
+                                          </div>
+                                          <div className="flex flex-col items-end">
+                                            <span className="text-lg text-blue-600 font-semibold">
+                                              PKR {totalPrice}/-
+                                            </span>
+                                            <span className="text-xs line-through text-gray-500">
+                                              PKR {storedPrice}/-
+                                            </span>
+                                          </div>
                                         </div>
-                                        <div>
-                                          Total Price{" "}
-                                          <span className="text-sm text-gray-500">
-                                            (After)
+                                        <div className="flex items-center">
+                                          <span className="text-xs text-gray-600 mr-2">
+                                            Quantity:
                                           </span>
-                                          <span>{totalPrice}</span>
+                                          <span className="text-base text-gray-800 font-semibold">
+                                            {totalQuantities}
+                                          </span>
                                         </div>
                                       </div>
                                     )}
                                   </div>
 
                                   <button
-                                    className=" inline-flex justify-center rounded-md border border-transparent w-[80px] shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-600 sm:w-auto sm:text-sm transition-all duration-300"
-                                    type="submit"
-                                    onClick={handleSubmit}
+                                    onClick={handleCheckout}
+                                    className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
+                                    disabled={disable || !isAddressFormFilled()}
                                   >
-                                    Submit
+                                    {processing ? (
+                                      <span>Processing...</span>
+                                    ) : orderCompleted ? (
+                                      "Order Placed!"
+                                    ) : tryAgain ? (
+                                      <span>Try Again</span>
+                                    ) : (
+                                      "Continue"
+                                    )}
                                   </button>
                                 </div>
                               </div>
