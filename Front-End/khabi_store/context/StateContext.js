@@ -12,7 +12,7 @@ const ORG_PRICE = "originalPrice";
 const ORG_CART = "originalCart";
 const CUS_COUPON = "customerCoupon";
 const Context = createContext();
-
+const STORED_PRICE='storedPrice';
 export const StateContext = ({ children }) => {
   const [submited, setSubmited] = useState(false);
   const [mailState, setMailState] = useState(false);
@@ -26,6 +26,7 @@ export const StateContext = ({ children }) => {
   const [originalPrice, setOriginalPrice] = useState(0);
   const [addCoupon, setAddCoupon] = useState(false);
   const [originalCart, setOriginalCart] = useState(0);
+  const [storedPrice, setStoredPrice] = useState(0);
   const [lock, setLock] = useState(false);
   const [address, setAddress] = useState(() => {
     let localAddress = {
@@ -88,6 +89,7 @@ export const StateContext = ({ children }) => {
     (typeof window !== "undefined" &&
       JSON.parse(localStorage.getItem(ORG_CART))) ||
     0;
+    const localStoredPrice=(typeof window !=="undefined" && JSON.parse(localStorage.getItem(STORED_PRICE))) || 0;
 
   useEffect(() => {
     setCartItems(localCart);
@@ -98,6 +100,7 @@ export const StateContext = ({ children }) => {
     setCustomerCoupon(localCustomerCoupon);
     setOriginalPrice(localOriginalPrice);
     setOriginalCart(localOriginalCart);
+    setStoredPrice(localStoredPrice);
     // setAddress(localAddress);
   }, []);
 
@@ -114,9 +117,11 @@ export const StateContext = ({ children }) => {
     localStorage.setItem(CUS_COUPON, JSON.stringify(customerCoupon));
     localStorage.setItem(ORG_PRICE, JSON.stringify(originalPrice));
     localStorage.setItem(ORG_CART, JSON.stringify(originalCart));
+    localStorage.setItem(STORED_PRICE,JSON.stringify(storedPrice));
   }, [
     cartItems,
     totalQuantities,
+    storedPrice,
     totalPrice,
     address,
     couponStatus,
@@ -337,6 +342,7 @@ export const StateContext = ({ children }) => {
         setOriginalCart,
         lock,
         setLock,
+        storedPrice, setStoredPrice,
       }}
     >
       {children}

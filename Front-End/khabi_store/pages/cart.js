@@ -38,6 +38,7 @@ const Cart = ({ coupons }) => {
     lock,
     setLock,
     addCoupon,
+    storedPrice, setStoredPrice,
     setAddCoupon,
     coupon,
     setCoupon,
@@ -47,7 +48,7 @@ const Cart = ({ coupons }) => {
   const [orderCompleted, setOrderCompleted] = useState(false);
   const [dropAddress, setDropAddress] = useState(false);
   const [showcoupon, setShowCoupon] = useState(false);
-  const [storedPrice, setStoredPrice] = useState(totalPrice);
+  
 
   const handleDrop = () => {
     return setDropAddress(!dropAddress);
@@ -365,7 +366,6 @@ const Cart = ({ coupons }) => {
           customerCoupon === couponItem.couponCode
         ) {
           setStoredPrice(totalPrice);
-
           if (couponItem.couponDiscountPKR) {
             const discountPKR = Number(couponItem.couponDiscountPKR);
             const discountedPrice = totalPrice - discountPKR;
@@ -575,13 +575,23 @@ const Cart = ({ coupons }) => {
           <div className="flex flex-[0.5] border-l border-r justify-center border-b">
             {cartItems.length >= 1 && (
               <div className="px-5 py-5 flex flex-col items-center justify-start">
-                <div className="flex flex-col min-[1534px]:flex-row items-center bg-red-200 p-7 rounded-2xl w-[100%] text-black gap-5">
-                  <div className="rounded-full border-black border-2">
+                <div className="flex flex-col md:flex-row items-center bg-gray-800 p-7 rounded-2xl w-full text-white gap-5">
+                  <div className="rounded-full border border-white flex items-center justify-center w-10 h-10">
                     <AiOutlineExclamation size={20} />
                   </div>
-                  <div className="text center  max-[1534px]:text-[14px]">
-                    Delivery available in Islamabad and Rawalpindi. Contact us
-                    for other areas. Thank you for choosing us.
+                  <div className="text-center md:text-left">
+                    <p className="text-sm md:text-base">
+                      <span className="font-semibold">
+                        Delivery available in Islamabad and Rawalpindi.
+                      </span>
+                      <br />
+                      <span className="text-gray-300">
+                        Contact us for delivery in other areas.
+                      </span>
+                    </p>
+                    <p className="text-xs md:text-sm text-gray-300 mt-2">
+                      Thank you for choosing us.
+                    </p>
                   </div>
                 </div>
 
@@ -663,7 +673,7 @@ const Cart = ({ coupons }) => {
                     ""
                   ) : (
                     <button
-                      className="bg-black text-white border-t w-[150px] mb-4 mt-4  rounded-lg h-11 hover:bg-gray-600 duration-300"
+                      className="bg-gray-800 text-white border-t w-[150px] mb-4 mt-4  rounded-lg h-11 hover:bg-gray-600 duration-300"
                       onClick={openModal}
                     >
                       Add Address
@@ -836,40 +846,43 @@ const Cart = ({ coupons }) => {
                   )}
                 </div>
                 <div className="flex flex-col bg-gray-100 rounded-lg p-4 w-[100%]">
-  <div className="text-xl font-semibold underline text-gray-800 mb-4 ">
-    Order Summary
-  </div>
-  <div className="flex flex-col gap-2">
-    <div className="flex items-center">
-      <p className="font-medium text-gray-800 text-base">Items Total:</p>
-      <div className="text-base">{totalQuantities}</div>
-    </div>
+                  <div className="text-xl font-semibold underline text-gray-800 mb-4 ">
+                    Order Summary
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center">
+                      <p className="font-medium text-gray-800 text-base">
+                        Items Total:
+                      </p>
+                      <div className="text-base">{totalQuantities}</div>
+                    </div>
 
-    <div className="flex items-center">
-      <p className="font-medium text-gray-800 text-base">Delivery Fee:</p>
-      <div className="text-base">PKR {totalPrice >= 2499 ? "0" : "99"}/-</div>
-    </div>
-  </div>
+                    <div className="flex items-center">
+                      <p className="font-medium text-gray-800 text-base">
+                        Delivery Fee:
+                      </p>
+                      <div className="text-base">
+                        PKR {totalPrice >= 2499 ? "0" : "99"}/-
+                      </div>
+                    </div>
+                  </div>
 
-  <div className="flex flex-col mt-2">
-    <div className="bg-gray-600 text-white rounded-lg py-2 px-3">
-      <p className="font-medium text-lg">Grand Total:</p>
-      <div className="text-lg">
-        PKR {delivery}/- <span className="text-sm">(incl. shipping fee)</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
+                  <div className="flex flex-col mt-2">
+                    <div className="bg-gray-800 text-white rounded-lg py-2 px-3">
+                      <p className="font-medium text-[17px]">Grand Total:</p>
+                      <div className="text-[17px]">
+                        PKR {delivery}/-{" "}
+                        <span className="text-sm">(incl. shipping fee)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <div>
                   <button
-                    className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
+                    className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
                     onClick={opencouponFunc}
+                    disabled={disable || !isAddressFormFilled()}
                   >
                     Proceed to Checkout
                   </button>
@@ -949,7 +962,7 @@ const Cart = ({ coupons }) => {
 
                                         <button
                                           onClick={submitCoupon}
-                                          className="bg-black text-white rounded-lg py-2 px-4 hover:bg-gray-600"
+                                          className="bg-gray-800 text-white rounded-lg py-2 px-4 hover:bg-gray-600"
                                           disabled={couponStatus}
                                         >
                                           Apply Coupon
@@ -975,10 +988,10 @@ const Cart = ({ coupons }) => {
                                           </div>
                                           <div className="flex flex-col items-end">
                                             <span className="text-lg text-blue-600 font-semibold">
-                                              PKR {totalPrice+99}/-
+                                              PKR {totalPrice + 99}/-
                                             </span>
                                             <span className="text-xs line-through text-gray-500">
-                                              PKR {storedPrice+99}/-
+                                              PKR {storedPrice + 99}/-
                                             </span>
                                           </div>
                                         </div>
@@ -996,7 +1009,7 @@ const Cart = ({ coupons }) => {
 
                                   <button
                                     onClick={handleCheckout}
-                                    className="bg-black text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-2 duration-300 relative overflow-hidden"
+                                    className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
                                     disabled={disable || !isAddressFormFilled()}
                                   >
                                     {processing ? (
