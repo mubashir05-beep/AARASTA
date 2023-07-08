@@ -341,13 +341,11 @@ const Cart = ({ coupons }) => {
   const submitCoupon = (e) => {
     e.preventDefault();
     setCouponSubmit(true);
-
     coupon.map((coupon) => {
       if (
         totalPrice >= coupon.minCouponPrice &&
         customerCoupon === coupon.couponCode
       ) {
-        // setLock(true);
         console.log('hello')
         if (coupon.couponDiscountPKR) {
           const discountPKR = Number(coupon.couponDiscountPKR);
@@ -374,6 +372,9 @@ const Cart = ({ coupons }) => {
           setTotalPrice(0); // Reset total price to 0 when cart is empty
           setCouponStatus(false);
           setCustomerCoupon("");
+          setCouponStatus(false);
+          setCouponSubmit(false);
+
         }
         coupon &&
           coupon.map((couponItem) => {
@@ -612,198 +613,188 @@ const Cart = ({ coupons }) => {
                   </div>
                 )}
 
-                <div>
-                  {!(
-                    address.name === "" &&
-                    address.zip === "" &&
-                    address.email === "" &&
-                    address.city === "" &&
-                    address.phone === "" &&
-                    address.addressAll === ""
-                  ) ? (
-                    ""
-                  ) : (
-                    <button
-                      className="bg-black text-white border-t w-[150px] mb-4 mt-4  rounded-lg h-11 hover:bg-gray-600 duration-300"
-                      onClick={openModal}
-                    >
-                      Add Address
-                    </button>
-                  )}
+<div>
+  {!(
+    address.name === "" &&
+    address.zip === "" &&
+    address.email === "" &&
+    address.city === "" &&
+    address.phone === "" &&
+    address.addressAll === ""
+  ) ? (
+    ""
+  ) : (
+    <button
+      className="bg-black text-white border-t w-[150px] mb-4 mt-4 rounded-lg h-11 hover:bg-gray-600 duration-300"
+      onClick={openModal}
+    >
+      Add Address
+    </button>
+  )}
 
-                  {isOpen && (
-                    <div className="fixed z-10 inset-0 overflow-y-auto">
-                      <div className="flex items-center justify-center min-h-screen">
-                        <div className="fixed inset-0 transition-opacity">
-                          <div
-                            className="absolute inset-0 bg-black opacity-75"
-                            onClick={closeModal}
-                          ></div>
+  {isOpen && (
+    <div className="fixed z-10 inset-0 overflow-y-auto">
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="fixed inset-0 transition-opacity">
+          <div
+            className="absolute inset-0 bg-black opacity-75"
+            onClick={closeModal}
+          ></div>
+        </div>
+        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-[25rem] sm:w-full">
+          <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              <div className="absolute right-6 top-6">
+                <button onClick={closeModal}>
+                  <RxCross2 size={24} />
+                </button>
+              </div>
+            </div>
+            <div className="sm:flex sm:items-start">
+              <div className="mt-3 flex flex-col gap-6 sm:mt-0 sm:ml-4 sm:text-left">
+                <div className="mt-2 flex flex-col items-center gap-6">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-5 justify-center"
+                    name="addressForm"
+                  >
+                    <label className="flex gap-3 items-center justify-center">
+                      <div className="flex flex-col">
+                        <div className="flex">
+                          <p className="w-[89px] font-semibold">Full Name:</p>
+                          <input
+                            type="text"
+                            name="name"
+                            value={address.name}
+                            onChange={handleChange}
+                            className="border w-[400px]"
+                            required
+                          />
                         </div>
-                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all  sm:max-w-[25rem] sm:w-full">
-                          <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                            <div className=" px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                              <div className="absolute right-6 top-6">
-                                <button onClick={closeModal}>
-                                  <RxCross2 size={24} />
-                                </button>
-                              </div>
-                            </div>
-                            <div className="sm:flex sm:items-start">
-                              <div className="mt-3 flex flex-col gap-6  sm:mt-0 sm:ml-4 sm:text-left">
-                                <div className="mt-2 flex flex-col items-center gap-6">
-                                  <form
-                                    onSubmit={handleSubmit}
-                                    className="flex flex-col gap-5 justify-center "
-                                    name="addressForm"
-                                  >
-                                    <label className="flex gap-3 items-center justify-center">
-                                      <div className="flex flex-col">
-                                        <div className="flex ">
-                                          <p className="w-[89px] font-semibold">
-                                            Full Name:
-                                          </p>
-                                          <input
-                                            type="text"
-                                            name="name"
-                                            value={address.name}
-                                            onChange={handleChange}
-                                            className="border"
-                                            required
-                                          />
-                                        </div>
-                                        <div className="text-red-600 text-sm">
-                                          {address.nameErr}
-                                        </div>
-                                      </div>
-                                    </label>
-
-                                    <label className="flex gap-3 items-center justify-center">
-                                      <div className="flex flex-col">
-                                        <div className="flex ">
-                                          <p className="w-[89px] font-semibold">
-                                            Phone:
-                                          </p>
-                                          <input
-                                            type="text"
-                                            name="phone"
-                                            value={address.phone}
-                                            onChange={handleChange}
-                                            className="border"
-                                            required
-                                          />
-                                        </div>
-                                        <div className="text-red-600 text-sm">
-                                          {address.phoneErr}
-                                        </div>
-                                      </div>
-                                    </label>
-                                    <label className="flex gap-3 items-center justify-center">
-                                      <div className="flex flex-col">
-                                        <div className="flex ">
-                                          <p className="w-[89px] font-semibold">
-                                            Email:
-                                          </p>
-                                          <input
-                                            type="text"
-                                            name="email"
-                                            value={address.email}
-                                            onChange={handleChange}
-                                            className="border"
-                                            required
-                                          />
-                                        </div>
-                                        <div className="text-red-600 text-sm">
-                                          {address.emailErr}
-                                        </div>
-                                      </div>
-                                    </label>
-                                    <label className="flex gap-3 items-center justify-center">
-                                      <div className="flex flex-col">
-                                        <div className="flex ">
-                                          <p className="w-[89px] font-semibold">
-                                            ZIP Code:
-                                          </p>
-                                          <input
-                                            type="text"
-                                            name="zip"
-                                            value={address.zip}
-                                            onChange={handleChange}
-                                            className="border"
-                                            required
-                                          />
-                                        </div>
-                                        <div className="text-red-600 text-sm">
-                                          {address.zipErr}
-                                        </div>
-                                      </div>
-                                    </label>
-                                    <label className="flex gap-3 items-center justify-center">
-                                      <div className="flex flex-col">
-                                        <div className="flex ">
-                                          <p className="w-[89px] font-semibold">
-                                            City:
-                                          </p>
-                                          <input
-                                            type="text"
-                                            name="city"
-                                            value={address.city}
-                                            onChange={handleChange}
-                                            className="border"
-                                            required
-                                          />
-                                        </div>
-                                        <div className="text-red-600 text-sm">
-                                          {address.cityErr}
-                                        </div>
-                                      </div>
-                                    </label>
-                                    <label className="flex gap-3 items-center justify-center">
-                                      <div className="flex flex-col">
-                                        <div className="flex ">
-                                          <p className="w-[89px] font-semibold">
-                                            Address:
-                                          </p>
-                                          <textarea
-                                            name="addressAll"
-                                            value={address.addressAll}
-                                            rows={6}
-                                            cols={20}
-                                            onChange={handleChange}
-                                            className="border resize-none"
-                                            required
-                                          />
-                                        </div>
-                                        <div className="text-red-600 text-sm">
-                                          {address.addressErr}
-                                        </div>
-                                      </div>
-                                    </label>
-                                  </form>
-                                  <button
-                                    className=" inline-flex justify-center rounded-md border border-transparent w-[80px] shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-600 sm:w-auto sm:text-sm transition-all duration-300"
-                                    type="submit"
-                                    onClick={handleSubmit}
-                                  >
-                                    Submit
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                        <div className="text-red-600 text-sm">
+                          {address.nameErr}
                         </div>
                       </div>
-                    </div>
-                  )}
+                    </label>
+
+                    <label className="flex gap-3 items-center justify-center">
+                      <div className="flex flex-col">
+                        <div className="flex">
+                          <p className="w-[89px] font-semibold">Phone:</p>
+                          <input
+                            type="text"
+                            name="phone"
+                            value={address.phone}
+                            onChange={handleChange}
+                            className="border w-[400px]"
+                            required
+                          />
+                        </div>
+                        <div className="text-red-600 text-sm">
+                          {address.phoneErr}
+                        </div>
+                      </div>
+                    </label>
+                    <label className="flex gap-3 items-center justify-center">
+                      <div className="flex flex-col">
+                        <div className="flex">
+                          <p className="w-[89px] font-semibold">Email:</p>
+                          <input
+                            type="text"
+                            name="email"
+                            value={address.email}
+                            onChange={handleChange}
+                            className="border w-[400px]"
+                            required
+                          />
+                        </div>
+                        <div className="text-red-600 text-sm">
+                          {address.emailErr}
+                        </div>
+                      </div>
+                    </label>
+                    <label className="flex gap-3 items-center justify-center">
+                      <div className="flex flex-col">
+                        <div className="flex">
+                          <p className="w-[89px] font-semibold">ZIP Code:</p>
+                          <input
+                            type="text"
+                            name="zip"
+                            value={address.zip}
+                            onChange={handleChange}
+                            className="border w-[400px]"
+                            required
+                          />
+                        </div>
+                        <div className="text-red-600 text-sm">
+                          {address.zipErr}
+                        </div>
+                      </div>
+                    </label>
+                    <label className="flex gap-3 items-center justify-center">
+                      <div className="flex flex-col">
+                        <div className="flex">
+                          <p className="w-[89px] font-semibold">City:</p>
+                          <input
+                            type="text"
+                            name="city"
+                            value={address.city}
+                            onChange={handleChange}
+                            className="border w-[400px]"
+                            required
+                          />
+                        </div>
+                        <div className="text-red-600 text-sm">
+                          {address.cityErr}
+                        </div>
+                      </div>
+                    </label>
+                    <label className="flex gap-3 items-center justify-center">
+                      <div className="flex flex-col">
+                        <div className="flex">
+                          <p className="w-[89px] font-semibold">Address:</p>
+                          <textarea
+                            name="addressAll"
+                            value={address.addressAll}
+                            rows={6}
+                            cols={20}
+                            onChange={handleChange}
+                            className="border resize-none w-[400px]"
+                            required
+                          />
+                        </div>
+                        <div className="text-red-600 text-sm">
+                          {address.addressErr}
+                        </div>
+                      </div>
+                    </label>
+                  </form>
+                  <button
+                    className="inline-flex justify-center rounded-md border border-transparent w-[80px] shadow-sm px-4 py-2 bg-black text-base font-medium text-white hover:bg-gray-600 sm:w-auto sm:text-sm transition-all duration-300"
+                    type="submit"
+                    onClick={handleSubmit}
+                  >
+                    Submit
+                  </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+</div>
+
+
                 <div className="flex flex-col gap-5 border-t w-full px-2 border-b py-5">
                   <div className="text-lg font-semibold underline underline-offset-8">
                     Have a Coupon?
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="couponInput" className="text-sm">
+                    {/* <label htmlFor="couponInput" className="text-sm">
                       Enter your coupon code:
-                    </label>
+                    </label> */}
                     {couponSubmit ? (
                       couponStatus ? (
                         <div className="text-sm text-green-500">
@@ -827,6 +818,8 @@ const Cart = ({ coupons }) => {
                             : "border-red-500"
                           : ""
                       } rounded-lg py-2 px-4`}
+                      
+                      value={customerCoupon}
                       placeholder="Enter coupon code"
                       onChange={handleCoupon}
                       onSubmit={submitCoupon}
@@ -838,7 +831,7 @@ const Cart = ({ coupons }) => {
                       className="bg-black text-white rounded-lg py-2 px-4 hover:bg-gray-600"
                       disabled={couponStatus}
                     >
-                      Lock Items & Apply Coupon
+                      Apply Coupon
                     </button>
                     <div className=" text-sm text-gray-500">
                       *Coupon can only be applied within the specified limit,
