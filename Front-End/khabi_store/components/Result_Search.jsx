@@ -4,33 +4,37 @@ import Link from "next/link";
 
 const Result_Search = ({ searchResults }) => {
   return (
-    <div>
+    <div className="mt-4">
       {searchResults.length > 0 ? (
         searchResults.map((item) => (
           <div
             key={item.id}
-            className="flex gap-3 items-center z-auto border border-b"
+            className="flex items-center gap-3 p-3 my-2 border border-b rounded"
           >
             <Link href={`/${item.category}/${item.slug}`}>
               <img
-                className="w-[70px] object-cover"
+                className="w-16 h-16 object-cover rounded"
                 src={urlFor(item.image && item.image[0])}
                 alt={item.name}
               />
             </Link>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1">
               <Link href={`/shirts/${item.slug.current}`}>
-                <div>{item.name}</div>
+                <div className="text-sm font-medium text-gray-800 hover:text-gray-600">
+                  {item.name}
+                </div>
               </Link>
               <Link href={`/shirts`}>
-                <div>{item.category}</div>
+                <div className="text-xs text-gray-500 hover:text-gray-600">
+                  {item.category}
+                </div>
               </Link>
             </div>
           </div>
         ))
       ) : (
-        <div>No items</div>
+        <div className="p-3 text-center text-gray-500">No items</div>
       )}
     </div>
   );

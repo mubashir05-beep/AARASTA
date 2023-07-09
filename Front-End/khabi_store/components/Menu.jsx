@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { BsCart } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
@@ -24,6 +24,7 @@ const Menu = () => {
   } = useStateContext();
 
   const [searchResults, setSearchResults] = useState([]);
+  const searchRef = useRef(null);
 
   const data = [
     { id: 1, name: "Home", url: "/" },
@@ -72,6 +73,19 @@ const Menu = () => {
     setSearchResults(searchItems);
   };
 
+  const handleClickOutside = (event) => {
+    if (searchRef.current && !searchRef.current.contains(event.target)) {
+      setSearchToggle(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="flex justify-between items-center">
       <Link href="/">
@@ -85,11 +99,11 @@ const Menu = () => {
             </li>
           );
         })}
-        <div
+         <div
           className={`flex relative flex-row items-center justify-normal ${
             searchToggle && "h-9 border p-3 gap-2 rounded-lg"
           } `}
-        >
+         ref={searchRef}>
           <GrSearch
             className="cursor-pointer"
             size={22}
@@ -100,8 +114,17 @@ const Menu = () => {
             onChange={handleSearchData}
             placeholder="Search..."
           />
-          {searchToggle && (
-            <div className="bg-white mt-2 p-4 rounded shadow-md absolute top-10 right-0 w-64">
+    {searchToggle && (
+            <div className="bg-white mt-2 p-4 rounded shadow-md absolute top-[calc(100%+8px)] right-0 w-64">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xl font-semibold">Search Results</span>
+                <button
+                  className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                  onClick={() => setSearchToggle(false)}
+                >
+                  <RxCross2 size={24} />
+                </button>
+              </div>
               <Result_Search searchResults={searchResults} />
             </div>
           )}
