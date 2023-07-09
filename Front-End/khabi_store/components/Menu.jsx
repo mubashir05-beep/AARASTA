@@ -13,8 +13,6 @@ const Menu = ({ shipFee, setShipFee }) => {
     { id: 3, name: "Ready to Wear", url: "/ready_to_wear" },
     { id: 4, name: "About Us", url: "/about" },
   ];
-  const [mobileMenu, setMobileMenu] = useState(false);
-
   const handleMenu = () => {
     setShipFee(!shipFee);
     setMobileMenu(!mobileMenu);
@@ -25,7 +23,7 @@ const Menu = ({ shipFee, setShipFee }) => {
       document.body.style.overflow = "hidden"; // disable scroll
     }
   };
-  const { showCart, setShowCart, totalQuantities } = useStateContext();
+  const { showCart, setShowCart, mobileMenu, setMobileMenu,totalQuantities } = useStateContext();
 
   return (
     <>

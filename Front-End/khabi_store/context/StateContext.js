@@ -24,6 +24,7 @@ export const StateContext = ({ children }) => {
   const [couponStatus, setCouponStatus] = useState(false);
   const [couponSubmit, setCouponSubmit] = useState(false);
   const [originalPrice, setOriginalPrice] = useState(0);
+  const [mobileMenu, setMobileMenu] = useState(false);
   const [addCoupon, setAddCoupon] = useState(false);
   const [originalCart, setOriginalCart] = useState(0);
   const [storedPrice, setStoredPrice] = useState(0);
@@ -306,6 +307,7 @@ export const StateContext = ({ children }) => {
         deleteCart,
         cartItems,
         setCartItems,
+        mobileMenu, setMobileMenu,
         totalPrice,
         selectedSize,
         setSelectedSize,
