@@ -11,7 +11,7 @@ const Products = ({ product }) => {
       <Link href={`/ready_to_wear/${product.slug.current}`}>
         <div className="relative cursor-pointer">
           <img
-            className="w-full h-40 object-cover"
+            className="w-full h-32 object-cover"
             src={urlFor(product.image && product.image[0])}
             alt={product.name}
           />
@@ -24,7 +24,7 @@ const Products = ({ product }) => {
       </Link>
       <div className="p-4">
         <Link href="/ready_to_wear">
-          <p className="text-gray-600 font-light text-xs mb-2 cursor-pointer hover:underline">
+          <p className="text-gray-600 font-light text-sm mb-2 cursor-pointer hover:underline">
             {product.category}
           </p>
         </Link>
@@ -33,10 +33,10 @@ const Products = ({ product }) => {
             {product.name}
           </h1>
         </Link>
-        <p className="text-gray-800 font-medium mb-4">PKR {product.price}</p>
+        <p className="text-gray-800 font-medium text-sm mb-4">PKR {product.price}</p>
         <div className="flex items-center justify-center">
           <Link href={`/ready_to_wear/${product.slug.current}`}>
-            <button className="flex items-center px-4 py-2 bg-transparent text-black hover:underline focus:outline-none">
+            <button className="flex items-center px-4 py-2 bg-transparent text-black hover:underline focus:outline-none border border-black rounded">
               View More
               <svg
                 xmlns="http://www.w3.org/2000/svg"
