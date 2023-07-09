@@ -7,7 +7,6 @@ import "react-multi-carousel/lib/styles.css";
 const FeaturedProducts = ({ products }) => {
   const responsive = {
     superLargeDesktop: {
-      // the naming can be any, depends on you.
       breakpoint: { max: 4000, min: 3000 },
       items: 5,
     },
@@ -24,26 +23,33 @@ const FeaturedProducts = ({ products }) => {
       items: 1,
     },
   };
+
+  const renderCarouselItems = () => {
+    return products
+      .filter((product) => product.featured)
+      .map((product) => (
+        <div key={product._id}>
+          <Products product={product} />
+        </div>
+      ));
+  };
+
   return (
-    <div className="flex flex-col item-center">
+    <div className="flex flex-col items-center">
       <HeaderTitle />
-      <Carousel responsive={responsive} itemClass="carousel-item-padding" className="mx-3">
-  {products
-    .filter((product) => product.featured)
-    .map((product) => (
-      <div>
-        <Products key={product._id} product={product} />
-      </div>
-    ))}
-</Carousel>
+      <Carousel
+        responsive={responsive}
+        itemClass="carousel-item-padding"
+        className="mx-3"
+      >
+        {renderCarouselItems()}
+      </Carousel>
 
-<style jsx global>{`
-  .carousel-item-padding {
-    padding-right: 50px; /* adjust the gap size as needed */
-      }
-`}</style>
-
-      ;
+      <style jsx>{`
+        .carousel-item-padding {
+          padding-right: 50px; /* adjust the gap size as needed */
+        }
+      `}</style>
     </div>
   );
 };

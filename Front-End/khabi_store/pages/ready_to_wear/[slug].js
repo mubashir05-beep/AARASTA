@@ -19,10 +19,30 @@ const Product = ({ products, product }) => {
 
   const [selected, setSelected] = useState("");
   const [err, setErr] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setDiscountedPrice(() => product.discount);
   }, []);
+
+  const handleAddToCart = () => {
+    if (!selectedSize) {
+      setErr(true);
+    } else {
+      onAdd(product, qty);
+      setShowModal(true);
+    }
+  };
+
+  const handleExplore = () => {
+    setShowModal(false);
+  };
+
+  const handleCheckout = () => {
+    setShowModal(false);
+    // Redirect to cart page
+    // Add your code for redirection here
+  };
 
   return (
     <div className="flex flex-col mx-[3rem] max-[500px]:mx-[1.5rem] my-[1rem]">
@@ -45,7 +65,7 @@ const Product = ({ products, product }) => {
             alt={product.name}
           />
           {product.discount && (
-            <span className="absolute top-0 right-0 z-10 bg-red-500 text-white px-2 py-1 text-xs font-bold">
+            <span className="absolute top-0 right-0 z-20 bg-red-500 text-white px-2 py-1 text-xs font-bold">
               {((product.discount / product.price) * 100).toFixed(0)}% OFF
             </span>
           )}
@@ -129,10 +149,11 @@ const Product = ({ products, product }) => {
           </div>
 
           <div className="text-black/[0.6]">{product.details}</div>
-
-          <div className="py-[12px] text-red-400">
-            Hurry up! only limited stock left.
-          </div>
+          {product.quantity && (
+            <div className="py-[12px] text-red-400">
+              Hurry up! only limited stock left.
+            </div>
+          )}
 
           <div className={`text-red-800 ${err ? "block" : "hidden"}`}>
             Please select a size!
@@ -140,13 +161,7 @@ const Product = ({ products, product }) => {
 
           <div>
             <button
-              onClick={() => {
-                if (!selectedSize) {
-                  setErr(true);
-                } else {
-                  onAdd(product, qty);
-                }
-              }}
+              onClick={handleAddToCart}
               className="py-2 px-4 bg-black text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
               disabled={!product.quantity}
             >
@@ -159,29 +174,6 @@ const Product = ({ products, product }) => {
                 stroke="currentColor"
               ></svg>
             </button>
-
-            {product.quantity && (
-              <>
-                {selected ? (
-                  <Link href="/cart">
-                    <button
-                      onClick={() => onAdd(product, qty)}
-                      className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
-                    >
-                      Buy Now
-                    </button>
-                  </Link>
-                ) : (
-                  <button
-                    onClick={() => setErr(true)}
-                    className="py-2 px-4 bg-red-400 text-white rounded hover:bg-black/[0.4] active:bg-black/[0.6] disabled:opacity-50 mt-4 w-full flex items-center justify-center"
-                    disabled={!product.quantity}
-                  >
-                    Buy Now
-                  </button>
-                )}
-              </>
-            )}
           </div>
 
           <div className="py-[25px]">
@@ -205,6 +197,30 @@ const Product = ({ products, product }) => {
             vary from the image.
           </div>
         </div>
+
+        {/* Modal */}
+        {showModal && selectedSize && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30">
+            <div className="bg-white p-8 rounded">
+              <h2 className="text-2xl font-bold mb-4">Product Added to Cart</h2>
+              <p className="mb-4">What would you like to do next?</p>
+              <div className="flex gap-4">
+                <button
+                  onClick={handleExplore}
+                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                >
+                  Explore
+                </button>
+                <button
+                  onClick={handleCheckout}
+                  className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
+                >
+                  Checkout
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
