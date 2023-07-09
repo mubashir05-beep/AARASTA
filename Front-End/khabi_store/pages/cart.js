@@ -58,6 +58,7 @@ const Cart = ({ coupons }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [processingModal, setProcessingModal] = useState(false);
   const opencouponFunc = () => {
+    handleSubmit();
     setProcessingModal(true);
   };
   const closecouponFunc = () => {
@@ -110,7 +111,7 @@ const Cart = ({ coupons }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     // Perform form validation
     const { name, phone, zip, city, addressAll, email } = address;
@@ -395,6 +396,11 @@ const Cart = ({ coupons }) => {
         setTotalPrice(0); // Reset total price to 0 when cart is empty
         setCouponStatus(false);
         setCustomerCoupon("");
+        setAddCoupon(false);
+    
+        setCouponSubmit(false);
+        setOriginalCart([]);
+        setOriginalPrice(0);
       }
       coupon &&
         coupon.map((couponItem) => {
@@ -550,44 +556,39 @@ const Cart = ({ coupons }) => {
                       </div>
                     </div>
                   </div>
-                  {/* <button
-                    className="bg-gray-800 text-white rounded-lg py-2 px-4 hover:bg-gray-600"
-                    type="submit"
-                    onClick={handleSubmit}
-                  >
-                    Submit
-                  </button> */}
                 </form>
                 <div className="w-full flex flex-col pb-3 gap-4 bg-gray-100 rounded-lg p-4">
-  <div className="text-xl font-semibold text-gray-800 mb-2">Your Address:</div>
-  <div className="flex flex-col gap-2 mx-2">
-    {address.name && (
-      <span className="break-words text-gray-600 text-sm">
-        <strong>Name:</strong> {address.name}
-      </span>
-    )}
-    {address.phone && (
-      <span className="break-words text-gray-600 text-sm">
-        <strong>Phone:</strong> {address.phone}
-      </span>
-    )}
-    {address.email && (
-      <span className="break-words text-gray-600 text-sm">
-        <strong>Email:</strong> {address.email}
-      </span>
-    )}
-    {address.addressAll && address.city && address.zip && (
-      <span className="break-words max-w-[150px] sm:max-w-[300px] md:max-w-[600px] text-gray-600 text-sm">
-        <strong>Address:</strong> {address.addressAll}, {address.city}, {address.zip}
-      </span>
-    )}
-  </div>
-</div>
-
+                  <div className="text-xl font-semibold text-gray-800 mb-2">
+                    Your Address:
+                  </div>
+                  <div className="flex flex-col gap-2 mx-2">
+                    {address.name && (
+                      <span className="break-words text-gray-600 text-sm">
+                        <strong>Name:</strong> {address.name}
+                      </span>
+                    )}
+                    {address.phone && (
+                      <span className="break-words text-gray-600 text-sm">
+                        <strong>Phone:</strong> {address.phone}
+                      </span>
+                    )}
+                    {address.email && (
+                      <span className="break-words text-gray-600 text-sm">
+                        <strong>Email:</strong> {address.email}
+                      </span>
+                    )}
+                    {address.addressAll && address.city && address.zip && (
+                      <span className="break-words max-w-[150px] sm:max-w-[300px] md:max-w-[600px] text-gray-600 text-sm">
+                        <strong>Address:</strong> {address.addressAll},{" "}
+                        {address.city}, {address.zip}
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
             )}
           </div>
-          <div className={`flex flex-col justify-start flex-[1]`}>
+          <div className={`flex flex-col p-5 justify-start flex-[1]`}>
             <div className="flex flex-col  rounded-lg p-4 w-full">
               <div className="text-xl font-semibold underline text-gray-800 mb-4">
                 Order Summary
@@ -678,7 +679,7 @@ const Cart = ({ coupons }) => {
                     Delivery Fee:
                   </p>
                   <div className="text-lg">
-                    PKR {totalPrice >= 2499 ? "0" : "99"}/-
+                    PKR {delivery >= 2499 ? "0" : "99"}/-
                   </div>
                 </div>
                 <div className="flex flex-col mt-4">
@@ -694,160 +695,171 @@ const Cart = ({ coupons }) => {
 
               <div>
                 <button
-                  className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
+                  className={`bg-gray-800 text-white border-t rounded-lg w-full h-11 ${
+                    isAddressFormFilled() ? " hover:bg-gray-600" : ""
+                  } px-4 my-4 duration-300 relative overflow-hidden`}
                   onClick={opencouponFunc}
                   disabled={disable || !isAddressFormFilled()}
                 >
-                  Proceed to Checkout
+                  {isAddressFormFilled() ? (
+                    <div> Proceed to Checkout</div>
+                  ) : (
+                    <div>Please Fill Out Your Address Form</div>
+                  )}
                 </button>
-                {processingModal && (
-                  <div className="fixed z-10 inset-0 overflow-y-auto">
-                    <div className="flex items-center justify-center min-h-screen">
-                      <div className="fixed inset-0 transition-opacity">
-                        <div
-                          className="absolute inset-0 bg-black opacity-75"
-                          onClick={closecouponFunc}
-                        ></div>
-                      </div>
-                      <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-[25rem] sm:w-full">
-                        <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                          <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <div className="absolute left-6 top-6">
-                              <button
-                                onClick={closecouponFunc}
-                                className="underline underline-offset-4 text-sm"
-                              >
-                                Go Back
-                              </button>
-                            </div>
-                          </div>
-                          <div className="sm:flex sm:items-start">
-                            <div className="mt-3 flex flex-col gap-6 sm:mt-0 sm:ml-4 sm:text-left">
-                              <div className="mt-2 flex flex-col items-center gap-6">
-                                <div className="flex flex-col gap-5 border-t w-full px-2 border-b py-5">
-                                  <div className="flex items-center justify-between min-w-[300px]">
-                                    <div className="text-lg font-semibold underline underline-offset-8 px-8px">
-                                      Have a Coupon?
-                                    </div>
-                                    <div
-                                      onClick={() => setAddCoupon(!addCoupon)}
-                                    >
-                                      {!addCoupon ? (
-                                        <AiFillCaretDown className="text-2xl cursor-pointer" />
-                                      ) : (
-                                        <AiFillCaretUp className="text-2xl cursor-pointer" />
-                                      )}
-                                    </div>
-                                  </div>
-                                  {addCoupon && (
-                                    <div className="flex flex-col gap-2">
-                                      {couponSubmit ? (
-                                        couponStatus ? (
-                                          <div className="text-sm text-green-500">
-                                            Coupon Applied!
-                                          </div>
-                                        ) : (
-                                          <div className="text-sm text-red-500">
-                                            Invalid coupon code. Please try
-                                            again.
-                                          </div>
-                                        )
-                                      ) : (
-                                        ""
-                                      )}
-                                      <input
-                                        type="text"
-                                        id="couponInput"
-                                        className={`border border-gray-400 ${
-                                          couponSubmit
-                                            ? couponStatus
-                                              ? "border-green-500"
-                                              : "border-red-500"
-                                            : ""
-                                        } rounded-lg py-2px-4`}
-                                        value={customerCoupon}
-                                        placeholder="Enter coupon code"
-                                        onChange={handleCoupon}
-                                        onSubmit={submitCoupon}
-                                        disabled={couponStatus}
-                                      />
-                                      <button
-                                        onClick={submitCoupon}
-                                        className="bg-gray-800 text-white rounded-lg py-2 px-4 hover:bg-gray-600"
-                                        disabled={couponStatus}
-                                      >
-                                        Apply Coupon
-                                      </button>
-                                      <div className="text-sm text-gray-500">
-                                        *Coupon can only be applied within the
-                                        specified limit, before adding the
-                                        shipping fee.
-                                      </div>
-                                    </div>
-                                  )}
-                                  {couponStatus && (
-                                    <div className="flex flex-col bg-gray-100 p-4 rounded-lg">
-                                      <div className="flex items-center justify-between mb-2">
-                                        <div className="flex items-start flex-col gap-1">
-                                          <span className="text-base font-semibold">
-                                            Total Price
-                                          </span>
-                                          <span className="text-xs text-gray-500">
-                                            (incl. shipping fee):
-                                          </span>
-                                        </div>
-                                        <div className="flex flex-col items-end">
-                                          <span className="text-lg text-blue-600 font-semibold">
-                                            PKR{" "}
-                                            {totalPrice >= 2499
-                                              ? totalPrice
-                                              : totalPrice + 99}
-                                            /-
-                                          </span>
-                                          <span className="text-xs line-through text-gray-500">
-                                            PKR{" "}
-                                            {storedPrice >= 2499
-                                              ? storedPrice
-                                              : storedPrice + 99}
-                                            /-
-                                          </span>
-                                        </div>
-                                      </div>
-                                      <div className="flex items-center">
-                                        <span className="text-xs text-gray-600 mr-2">
-                                          Quantity:
-                                        </span>
-                                        <span className="text-base text-gray-800 font-semibold">
-                                          {totalQuantities}
-                                        </span>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-
+                <div className="flex items-center justify-center">
+                  {processingModal && (
+                    <div className="fixed z-10 inset-0 overflow-y-auto">
+                      <div className="flex items-center justify-center min-h-screen">
+                        <div className="fixed inset-0 transition-opacity">
+                          <div
+                            className="absolute inset-0 bg-black opacity-75"
+                            onClick={closecouponFunc}
+                          ></div>
+                        </div>
+                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-[25rem] sm:w-full">
+                          <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                            <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                              <div className="absolute left-6 top-6">
                                 <button
-                                  onClick={handleCheckout}
-                                  className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
-                                  disabled={disable || !isAddressFormFilled()}
+                                  onClick={closecouponFunc}
+                                  className="underline underline-offset-4 text-sm"
                                 >
-                                  {processing ? (
-                                    <span>Processing...</span>
-                                  ) : orderCompleted ? (
-                                    "Order Placed!"
-                                  ) : tryAgain ? (
-                                    <span>Try Again</span>
-                                  ) : (
-                                    "Continue"
-                                  )}
+                                  Go Back
                                 </button>
+                              </div>
+                            </div>
+                            <div className="sm:flex sm:items-start">
+                              <div className="mt-3 flex flex-col gap-6">
+                                <div className="mt-2 flex flex-col items-center gap-6">
+                                  <div className="flex flex-col gap-5 border-t w-full px-2 border-b py-5">
+                                    <div className="flex items-center justify-between min-w-[300px]">
+                                      <div className="text-lg font-semibold underline underline-offset-8 px-8px">
+                                        Have a Coupon?
+                                      </div>
+                                      <div
+                                        onClick={() => setAddCoupon(!addCoupon)}
+                                      >
+                                        {!addCoupon ? (
+                                          <AiFillCaretDown className="text-2xl cursor-pointer" />
+                                        ) : (
+                                          <AiFillCaretUp className="text-2xl cursor-pointer" />
+                                        )}
+                                      </div>
+                                    </div>
+                                    {addCoupon && (
+                                      <div className="flex flex-col gap-2">
+                                        {couponSubmit ? (
+                                          couponStatus ? (
+                                            <div className="text-sm text-green-500">
+                                              Coupon Applied!
+                                            </div>
+                                          ) : (
+                                            <div className="text-sm text-red-500">
+                                              Invalid coupon code. Please try
+                                              again.
+                                            </div>
+                                          )
+                                        ) : (
+                                          ""
+                                        )}
+                                        <input
+                                          type="text"
+                                          id="couponInput"
+                                          className={`border border-gray-400 ${
+                                            couponSubmit
+                                              ? couponStatus
+                                                ? "border-green-500"
+                                                : "border-red-500"
+                                              : ""
+                                          } rounded-lg py-2 px-4`}
+                                          value={customerCoupon}
+                                          placeholder="Enter coupon code"
+                                          onChange={handleCoupon}
+                                          onSubmit={submitCoupon}
+                                          disabled={couponStatus}
+                                        />
+                                        <button
+                                          onClick={submitCoupon}
+                                          className="bg-gray-800 text-white rounded-lg py-2 px-4 hover:bg-gray-600"
+                                          disabled={couponStatus}
+                                        >
+                                          Apply Coupon
+                                        </button>
+                                        <div className="text-sm text-gray-500">
+                                          *Coupon can only be applied within the
+                                          specified limit, before adding the
+                                          shipping fee.
+                                        </div>
+                                      </div>
+                                    )}
+                                    {couponStatus && (
+                                      <div className="flex flex-col bg-gray-100 p-4 rounded-lg">
+                                        <div className="flex items-center justify-between mb-2">
+                                          <div className="flex items-start flex-col gap-1">
+                                            <span className="text-base font-semibold">
+                                              Total Price
+                                            </span>
+                                            <span className="text-xs text-gray-500">
+                                              (incl. shipping fee):
+                                            </span>
+                                          </div>
+                                          <div className="flex flex-col items-end">
+                                            <span className="text-lg text-blue-600 font-semibold">
+                                              PKR{" "}
+                                              {totalPrice >= 2499
+                                                ? totalPrice
+                                                : totalPrice + 99}
+                                              /-
+                                            </span>
+                                            <span className="text-xs line-through text-gray-500">
+                                              PKR{" "}
+                                              {storedPrice >= 2499
+                                                ? storedPrice
+                                                : storedPrice + 99}
+                                              /-
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div className="flex items-center">
+                                          <span className="text-xs text-gray-600 mr-2">
+                                            Quantity:
+                                          </span>
+                                          <span className="text-base text-gray-800 font-semibold">
+                                            {totalQuantities}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                  <button
+  onClick={handleCheckout}
+  className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
+  disabled={disable || !isAddressFormFilled()}
+>
+  {processing ? (
+    <div className="flex items-center justify-center">
+      <div className="rounded-full h-5 w-5 border-t-2 border-b-2 border-gray-100 animate-spin"></div>
+      <div className="ml-2">Processing...</div>
+    </div>
+  ) : orderCompleted ? (
+    "Order Placed!"
+  ) : tryAgain ? (
+    <span>Try Again</span>
+  ) : (
+    "Continue"
+  )}
+</button>
+
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>
