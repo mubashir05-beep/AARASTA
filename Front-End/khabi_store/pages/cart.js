@@ -575,97 +575,104 @@ const Cart = ({ coupons }) => {
               </div>
             )}
           </div>
-          <div className={`flex flex-col  justify-start py-5 max-[380px]:px-1 px-5 flex-[1]`}>
+          <div
+            className={`flex flex-col  justify-start py-5 max-[380px]:px-1 px-5 flex-[1]`}
+          >
             <div className="flex flex-col  rounded-lg  w-full">
               <div className="text-xl font-semibold underline text-gray-800">
                 Order Summary
               </div>
               {cartItems.length >= 1 && (
-               <div className="">
-               {cartItems.map((item) => (
-                 <div
-                   className="flex items-center py-4 border-b border-gray-200 relative"
-                   key={item._id}
-                 >
-                   <img
-                     src={urlFor(item?.image[0])}
-                     width="150"
-                     className="rounded-lg max-[600px]:w-[150px] max-[350px]:w-[120px]"
-                     alt={item.name}
-                   />
-                   <div className="flex flex-col max-[600px]:gap-1 ml-3">
-                     <div className="text-lg font-semibold max-[350px]:text-base">
-                       <Link href={`./ready_to_wear/${item.slug.current}`}>
-                         {item.name}
-                       </Link>
-                     </div>
-                     {item.productCode && (
-                       <div className="text-sm text-gray-500">
-                         Code: {item.productCode}
-                       </div>
-                     )}
-                     <div className="text-sm flex items-center">
-                       Size:
-                       <span className="w-4 h-4 text-xs text-black rounded-full bg-black/[0.1] flex items-center justify-center ml-1">
-                         {item.size}
-                       </span>
-                     </div>
-                     <div className="text-sm flex items-center min-[601px]:hidden">
-                       Price:
-                       <span className="ml-1">
-                         {item.discount
-                           ? "PKR " + (item.price - item.discount) + " /-"
-                           : "PKR " + item.price + " /-"}
-                       </span>
-                     </div>
-             
-                     <div className="text-sm flex items-center min-[601px]:mt-2">
-                       Quantity:
-                       <div className="flex items-center ml-1">
-                         <button
-                           className="px-1.5 py-0.5 bg-slate-200 text-gray-700 rounded-l text-xs hover:bg-gray-300"
-                           onClick={() => toggleCartItemQuanitity(item._id, "dec")}
-                         >
-                           -
-                         </button>
-                         <span className="px-2 min-[601px]:py-1 min-[601px]:text-lg max-[600px]:text-base text-gray-600">
-                           {item.quantity}
-                         </span>
-                         <button
-                           className="px-1.5 py-0.5 bg-slate-200 text-gray-700 rounded-r text-xs hover:bg-gray-300"
-                           onClick={() => toggleCartItemQuanitity(item._id, "inc")}
-                         >
-                           +
-                         </button>
-                       </div>
-                       <div className="absolute top-0 right-0 mt-1 mr-2">
-                         <RxCross2
-                           size={20}
-                           className={`cursor-pointer ${
-                             processing ? "opacity-50" : ""
-                           }`}
-                           disabled={lock}
-                           onClick={() => !processing && onRemove(item)}
-                         />
-                       </div>
-                     </div>
-                   </div>
-                   <div className="min-[601px]:ml-auto max-[600px]:hidden flex flex-col justify-between">
-                   
-                     <div className="text-xl text-gray-600">
-                       PKR{" "}
-                       {item.discount ? item.price - item.discount : item.price}
-                       {item.discount && (
-                         <span className="ml-2 text-xs text-red-500">
-                           {((item.discount / item.price) * 100).toFixed(0)}% OFF
-                         </span>
-                       )}
-                     </div>
-                   </div>
-                 </div>
-               ))}
-             </div>
-             
+                <div className="">
+                  {cartItems.map((item) => (
+                    <div
+                      className="flex items-center py-4 border-b border-gray-200 relative"
+                      key={item._id}
+                    >
+                      <img
+                        src={urlFor(item?.image[0])}
+                        width="150"
+                        className="rounded-lg max-[600px]:w-[150px] max-[350px]:w-[120px]"
+                        alt={item.name}
+                      />
+                      <div className="flex flex-col max-[600px]:gap-1 ml-3">
+                        <div className="text-lg font-semibold max-[350px]:text-base">
+                          <Link href={`./shirts/${item.slug.current}`}>
+                            {item.name}
+                          </Link>
+                        </div>
+                        {item.productCode && (
+                          <div className="text-sm text-gray-500">
+                            Code: {item.productCode}
+                          </div>
+                        )}
+                        <div className="text-sm flex items-center">
+                          Size:
+                          <span className="w-4 h-4 text-xs text-black rounded-full bg-black/[0.1] flex items-center justify-center ml-1">
+                            {item.size}
+                          </span>
+                        </div>
+                        <div className="text-sm flex items-center min-[601px]:hidden">
+                          Price:
+                          <span className="ml-1">
+                            {item.discount
+                              ? "PKR " + (item.price - item.discount) + " /-"
+                              : "PKR " + item.price + " /-"}
+                          </span>
+                        </div>
+
+                        <div className="text-sm flex items-center min-[601px]:mt-2">
+                          Quantity:
+                          <div className="flex items-center ml-1">
+                            <button
+                              className="px-1.5 py-0.5 bg-slate-200 text-gray-700 rounded-l text-xs hover:bg-gray-300"
+                              onClick={() =>
+                                toggleCartItemQuanitity(item._id, "dec")
+                              }
+                            >
+                              -
+                            </button>
+                            <span className="px-2 min-[601px]:py-1 min-[601px]:text-lg max-[600px]:text-base text-gray-600">
+                              {item.quantity}
+                            </span>
+                            <button
+                              className="px-1.5 py-0.5 bg-slate-200 text-gray-700 rounded-r text-xs hover:bg-gray-300"
+                              onClick={() =>
+                                toggleCartItemQuanitity(item._id, "inc")
+                              }
+                            >
+                              +
+                            </button>
+                          </div>
+                          <div className="absolute top-0 right-0 mt-1 mr-2">
+                            <RxCross2
+                              size={20}
+                              className={`cursor-pointer ${
+                                processing ? "opacity-50" : ""
+                              }`}
+                              disabled={lock}
+                              onClick={() => !processing && onRemove(item)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="min-[601px]:ml-auto max-[600px]:hidden flex flex-col justify-between">
+                        <div className="text-xl text-gray-600">
+                          PKR{" "}
+                          {item.discount
+                            ? item.price - item.discount
+                            : item.price}
+                          {item.discount && (
+                            <span className="ml-2 text-xs text-red-500">
+                              {((item.discount / item.price) * 100).toFixed(0)}%
+                              OFF
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               )}
 
               <div className="flex flex-col gap-4">

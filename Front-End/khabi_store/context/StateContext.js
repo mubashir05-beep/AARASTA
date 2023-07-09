@@ -29,6 +29,7 @@ export const StateContext = ({ children }) => {
   const [originalCart, setOriginalCart] = useState(0);
   const [storedPrice, setStoredPrice] = useState(0);
   const [lock, setLock] = useState(false);
+  const [searchToggle,setSearchToggle]=useState(false);
   const [address, setAddress] = useState(() => {
     let localAddress = {
       name: "",
@@ -325,6 +326,7 @@ export const StateContext = ({ children }) => {
         onSizeChange,
         discountedPrice,
         coupon,
+        searchToggle,setSearchToggle,
         setCoupon,
         setDiscountedPrice,
         customerCoupon,

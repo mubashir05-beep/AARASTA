@@ -6,12 +6,21 @@ import { RxCross2 } from "react-icons/rx";
 import MobileMenu from "./MobileMenu";
 import { useStateContext } from "@/context/StateContext";
 
+import { BiSearch } from "react-icons/bi";
 const Menu = ({ shipFee, setShipFee }) => {
+  const {
+    showCart,
+    setShowCart,
+    mobileMenu,
+    setMobileMenu,
+    totalQuantities,
+    searchToggle,
+    setSearchToggle,
+  } = useStateContext();
   const data = [
     { id: 1, name: "Home", url: "/" },
-    { id: 2, name: "Tailored Clothing", url: "/tailored_clothing" },
-    { id: 3, name: "Ready to Wear", url: "/ready_to_wear" },
-    { id: 4, name: "About Us", url: "/about" },
+    { id: 2, name: "Shirts", url: "/shirts" },
+    { id: 3, name: "About Us", url: "/about" },
   ];
   const handleMenu = () => {
     setShipFee(!shipFee);
@@ -23,7 +32,9 @@ const Menu = ({ shipFee, setShipFee }) => {
       document.body.style.overflow = "hidden"; // disable scroll
     }
   };
-  const { showCart, setShowCart, mobileMenu, setMobileMenu,totalQuantities } = useStateContext();
+  const handleToggleSearch = () => {
+    setSearchToggle(!searchToggle);
+  };
 
   return (
     <>
@@ -39,6 +50,17 @@ const Menu = ({ shipFee, setShipFee }) => {
               </li>
             );
           })}
+          <div className="flex flex-row items-center justify-normal h-9 border p-3 rounded-lg">
+            <BiSearch
+              className="mr-2 cursor-pointer"
+              size={22}
+              onClick={handleToggleSearch}
+            />
+            <input
+              className={`${searchToggle && 'hidden'} border-transparent focus:border-transparent focus:ring-0 `}
+              placeholder="Search"
+            />
+          </div>
           <Link href={"/cart"}>
             <div class="relative">
               <BsCart size={22} />

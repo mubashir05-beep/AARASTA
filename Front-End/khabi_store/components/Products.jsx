@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
 
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-      <Link href={`/ready_to_wear/${product.slug.current}`}>
+      <Link href={`/shirts/${product.slug.current}`}>
         <div className="relative cursor-pointer">
           <img
             className="w-full h-[400px] object-cover"
@@ -29,12 +29,12 @@ const ProductCard = ({ product }) => {
         </div>
       </Link>
       <div className="p-4">
-        <Link href="/ready_to_wear">
+        <Link href="/shirts">
           <p className="text-gray-600 font-light text-sm mb-2 cursor-pointer hover:underline">
             {product.category}
           </p>
         </Link>
-        <Link href={`/ready_to_wear/${product.slug.current}`}>
+        <Link href={`/shirts/${product.slug.current}`}>
           <h1 className="text-gray-800 text-lg font-medium mb-2 cursor-pointer hover:underline">
             {product.name}
           </h1>
@@ -55,7 +55,7 @@ const ProductCard = ({ product }) => {
           </p>
         )}
         <div className="flex items-center justify-center">
-          <Link href={`/ready_to_wear/${product.slug.current}`}>
+          <Link href={`/shirts/${product.slug.current}`}>
             <button className="flex items-center px-4 py-2 bg-transparent text-black hover:border-gray-500 focus:outline-none border border-black rounded">
               Learn More
             

@@ -12,7 +12,7 @@ const Success = () => {
   }, []); // Run deleteCart only once, on component mount
 
   const gotoPage = () => {
-    router.push("/ready_to_wear");
+    router.push("/shirts");
   };
   const gotoHome = () => {
     router.push("/");

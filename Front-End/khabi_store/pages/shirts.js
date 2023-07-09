@@ -3,7 +3,7 @@ import { client } from "@/lib/client";
 import Products from "@/components/Products";
 import Link from "next/link";
 
-const ReadyToWear = ({ products }) => {
+const Shirts = ({ products }) => {
   const [sortBy, setSortBy] = useState("");
 
   const handleSortChange = (event) => {
@@ -95,7 +95,7 @@ const ReadyToWear = ({ products }) => {
   );
 };
 
-export default ReadyToWear;
+export default  Shirts;
 
 export const getServerSideProps = async () => {
   const query = '*[_type == "product"]';

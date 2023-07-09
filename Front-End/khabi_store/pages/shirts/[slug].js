@@ -75,7 +75,7 @@ const Product = ({ products, product }) => {
           <div className="flex flex-col gap-[1px] my-[12px]">
             <div>
               <div className="text-[35px]">{product.name}</div>
-              <Link href={"/ready_to_wear"}>
+              <Link href={"/shirts"}>
                 <div className="text-black text-[16px]">{product.category}</div>
               </Link>
             </div>
