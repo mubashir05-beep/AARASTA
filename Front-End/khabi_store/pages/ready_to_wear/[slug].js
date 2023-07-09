@@ -194,14 +194,33 @@ const Product = ({ products, product }) => {
           <div className="text-[14px] text-red-400">
             Disclaimer: Due to the difference in lighting used during
             photoshoots, the color or texture of the actual product may slightly
-            vary from the image.
+           vary from the image.
           </div>
         </div>
 
         {/* Modal */}
         {showModal && selectedSize && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30">
-            <div className="bg-white p-8 rounded">
+            <div className="bg-white p-8 rounded flex flex-col items-center">
+              <button
+                className="absolute top-0 right-0 mt-2 mr-2 text-gray-500 hover:text-gray-700"
+                onClick={() => setShowModal(false)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
               <h2 className="text-2xl font-bold mb-4">Product Added to Cart</h2>
               <p className="mb-4">What would you like to do next?</p>
               <div className="flex gap-4">
@@ -211,12 +230,14 @@ const Product = ({ products, product }) => {
                 >
                   Explore
                 </button>
-                <button
-                  onClick={handleCheckout}
-                  className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
-                >
-                  Checkout
-                </button>
+                <Link href="/cart">
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800"
+                  >
+                    Checkout
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
