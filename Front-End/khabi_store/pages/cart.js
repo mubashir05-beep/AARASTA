@@ -397,7 +397,7 @@ const Cart = ({ coupons }) => {
         setCouponStatus(false);
         setCustomerCoupon("");
         setAddCoupon(false);
-    
+
         setCouponSubmit(false);
         setOriginalCart([]);
         setOriginalPrice(0);
@@ -435,29 +435,28 @@ const Cart = ({ coupons }) => {
       {cartItems.length >= 1 && <CartHead />}
 
       {cartItems.length >= 1 && (
-        <div className="flex flex-col min-[996px]:flex-row">
+        <div className="flex flex-col min-[1220px]:flex-row">
           <div className="flex  border-l border-r flex-1 border-b">
             {cartItems.length >= 1 && (
-              <div className="px-5 py-5 flex flex-1 flex-col">
+              <div className="max-[340px]:px-1 max-[340px]:py-3  px-5 py-5 flex flex-1 flex-col">
                 <form onSubmit={handleSubmit}>
                   <div className="flex flex-col items-baseline my-4 flex-grow ">
                     <label htmlFor="name" className="font-semibold">
                       Full Name:
                     </label>
-                    <div className="flex  flex-col justify-start items-start">
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={address.name}
-                        onChange={handleChange}
-                        placeholder="Enter your full name"
-                        className="border rounded-lg px-4 py-2 mt-1 flex-grow w-[50vw]"
-                        required
-                      />
-                      <div className="text-red-600 text-sm ml-2">
-                        {address.nameErr}
-                      </div>
+
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={address.name}
+                      onChange={handleChange}
+                      placeholder="Enter your full name"
+                      className="border rounded-lg px-4 py-2 mt-1 w-full flex-grow"
+                      required
+                    />
+                    <div className="text-red-600 text-sm">
+                      {address.nameErr}
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-6 my-4">
@@ -557,11 +556,12 @@ const Cart = ({ coupons }) => {
                     </div>
                   </div>
                 </form>
+
                 <div className="w-full flex flex-col pb-3 gap-4 bg-gray-100 rounded-lg p-4">
                   <div className="text-xl font-semibold text-gray-800 mb-2">
                     Your Address:
                   </div>
-                  <div className="flex flex-col gap-2 mx-2">
+                  <div className="flex flex-col gap-2 ">
                     {address.name && (
                       <span className="break-words text-gray-600 text-sm">
                         <strong>Name:</strong> {address.name}
@@ -578,7 +578,7 @@ const Cart = ({ coupons }) => {
                       </span>
                     )}
                     {address.addressAll && address.city && address.zip && (
-                      <span className="break-words max-w-[150px] sm:max-w-[300px] md:max-w-[600px] text-gray-600 text-sm">
+                      <span className="break-words max-w-full sm:max-w-[300px]  text-gray-600 text-sm">
                         <strong>Address:</strong> {address.addressAll},{" "}
                         {address.city}, {address.zip}
                       </span>
@@ -588,26 +588,26 @@ const Cart = ({ coupons }) => {
               </div>
             )}
           </div>
-          <div className={`flex flex-col p-5 justify-start flex-[1]`}>
-            <div className="flex flex-col  rounded-lg p-4 w-full">
-              <div className="text-xl font-semibold underline text-gray-800 mb-4">
+          <div className={`flex flex-col  justify-start py-5 px-1 flex-[1]`}>
+            <div className="flex flex-col  rounded-lg  w-full">
+              <div className="text-xl font-semibold underline text-gray-800">
                 Order Summary
               </div>
               {cartItems.length >= 1 && (
-                <div className="my-4">
+                <div className="">
                   {cartItems.map((item) => (
                     <div
-                      className="flex items-center py-4 border-b border-gray-200"
+                      className="flex items-center  py-4 border-b border-gray-200"
                       key={item._id}
                     >
                       <img
                         src={urlFor(item?.image[0])}
-                        width="100"
-                        className="rounded-lg"
+                        width="150"
+                        className="rounded-lg max-[600px]:w-[150px] max-[350px]:w-[120px]"
                         alt={item.name}
                       />
-                      <div className="flex flex-col ml-3">
-                        <div className="text-lg font-semibold">
+                      <div className="flex flex-col max-[600px]:gap-1 ml-3">
+                        <div className="text-lg font-semibold max-[350px]:text-base">
                           <Link href={`./ready_to_wear/${item.slug.current}`}>
                             {item.name}
                           </Link>
@@ -623,9 +623,18 @@ const Cart = ({ coupons }) => {
                             {item.size}
                           </span>
                         </div>
-                        <div className="text-sm flex items-center mt-2">
+                        <div className="text-sm flex items-center min-[601px]:hidden">
+                          Price: 
+                          <span className="ml-1">
+                            {item.discount
+                              ? "PKR " + (item.price - item.discount) + " /-"
+                              : "PKR " + item.price + " /-"}
+                          </span>
+                        </div>
+
+                        <div className="text-sm flex items-center min-[601px]:mt-2">
                           Quantity:
-                          <div className="flex items-center ml-2">
+                          <div className="flex items-center ml-1">
                             <button
                               className="px-1.5 py-0.5 bg-slate-200  text-gray-700 rounded-l text-xs hover:bg-gray-300"
                               onClick={() =>
@@ -634,7 +643,7 @@ const Cart = ({ coupons }) => {
                             >
                               -
                             </button>
-                            <span className="px-2 py-1 text-lg text-gray-600 ">
+                            <span className="px-2 min-[601px]:py-1 min-[601px]:text-lg max-[600px]:text-base text-gray-600 ">
                               {item.quantity}
                             </span>
                             <button
@@ -648,7 +657,7 @@ const Cart = ({ coupons }) => {
                           </div>
                         </div>
                       </div>
-                      <div className="ml-auto">
+                      <div className="min-[601px]:ml-auto max-[600px]:hidden">
                         <div className="text-xl text-gray-600">
                           PKR{" "}
                           {item.discount
@@ -685,8 +694,8 @@ const Cart = ({ coupons }) => {
                 <div className="flex flex-col mt-4">
                   <div className="bg-gray-800 text-white rounded-lg py-4 px-6">
                     <p className="font-medium text-lg">Grand Total:</p>
-                    <div className="text-2xl font-bold">
-                      PKR {delivery}/-{" "}
+                    <div className="text-2xl flex items-center gap-2 font-bold max-[340px]:flex-col max-[340px]:items-baseline">
+                      PKR {delivery}/-
                       <span className="text-sm">(incl. shipping fee)</span>
                     </div>
                   </div>
@@ -717,7 +726,7 @@ const Cart = ({ coupons }) => {
                             onClick={closecouponFunc}
                           ></div>
                         </div>
-                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-[25rem] sm:w-full">
+                        <div className="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-[440px]:max-w-[25rem] max-[380px]:max-w-[18rem]">
                           <div className="bg-white flex flex-col gap-6 items-center justify-center px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                               <div className="absolute left-6 top-6">
@@ -733,8 +742,8 @@ const Cart = ({ coupons }) => {
                               <div className="mt-3 flex flex-col gap-6">
                                 <div className="mt-2 flex flex-col items-center gap-6">
                                   <div className="flex flex-col gap-5 border-t w-full px-2 border-b py-5">
-                                    <div className="flex items-center justify-between min-w-[300px]">
-                                      <div className="text-lg font-semibold underline underline-offset-8 px-8px">
+                                    <div className="flex items-center justify-between min-[381px]:min-w-[300px] max-[380px]:min-w-[270px]">
+                                      <div className="text-lg font-semibold underline underline-offset-8 px-[8px]">
                                         Have a Coupon?
                                       </div>
                                       <div
@@ -833,24 +842,25 @@ const Cart = ({ coupons }) => {
                                     )}
                                   </div>
                                   <button
-  onClick={handleCheckout}
-  className="bg-gray-800 text-white border-t rounded-lg w-full h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden"
-  disabled={disable || !isAddressFormFilled()}
->
-  {processing ? (
-    <div className="flex items-center justify-center">
-      <div className="rounded-full h-5 w-5 border-t-2 border-b-2 border-gray-100 animate-spin"></div>
-      <div className="ml-2">Processing...</div>
-    </div>
-  ) : orderCompleted ? (
-    "Order Placed!"
-  ) : tryAgain ? (
-    <span>Try Again</span>
-  ) : (
-    "Continue"
-  )}
-</button>
-
+                                    onClick={handleCheckout}
+                                    className="bg-gray-800 text-white border-t rounded-lg w-full max-[380px]:w-[200px]  h-11 hover:bg-gray-600 px-4 my-4 duration-300 relative overflow-hidden "
+                                    disabled={disable || !isAddressFormFilled()}
+                                  >
+                                    {processing ? (
+                                      <div className="flex items-center justify-center">
+                                        <div className="rounded-full h-5 w-5 border-t-2 border-b-2 border-gray-100 animate-spin"></div>
+                                        <div className="ml-2">
+                                          Processing...
+                                        </div>
+                                      </div>
+                                    ) : orderCompleted ? (
+                                      "Order Placed!"
+                                    ) : tryAgain ? (
+                                      <span>Try Again</span>
+                                    ) : (
+                                      "Continue"
+                                    )}
+                                  </button>
                                 </div>
                               </div>
                             </div>
