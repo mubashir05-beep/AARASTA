@@ -1,10 +1,18 @@
 import HeroBanner from "@/components/HeroBanner";
 import Products from "@/components/Products";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { client } from "@/lib/client";
 import FeaturedProducts from "@/components/FeaturedProducts";
 
+
+import { useStateContext } from "@/context/StateContext";
 export default function Home({ products, bannerData }) {
+  const {
+    setProducts
+  } = useStateContext();
+  useEffect(()=>{
+    setProducts(products)
+  },[products])
   return (
     <main>
       <HeroBanner setBannerData={bannerData} />

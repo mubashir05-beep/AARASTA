@@ -55,7 +55,7 @@ const Product = ({ products, product }) => {
           Shirts
         </Link>
         <span>/</span>
-        <span className="font-medium">{product.name}</span>
+        <span className="font-medium">{product&&product.name}</span>
       </div>
 
       <div className="flex flex-col lg:flex-row items-center mx-6 my-6 justify-center gap-10">
