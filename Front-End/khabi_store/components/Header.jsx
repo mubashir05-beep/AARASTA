@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import Menu from './Menu'
 
+import { useStateContext } from "@/context/StateContext";
 const Header = () => {
-  const [shipFee,setShipFee]=useState(true);
+  const {
+    shipFee,setShipFee,
+  } = useStateContext();
 
   return (
     <>
@@ -13,7 +16,7 @@ const Header = () => {
    
       )}
       <div className={`mx-[3rem] max-[500px]:mx-[1.5rem] my-[1rem]`}>
-        <Menu shipFee={shipFee} setShipFee={setShipFee} />
+        <Menu />
       </div>
     </>
   )

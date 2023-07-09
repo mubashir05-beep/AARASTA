@@ -30,6 +30,8 @@ export const StateContext = ({ children }) => {
   const [storedPrice, setStoredPrice] = useState(0);
   const [lock, setLock] = useState(false);
   const [searchToggle,setSearchToggle]=useState(false);
+  const [searchData,setSearchData]=useState('');
+  const [shipFee,setShipFee]=useState(true);
   const [address, setAddress] = useState(() => {
     let localAddress = {
       name: "",
@@ -316,6 +318,7 @@ export const StateContext = ({ children }) => {
         onAdd,
         incQty,
         onRemove,
+        shipFee,setShipFee,
         toggleCartItemQuanitity,
         decQty,
         address,
@@ -327,6 +330,7 @@ export const StateContext = ({ children }) => {
         discountedPrice,
         coupon,
         searchToggle,setSearchToggle,
+        searchData,setSearchData,
         setCoupon,
         setDiscountedPrice,
         customerCoupon,

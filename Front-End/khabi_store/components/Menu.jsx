@@ -1,13 +1,14 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { client } from "@/lib/client";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { BsCart } from "react-icons/bs";
 import { RxCross2 } from "react-icons/rx";
 import MobileMenu from "./MobileMenu";
 import { useStateContext } from "@/context/StateContext";
-
-import { BiSearch } from "react-icons/bi";
-const Menu = ({ shipFee, setShipFee }) => {
+import { GrSearch } from "react-icons/gr";
+const Menu = ({ products }) => {
+  console.log(products);
   const {
     showCart,
     setShowCart,
@@ -16,6 +17,10 @@ const Menu = ({ shipFee, setShipFee }) => {
     totalQuantities,
     searchToggle,
     setSearchToggle,
+    shipFee,
+    setShipFee,
+    searchData,
+    setSearchData,
   } = useStateContext();
   const data = [
     { id: 1, name: "Home", url: "/" },
@@ -32,10 +37,26 @@ const Menu = ({ shipFee, setShipFee }) => {
       document.body.style.overflow = "hidden"; // disable scroll
     }
   };
+
   const handleToggleSearch = () => {
     setSearchToggle(!searchToggle);
   };
+  const handleSearchData = (e) => {
+    setSearchData(e.target.value);
+  };
 
+  const getSearchResults = (products) => {
+    // console.log(products);
+    // products &&
+    //   products.map((item) => {
+    //     console.log(item);
+    //     if (item.productCode || item.name) {
+    //       if (searchData == item.productCode || searchData == item.name) {
+    //         console.log("Found");
+    //       }
+    //     }
+    //   });
+  };
   return (
     <>
       <div className="flex  justify-between items-center w-full ">
@@ -50,15 +71,22 @@ const Menu = ({ shipFee, setShipFee }) => {
               </li>
             );
           })}
-          <div className="flex flex-row items-center justify-normal h-9 border p-3 rounded-lg">
-            <BiSearch
-              className="mr-2 cursor-pointer"
+          <div
+            className={`flex flex-row items-center justify-normal ${
+              searchToggle && "h-9 border p-3 gap-2 rounded-lg"
+            } `}
+          >
+            <GrSearch
+              className=" cursor-pointer"
               size={22}
               onClick={handleToggleSearch}
             />
             <input
-              className={`${searchToggle && 'hidden'} border-transparent focus:border-transparent focus:ring-0 `}
-              placeholder="Search"
+              className={`${!searchToggle && "hidden"} p-1 !outline-none `}
+              onChange={handleSearchData}
+              
+              onSubmit={getSearchResults(products)}
+              placeholder="Search..."
             />
           </div>
           <Link href={"/cart"}>
@@ -93,3 +121,12 @@ const Menu = ({ shipFee, setShipFee }) => {
 };
 
 export default Menu;
+export const getServerSideProps = async () => {
+  const query = '*[_type=="product"]';
+  const products = await client.fetch(query);
+  return {
+    props: {
+      products,
+    },
+  };
+};
