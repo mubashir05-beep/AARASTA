@@ -93,7 +93,7 @@ const Menu = () => {
   return (
     <div className="flex justify-between items-center">
       <Link href="/">
-        <div className="font-semibold pointer text-[24px] logo">Khaabi</div>
+        <div className="font-semibold pointer text-[24px] logo">AARASTA</div>
       </Link>
       <ul className="flex gap-6 items-center text-[17px]">
         {data.map((object) => (
