@@ -3,9 +3,8 @@ import Products from "@/components/Products";
 import React, { useState,useEffect } from "react";
 import { client } from "@/lib/client";
 import FeaturedProducts from "@/components/FeaturedProducts";
-
-
 import { useStateContext } from "@/context/StateContext";
+import ChooseUs from "@/components/ChooseUs";
 export default function Home({ products, bannerData }) {
   const {
     setProducts
@@ -16,7 +15,8 @@ export default function Home({ products, bannerData }) {
   return (
     <main>
       <HeroBanner setBannerData={bannerData} />
-      <FeaturedProducts products={products} />
+      <ChooseUs />
+      {/* <FeaturedProducts products={products} /> */}
     </main>
   );
 }
