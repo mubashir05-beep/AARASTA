@@ -15,7 +15,7 @@ gradient.initGradient("#gradient-canvas");
 
 return (
 <div className="relative h-[100vh]" ref={ref}>
-{/* <canvas
+<canvas
           id="gradient-canvas"
           data-transition-in
         
@@ -24,7 +24,7 @@ return (
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
-        /> */}
+        />
 <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-20 flex items-center justify-center">
 <span className="text-white font-bold text-5xl max-w-xs text-center">EMBRACE YOUR STYLE</span>
 </div>

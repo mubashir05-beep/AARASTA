@@ -16,15 +16,16 @@ font-family: 'Inter', sans-serif;
   font-size: 25px;
   text-align: center;
   text-transform: uppercase;
-
+  mix-blend-mode: difference;
   letter-spacing: 1px;
   transition: 700ms ease;
   font-variation-settings: "wght" 311;
-  color: rgb(19, 19, 19);
+  color: rgb(255, 255, 255);
 }
 .logo:hover {
   font-variation-settings: "wght" 582;
   letter-spacing: 3px;
+  mix-blend-mode: difference;
 }
 /* 
 .react-multi-carousel-item react-multi-carousel-item--active {
@@ -62,8 +63,8 @@ font-family: 'Inter', sans-serif;
 #gradient-canvas {
   width: 100%;
   height: 100%;
-  --gradient-color-1: #FFEB3B;
-  --gradient-color-2: #FF9800;
-  --gradient-color-3: #FF5722;
-  --gradient-color-4: #CDDC39;
+  --gradient-color-1: #ffdfdf;
+  --gradient-color-2: #f2ffff;
+  --gradient-color-3: #ff6f6f;
+  --gradient-color-4: #272727;
 }
