@@ -29,11 +29,12 @@ export const StateContext = ({ children }) => {
   const [originalCart, setOriginalCart] = useState(0);
   const [storedPrice, setStoredPrice] = useState(0);
   const [lock, setLock] = useState(false);
-  const [products,setProducts]=useState([]);
-  const [searchToggle,setSearchToggle]=useState(false);
-  const [searchData,setSearchData]=useState('');
-  const [shipFee,setShipFee]=useState(true);
-  const [resultItem,setResultItem]=useState([]);
+  const [products, setProducts] = useState([]);
+  const [searchToggle, setSearchToggle] = useState(false);
+  const [searchState, setSearchState] = useState(false);
+  const [searchData, setSearchData] = useState("");
+  const [shipFee, setShipFee] = useState(true);
+  const [resultItem, setResultItem] = useState([]);
   const [address, setAddress] = useState(() => {
     let localAddress = {
       name: "",
@@ -320,11 +321,13 @@ export const StateContext = ({ children }) => {
         onAdd,
         incQty,
         onRemove,
-        shipFee,setShipFee,
+        shipFee,
+        setShipFee,
         toggleCartItemQuanitity,
         decQty,
         address,
-        resultItem,setResultItem,
+        resultItem,
+        setResultItem,
         setAddress,
         submited,
         setTotalPrice,
@@ -332,13 +335,16 @@ export const StateContext = ({ children }) => {
         onSizeChange,
         discountedPrice,
         coupon,
-        searchToggle,setSearchToggle,
-        searchData,setSearchData,
+        searchToggle,
+        setSearchToggle,
+        searchData,
+        setSearchData,
         setCoupon,
         setDiscountedPrice,
         customerCoupon,
         setCustomerCoupon,
-        products,setProducts,
+        products,
+        setProducts,
         couponStatus,
         setCouponStatus,
         couponSubmit,
@@ -353,6 +359,7 @@ export const StateContext = ({ children }) => {
         setLock,
         storedPrice,
         setStoredPrice,
+        searchState, setSearchState,
       }}
     >
       {children}

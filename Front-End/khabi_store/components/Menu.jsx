@@ -19,6 +19,7 @@ const Menu = () => {
     searchToggle,
     setSearchToggle,
     shipFee,
+    searchState, setSearchState,
     setShipFee,
     setSearchData,
   } = useStateContext();
@@ -30,6 +31,7 @@ const Menu = () => {
     { id: 1, name: "Home", url: "/" },
     { id: 2, name: "Shirts", url: "/shirts" },
     { id: 3, name: "About Us", url: "/about" },
+    { id: 4, name: "Contact", url: "/contact" },
   ];
 
   const handleMenu = () => {
@@ -43,12 +45,11 @@ const Menu = () => {
     }
   };
 
-  const handleToggleSearch = () => {
-    setSearchToggle(!searchToggle);
-  };
+ 
 
   const handleSearchData = (e) => {
     const searchData = e.target.value;
+    setSearchToggle(!searchToggle);
     setSearchData(searchData);
     if (searchData.trim() === "") {
       setSearchResults([]);
@@ -73,6 +74,7 @@ const Menu = () => {
     setSearchResults(searchItems);
   };
 
+
   const handleClickOutside = (event) => {
     if (searchRef.current && !searchRef.current.contains(event.target)) {
       setSearchToggle(false);
@@ -86,49 +88,62 @@ const Menu = () => {
     };
   }, []);
 
+  
+
   return (
     <div className="flex justify-between items-center">
       <Link href="/">
         <div className="font-semibold pointer text-[24px] logo">Khaabi</div>
       </Link>
       <ul className="flex gap-6 items-center text-[17px]">
-        {data.map((object) => {
-          return (
-            <li key={object.id} className="hidden md:block">
-              <Link href={object.url}>{object.name}</Link>
-            </li>
-          );
-        })}
-         <div
-          className={`flex relative flex-row items-center justify-normal ${
-            searchToggle && "h-9 border p-3 gap-2 rounded-lg"
-          } `}
-         ref={searchRef}>
-          <GrSearch
-            className="cursor-pointer"
-            size={22}
-            onClick={handleToggleSearch}
-          />
-          <input
-            className={`${!searchToggle && "hidden"} p-1 !outline-none `}
-            onChange={handleSearchData}
-            placeholder="Search..."
-          />
-    {searchToggle && (
-            <div className="bg-white mt-2 p-4 rounded shadow-md absolute top-[calc(100%+8px)] right-0 w-64">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-xl font-semibold">Search Results</span>
-                <button
-                  className="text-gray-400 hover:text-gray-600 focus:outline-none"
-                  onClick={() => setSearchToggle(false)}
-                >
-                  <RxCross2 size={24} />
-                </button>
-              </div>
-              <Result_Search searchResults={searchResults} />
+        {data.map((object) => (
+          <li key={object.id} className="hidden md:block">
+            <Link href={object.url}>{object.name}</Link>
+          </li>
+        ))}
+        <GrSearch
+          className="cursor-pointer"
+          size={22}
+          onClick={() => {
+            setSearchState(!searchState);
+          }}
+        />
+        {searchState && (
+          <div
+            className="fixed top-0 right-0 bottom-0 p-10 left-0 bg-white z-[500000]"
+            ref={searchRef}
+          >
+            <div className="flex flex-row items-center justify-normal h-9 border p-3 gap-2 rounded-lg">
+              <GrSearch className="cursor-pointer" size={22} />
+              <input
+                className="p-1 outline-none w-full"
+                onChange={handleSearchData}
+                placeholder="Search..."
+              />
+              <button
+                className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                onClick={() => setSearchToggle(false)}
+              >
+                <RxCross2
+                  size={24}
+                  onClick={() => {
+                    setSearchState(!searchState);
+                  }}
+                />
+              </button>
             </div>
-          )}
-        </div>
+              <div className="bg-white mt-2 p-4 rounded shadow-md max-w-full">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-xl font-semibold max-w-[390px]">
+                    Search Results
+                  </span>
+                 
+                </div>
+                <Result_Search searchResults={searchResults} />
+              </div>
+            
+          </div>
+        )}
         <Link href={"/cart"}>
           <div className="relative">
             <BsCart size={22} />

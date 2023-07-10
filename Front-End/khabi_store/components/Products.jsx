@@ -58,7 +58,6 @@ const ProductCard = ({ product }) => {
           <Link href={`/shirts/${product.slug.current}`}>
             <button className="flex items-center px-4 py-2 bg-transparent text-black hover:border-gray-500 focus:outline-none border border-black rounded">
               Learn More
-            
             </button>
           </Link>
         </div>

@@ -6,9 +6,9 @@ const MobileMenu = () => {
   const { showCart, setShowCart,mobileMenu, setMobileMenu,totalQuantities } = useStateContext();
   const data = [
     { id: 1, name: "Home", url: "/" },
-    { id: 3, name: "Shirts", url: "/shirts" },
-    { id: 4, name: "About Us", url: "/about" },
-    { id: 5, name: "Contact", url: "/contact" },
+    { id: 2, name: "Shirts", url: "/shirts" },
+    { id: 3, name: "About Us", url: "/about" },
+    { id: 4, name: "Contact", url: "/contact" },
   ];
 
   return (
