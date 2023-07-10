@@ -2,7 +2,7 @@ import React from "react";
 
 const ChooseUs = () => {
   return (
-    <div className="bg-[#242424] flex flex-col h-[10000px] my-9 max-[1300px]:p-[4rem] max-[460px]:px[2rem] p-[6rem] max-[860px]:items-center ">
+    <div className="bg-[#242424] flex flex-col h-[10000px]  max-[1300px]:p-[4rem] max-[460px]:px[2rem] p-[6rem] max-[860px]:items-center ">
       <div className="text-white  font-bold text-5xl">Why choose us</div>
       <div className="flex flex-row justify-between gap-8 flex-wrap  mt-12 max-[860px]:items-center max-[860px]:justify-center">
         <div className="flex flex-col max-[860px]:items-center  max-w-[350px]  text-white max-[860px]:text-center">
