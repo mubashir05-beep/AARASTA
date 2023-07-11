@@ -15,7 +15,7 @@ const Context = createContext();
 const STORED_PRICE = "storedPrice";
 export const StateContext = ({ children }) => {
   const [submited, setSubmited] = useState(false);
-  const [top,setTop]=useState(0);
+  const [top, setTop] = useState(0);
   const [mailState, setMailState] = useState(false);
   const [showCart, setShowCart] = useState(false);
   const [selectedSize, setSelectedSize] = useState({});
@@ -325,7 +325,8 @@ export const StateContext = ({ children }) => {
         incQty,
         onRemove,
         shipFee,
-        top,setTop,
+        top,
+        setTop,
         setShipFee,
         toggleCartItemQuanitity,
         decQty,
@@ -356,7 +357,8 @@ export const StateContext = ({ children }) => {
         originalPrice,
         setOriginalPrice,
         addCoupon,
-        navbarVisible, setNavbarVisible,
+        navbarVisible,
+        setNavbarVisible,
         setAddCoupon,
         originalCart,
         setOriginalCart,
@@ -364,7 +366,8 @@ export const StateContext = ({ children }) => {
         setLock,
         storedPrice,
         setStoredPrice,
-        searchState, setSearchState,
+        searchState,
+        setSearchState,
       }}
     >
       {children}

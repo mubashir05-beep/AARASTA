@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }) {
         />
       </Head>
       <StateContext>
-        {/* <Header /> */}
+        <Header />
         <Toaster />
         <NextNProgress color="#000000"  options={{ showSpinner: false }}  />
         <Component {...pageProps} />

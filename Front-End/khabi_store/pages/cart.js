@@ -417,7 +417,7 @@ const Cart = ({ coupons }) => {
   };
   return (
     <>
-    <Menu/>
+    
     <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
         Shopping Cart

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import React, { useEffect, useState, useRef } from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { BsCart } from "react-icons/bs";
@@ -7,6 +6,7 @@ import MobileMenu from "./MobileMenu";
 import { useStateContext } from "@/context/StateContext";
 import { GoSearch } from "react-icons/go";
 import Result_Search from "./Result_Search";
+import Link from "next/link";
 
 const Menu = () => {
   const {
@@ -102,99 +102,98 @@ const Menu = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  const [hide,setHide]=useState(false);
-  return (
-    <>
-      {navbarVisible && (
-        <div
-          className={`flex justify-between items-center  w-full z-[55555555555]  py-4 px-8 transition-colors duration-300 ${
-            navbarBackground ? "bg-white text-black" : "bg-black text-white"
-          }`}
-        >
-          <Link href="/">
-            <div className="font-semibold pointer text-[24px] logo">
-              AARASTA
-            </div>
-          </Link>
-          <ul className="flex gap-6 items-center px-3 text-[17px]">
-            {data.map((object) => (
-              <li key={object.id} className="hidden md:block">
-                <Link href={object.url}>{object.name}</Link>
-              </li>
-            ))}
-            <GoSearch
-              className="cursor-pointer"
-        
-              size={22}
-              onClick={() => {
-                setSearchState(!searchState);
-                setHide(!hide);
-              }}
-            />
-            {searchState && (
-              <div
-                className="fixed top-0 right-0 bottom-0 p-10 left-0 bg-white"
-                ref={searchRef}
-              >
-                <div className="flex flex-row items-center justify-normal h-9 border p-3 gap-2 rounded-lg">
-                  <GoSearch className="cursor-pointer" size={22} />
-                  <input
-                    className="p-1 outline-none w-full"
-                    onChange={handleSearchData}
-                    placeholder="Search..."
-                  />
-                  <button
-                    className="text-gray-400 hover:text-gray-600 focus:outline-none"
-                    onClick={() => setSearchToggle(false)}
-                  >
-                    <RxCross2
-                      size={24}
-                      onClick={() => {
-                        setSearchState(!searchState);
-                        setHide(!hide)
-                      }}
-                    />
-                  </button>
-                </div>
-                <div className="bg-white mt-2 p-4 rounded shadow-md max-w-full">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-xl font-semibold max-w-[390px]">
-                      Search Results
-                    </span>
-                  </div>
-                  <Result_Search searchResults={searchResults} />
-                </div>
-              </div>
-            )}
-            <Link href={"/cart"}>
-              <div className={`relative ${hide? 'hidden':'block'}`}  >
-                <BsCart size={22} />
-                <span className="absolute bottom-2 left-3 inline-flex items-center justify-center px-[6px] py-[3px] mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                  {totalQuantities}
-                </span>
-              </div>
-            </Link>
+  const [hide, setHide] = useState(false);
 
-            {mobileMenu ? (
-              <div className="block md:hidden">
+  return (
+    <div
+      className="flex justify-between items-center w-full z-[55555555555] py-4 px-8 transition-colors duration-300 bg-white text-black "
+    >
+      <Link href="/">
+        <div className="font-semibold pointer text-[24px] logo">
+          AARASTA
+        </div>
+      </Link>
+      <ul className="flex gap-6 items-center px-3 text-[17px]">
+        {data.map((object) => (
+          <li key={object.id} className="hidden md:block">
+            <Link href={object.url}>{object.name}</Link>
+          </li>
+        ))}
+        <GoSearch
+          className="cursor-pointer"
+          size={22}
+          onClick={() => {
+            setSearchState(!searchState);
+            setHide(!hide);
+          }}
+        />
+        {searchState && (
+          <div
+            className="fixed top-0 right-0 bottom-0 p-10 left-0 bg-white"
+            ref={searchRef}
+          >
+            <div className="flex flex-row items-center justify-normal h-9 border p-3 gap-2 rounded-lg">
+              <GoSearch className="cursor-pointer" size={22} />
+              <input
+                className="p-1 outline-none w-full"
+                onChange={handleSearchData}
+                placeholder="Search..."
+              />
+              <button
+                className="text-gray-400 hover:text-gray-600 focus:outline-none"
+                onClick={() => {
+                  setSearchToggle(false);
+                  setSearchState(!searchState);
+                  setHide(!hide);
+                }}
+              >
                 <RxCross2
                   size={24}
-                  className="cursor-pointer block md:hidden"
-                  onClick={handleMenu}
+                  onClick={() => {
+                    setSearchState(!searchState);
+                    setHide(!hide);
+                  }}
                 />
-                <MobileMenu />
+              </button>
+            </div>
+            <div className="bg-white mt-2 p-4 rounded shadow-md max-w-full">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xl font-semibold max-w-[390px]">
+                  Search Results
+                </span>
               </div>
-            ) : (
-              <RxHamburgerMenu
-                size={24}
-                className="cursor-pointer block md:hidden"
-                onClick={handleMenu}
-              />
-            )}
-          </ul>
+              <Result_Search searchResults={searchResults} />
+            </div>
+          </div>
+        )}
+         <div className={`relative ${hide ? "hidden" : "block"}`}>
+        <Link href={"/cart"}>
+         
+            <BsCart size={22} />
+            <span className="absolute bottom-2 left-3 inline-flex items-center justify-center px-[6px] py-[3px] mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+              {totalQuantities}
+            </span>
+        
+        </Link>
         </div>
-      )}
-    </>
+        {mobileMenu ? (
+          <div className="block md:hidden">
+            <RxCross2
+              size={24}
+              className="cursor-pointer block md:hidden"
+              onClick={handleMenu}
+            />
+            <MobileMenu />
+          </div>
+        ) : (
+          <RxHamburgerMenu
+            size={24}
+            className="cursor-pointer block md:hidden"
+            onClick={handleMenu}
+          />
+        )}
+      </ul>
+    </div>
   );
 };
 

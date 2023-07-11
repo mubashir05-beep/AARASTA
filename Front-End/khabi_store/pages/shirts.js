@@ -57,7 +57,7 @@ const Shirts = ({ products }) => {
 
   return (
     <>
-   <Menu />
+  
     <div>
       <div className="relative h-[300px]">
         <Image src="/sky.jpg" layout="fill" objectFit="cover" alt="Product Image" />

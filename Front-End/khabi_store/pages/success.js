@@ -21,7 +21,7 @@ const Success = () => {
 
   return (
     <>
-  <Menu/>
+
     <div className="flex flex-col justify-center items-center px-4 py-8 mx-auto max-w-[600px] h-auto md:h-[80vh]">
       <Image src="/pngegg.png" height={300} className="w-48 md:w-auto" width={300} />
       <h1 className="font-semibold text-4xl md:text-3xl text-center my-4 md:my-2">

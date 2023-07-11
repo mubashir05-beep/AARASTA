@@ -46,8 +46,7 @@ const Product = ({ products, product }) => {
   };
 
   return (
-    <>
-    <Menu/>
+ 
     <div className="flex flex-col mx-[3rem] max-[500px]:mx-[1.5rem] my-[1rem]">
       <div className="flex flex-row gap-1 items-center">
         <Link href="../" className="font-normal hover:underline">
@@ -247,7 +246,7 @@ const Product = ({ products, product }) => {
         )}
       </div>
     </div>
-    </>
+    
   );
 };
 
