@@ -106,18 +106,17 @@ const Menu = () => {
 
   return (
     <>
-      {/* {!shipFee && (
-        <div className={`text-center text-sm py-2 bg-red-200 ${!top === 36 ? "" : "hidden"}`}>
-          Free shipping on orders above PKR. 2499/-
-        </div>
-      )} */}
       <div
-        className={`flex justify-between items-center fixed w-full z-[55555555555] left-0 py-4 px-8  transition-colors duration-300 ${
-          navbarBackground ? "bg-transparent text-white " : "bg-white top-0 text-black"
+        className={`flex justify-between items-center fixed w-full z-[55555555555] left-0 top-0 right-0 py-4 px-8  transition-colors duration-300 ${
+          navbarBackground
+            ? "bg-transparent text-white "
+            : "bg-white top-0 text-black"
         }`}
       >
         <Link href="/">
-          <div className="font-semibold pointer mix-blend-difference text-[24px] logo">AARASTA</div>
+          <div className="font-semibold pointer mix-blend-difference text-[24px] logo">
+            AARASTA
+          </div>
         </Link>
         <ul className="flex gap-6 items-center px-3 text-[17px]">
           {data.map((object) => (
@@ -127,7 +126,7 @@ const Menu = () => {
           ))}
           <GoSearch
             className="cursor-pointer "
-            color={`${navbarBackground ? 'white':'black'}`}
+            color={`${navbarBackground ? "white" : "black"}`}
             size={22}
             onClick={() => {
               setSearchState(!searchState);
@@ -139,7 +138,7 @@ const Menu = () => {
               ref={searchRef}
             >
               <div className="flex flex-row items-center justify-normal h-9 border p-3 gap-2 rounded-lg">
-                <GoSearch className="cursor-pointer"  size={22} />
+                <GoSearch className="cursor-pointer" size={22} />
                 <input
                   className="p-1 outline-none w-full"
                   onChange={handleSearchData}

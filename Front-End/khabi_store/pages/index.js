@@ -8,6 +8,9 @@ import ChooseUs from "@/components/ChooseUs";
 import Header_Hero from "@/components/Header_Hero";
 import Landing_Offer from "@/components/Landing_Offer";
 import Category from "@/components/Category";
+import Kameez from "@/components/Kameez";
+import Link from "next/link";
+import Shirts from "@/components/Shirts";
 
 export default function Home({ products, bannerData }) {
 
@@ -17,12 +20,23 @@ export default function Home({ products, bannerData }) {
   }, [products]);
   return (
     <main>
-      {/* <HeroBanner setBannerData={bannerData} /> */}
-      <Header_Hero />
-      <ChooseUs />
+    
+      <div className="flex items-center justify-center py-8">
+        <Link href="/">
+          <div className="font-semibold pointer  text-[24px] logo2">
+            AARASTA
+          </div>
+        </Link>
+        </div>
+        <div className="flex  items-center justify-center  ">
+        <Shirts/>
+        <Kameez/>
+        
+      </div>
+       
+     
       <Landing_Offer/>
-      <Category/>
-      {/* <FeaturedProducts products={products} /> */}
+     
     </main>
   );
 }
