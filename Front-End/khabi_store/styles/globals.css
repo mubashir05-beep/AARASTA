@@ -59,12 +59,11 @@ font-family: 'Inter', sans-serif;
     }
   }
 }
-
 #gradient-canvas {
   width: 100%;
   height: 100%;
-  --gradient-color-1: #272727; /* Dark gray */
-  --gradient-color-2: #05668D; /* Deep blue */
-  --gradient-color-3: #132e32; /* Dark teal */
-  --gradient-color-4: #393e46; /* Charcoal */
+  --gradient-color-1: #40407a; /* Deep purple */
+  --gradient-color-2: #45a247; /* Lime green */
+  --gradient-color-3: #046c3c; /* Dark green */
+  --gradient-color-4: #9c26b0; /* Magenta */
 }

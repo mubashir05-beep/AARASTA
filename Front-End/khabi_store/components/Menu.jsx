@@ -112,7 +112,7 @@ const Menu = () => {
         </div>
       )} */}
       <div
-        className={`flex justify-between items-center fixed w-full z-[55555555555] left-0 p-4 transition-colors duration-300 ${
+        className={`flex justify-between items-center fixed w-full z-[55555555555] left-0 py-4 px-8  transition-colors duration-300 ${
           navbarBackground ? "bg-transparent text-white " : "bg-white top-0 text-black"
         }`}
       >

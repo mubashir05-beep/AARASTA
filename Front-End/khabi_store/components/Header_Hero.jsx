@@ -23,14 +23,33 @@ const HeaderHero = () => {
           backgroundPosition: "center",
         }}
       />
-      <div className="absolute bottom-0 right-0 flex p-8 flex-col left-0 w-70vw h-40vh border-t gap-4 border-white">
-        <div className="text-4xl text-[#fde8c0] mix-blend-difference font-semibold">AARASTA</div>
-        <div className="text-2xl text-white">Crafting Tradition with <span className="mix-blend-difference">Style</span>!</div>
+      <div className="absolute bottom-0 right-0 flex p-8 flex-col left-0 w-[70vw] h-[40vh] border-t gap-4 border-white">
+        <div className="text-4xl text-[#fde8c0] mix-blend-difference font-semibold">
+          AARASTA
+        </div>
+        <div className="text-2xl text-white">
+          Crafting Tradition with{" "}
+          <span className="mix-blend-difference text-[#ffdfa4]">Style</span>!
+        </div>
         <div className="text-lg pt-3 text-white">
-          Welcome to AARASTA! We are a brand built on the passion and dedication of two brothers who share a common vision - to create exceptional "Kameez Salwar" and suits for men. Our story began with a deep-rooted love for traditional craftsmanship and a desire to bring the essence of our heritage to the modern world. Want to <span className="underline underline-offset-4 cursor-pointer">learn more?</span> 
+          Welcome to AARASTA! We are a brand built on the passion and dedication
+          of two brothers who share a common vision - to create exceptional
+          "Kameez Shalwar" and suits for men. Our story began with a deep-rooted
+          love for traditional craftsmanship and a desire to bring the essence
+          of our heritage to the modern world. Want to{" "}
+          <span className="underline underline-offset-4 cursor-pointer">
+            learn more?
+          </span>
         </div>
       </div>
-      <div className="absolute bottom-0 right-0 border-r border-t w-30vw h-60vh border-white">Hello</div>
+      <div className="absolute bottom-0 right-0 border-l border-t w-[30vw] h-[80vh] border-white">
+        <div className="h-[40vh] border-b border-white flex items-center justify-center">
+          <h1>Shirts</h1>
+        </div>
+        <div className="h-[40vh]  border-white flex items-center justify-center">
+          <h1>Shirts</h1>
+        </div>
+      </div>
     </div>
   );
 };

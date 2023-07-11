@@ -1,0 +1,21 @@
+import React from 'react';
+
+const Landing_Offer = () => {
+  return (
+    <div className="flex justify-between items-center mx-[3rem] max-[500px]:mx-[1.5rem] my-[3rem] bg-gradient-to-r from-purple-200 to-blue-200 p-[2rem] rounded-lg">
+      <div className="flex flex-col">
+        <h2 className="text-2xl font-bold mb-4">
+          Free Shipping on Orders Above 2499PKR
+        </h2>
+        <p className="mb-2">
+          Shop now and enjoy the freedom of free shipping on AARASTA!
+        </p>
+      </div>
+      <button className="border rounded-lg border-black px-4 h-12 bg-black text-white hover:bg-gray-800 transition-colors duration-300">
+        Shop Now!
+      </button>
+    </div>
+  );
+};
+
+export default Landing_Offer;
