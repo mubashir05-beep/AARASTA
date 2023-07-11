@@ -102,7 +102,7 @@ const Menu = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+  const [hide,setHide]=useState(false);
   return (
     <>
       {navbarVisible && (
@@ -124,10 +124,11 @@ const Menu = () => {
             ))}
             <GoSearch
               className="cursor-pointer"
-              color={`${navbarBackground ? "white" : "black"}`}
+        
               size={22}
               onClick={() => {
                 setSearchState(!searchState);
+                setHide(!hide);
               }}
             />
             {searchState && (
@@ -150,6 +151,7 @@ const Menu = () => {
                       size={24}
                       onClick={() => {
                         setSearchState(!searchState);
+                        setHide(!hide)
                       }}
                     />
                   </button>
@@ -165,7 +167,7 @@ const Menu = () => {
               </div>
             )}
             <Link href={"/cart"}>
-              <div className="relative">
+              <div className={`relative ${hide? 'hidden':'block'}`}  >
                 <BsCart size={22} />
                 <span className="absolute bottom-2 left-3 inline-flex items-center justify-center px-[6px] py-[3px] mr-2 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
                   {totalQuantities}

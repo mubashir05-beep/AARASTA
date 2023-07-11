@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useStateContext } from "@/context/StateContext";
 import {TbTruckDelivery } from "react-icons/tb";
 import Image from "next/image";
+import Menu from "@/components/Menu";
 const Success = () => {
   const router = useRouter();
   const { deleteCart } = useStateContext();
@@ -19,6 +20,8 @@ const Success = () => {
   };
 
   return (
+    <>
+  <Menu/>
     <div className="flex flex-col justify-center items-center px-4 py-8 mx-auto max-w-[600px] h-auto md:h-[80vh]">
       <Image src="/pngegg.png" height={300} className="w-48 md:w-auto" width={300} />
       <h1 className="font-semibold text-4xl md:text-3xl text-center my-4 md:my-2">
@@ -50,6 +53,7 @@ const Success = () => {
         </div>
       </div>
     </div>
+    </>
   );
   
 };

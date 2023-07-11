@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { client } from "@/lib/client";
 import CartHead from "@/components/CartHead";
+import Menu from "@/components/Menu";
+
 const Cart = ({ coupons }) => {
   const {
     totalPrice,
@@ -414,6 +416,8 @@ const Cart = ({ coupons }) => {
     setCustomerCoupon(e.target.value);
   };
   return (
+    <>
+    <Menu/>
     <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
       <div className="hidden sm:block text-center text-[34px] py-4 ">
         Shopping Cart
@@ -874,7 +878,7 @@ const Cart = ({ coupons }) => {
           </div>
         </div>
       )}
-    </div>
+    </div></>
   );
 };
 

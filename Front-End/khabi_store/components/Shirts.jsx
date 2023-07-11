@@ -16,17 +16,15 @@ const Shirts = () => {
   return (
     <Link href='/shirts'>
     <div
-      className={`w-[50vw] flex items-center flex-row-reverse  transition-transform duration-500 ${
-        isHovered ? 'scale-105' : 'scale-95'
-      }`}
+      className={`w-[50vw] flex items-center flex-row-reverse  `}
       onMouseEnter={handleHover}
       onMouseLeave={handleMouseLeave}
     >
       <div>
-        <Image src='/Header_shirt-transformed.png' className='' height={200} width={500} />
+        <Image src='/Header_shirt-transformed.png' className={`${  isHovered ? 'scale-105' : 'scale-85'} h-[660px] object-contain transition-transform duration-500 `} height={200} width={500} />
       </div>
       <div className="border-white w-[250px] flex items-center gap-6 flex-col">
-        <h1 className="text-[3rem] font-semibold">Shirts</h1>
+        <h1 className={`${  isHovered ? 'scale-105' : 'scale-85'} transition-transform duration-500 text-[3rem] font-semibold`}>Shirts</h1>
         <p>
           Discover our meticulously crafted shirts that effortlessly blend style and comfort.
           Tailored to perfection with premium fabrics and attention to detail, our shirts offer

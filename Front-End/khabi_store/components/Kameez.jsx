@@ -14,18 +14,16 @@ const Kameez = () => {
 
   return (
     <div
-      className={`w-[50vw] flex items-center transition-transform cursor-pointer duration-500 ${
-        isHovered ? 'scale-110' : ''
-      }`}
+      className={`w-[50vw] flex items-center  `}
       onMouseEnter={handleHover}
       onMouseLeave={handleMouseLeave}
     >
       <div>
-        <Image src='/47039-1_1_-transformed.png' className='' height={200} width={500} />
+        <Image src='/47039-1_1_-transformed.png' className={`${  isHovered ? 'scale-105' : 'scale-85'} transition-transform duration-500 `} height={200} width={500} />
       </div>
       <div>
         <div className="w-[250px] border-b border-white p-4 gap-6 flex flex-col items-center">
-          <h1 className="text-[3rem] font-semibold">Salwar Kameez</h1>
+        <h1 className={`${  isHovered ? 'scale-105' : 'scale-85'} transition-transform duration-500 text-[3rem] font-semibold`}>Salwar Kameez</h1>
           <p>
             Experience the perfect blend of tradition and contemporary style
             with our exquisite Kameez Shalwar collection. Meticulously crafted
