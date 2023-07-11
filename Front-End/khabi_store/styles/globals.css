@@ -16,22 +16,22 @@ font-family: 'Inter', sans-serif;
   font-size: 25px;
   text-align: center;
   text-transform: uppercase;
-  mix-blend-mode: difference;
+
   letter-spacing: 1px;
   transition: 700ms ease;
   font-variation-settings: "wght" 311;
-  color: rgb(0, 0, 0);
+ color: black;
 }
 .logo:hover {
   font-variation-settings: "wght" 582;
   letter-spacing: 3px;
-  mix-blend-mode: difference;
+
 }
 .logo2 {
   font-size: 25px;
   text-align: center;
   text-transform: uppercase;
-  mix-blend-mode: difference;
+
   letter-spacing: 1px;
   transition: 700ms ease;
   font-variation-settings: "wght" 311;
@@ -40,7 +40,7 @@ font-family: 'Inter', sans-serif;
 .logo2:hover {
   font-variation-settings: "wght" 582;
   letter-spacing: 3px;
-  mix-blend-mode: difference;
+ 
 }
 /* 
 .react-multi-carousel-item react-multi-carousel-item--active {

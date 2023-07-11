@@ -3,7 +3,8 @@ import { client } from "@/lib/client";
 import Products from "@/components/Products";
 import Link from "next/link";
 import Image from "next/image";
-
+import Menu from "@/components/Menu";
+Menu
 const Shirts = ({ products }) => {
   const [sortBy, setSortBy] = useState("");
 
@@ -55,6 +56,8 @@ const Shirts = ({ products }) => {
   const sortedProducts = sortProducts();
 
   return (
+    <>
+   <Menu />
     <div>
       <div className="relative h-[300px]">
         <Image src="/sky.jpg" layout="fill" objectFit="cover" alt="Product Image" />
@@ -96,6 +99,7 @@ const Shirts = ({ products }) => {
         ))}
       </div>
     </div>
+    </>
   );
 };
 
