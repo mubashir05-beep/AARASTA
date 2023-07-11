@@ -43,13 +43,14 @@ const HeaderHero = () => {
         </div>
       </div>
       <div className="absolute bottom-0 right-0 border-l border-t w-[30vw] h-[80vh] border-white">
-        <div className="h-[40vh] border-b border-white flex items-center justify-center">
-          <h1>Shirts</h1>
-        </div>
-        <div className="h-[40vh]  border-white flex items-center justify-center">
-          <h1>Shirts</h1>
-        </div>
-      </div>
+  <div className="h-[40vh] border-b border-white flex items-center justify-center">
+    <h1>Salwar Kameez</h1>
+  </div>
+  <div className="h-[40vh] border-white flex items-center justify-center">
+    <h1>Shirts</h1>
+  </div>
+</div>
+
     </div>
   );
 };
