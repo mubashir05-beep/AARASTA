@@ -3,7 +3,8 @@ import React from "react";
 import { useStateContext } from "@/context/StateContext";
 
 const MobileMenu = () => {
-  const { showCart, setShowCart,mobileMenu, setMobileMenu,totalQuantities } = useStateContext();
+  const { showCart, setShowCart, mobileMenu, setMobileMenu, totalQuantities } =
+    useStateContext();
   const data = [
     { id: 1, name: "Home", url: "/" },
     { id: 2, name: "Shirts", url: "/shirts" },
@@ -12,15 +13,15 @@ const MobileMenu = () => {
   ];
 
   return (
-    <div className="fixed top-[55px] right-0 bottom-0 left-0 bg-white z-50">
-      <ul className="flex flex-col gap-4 mx-4 my-4">
+    <div className="fixed top-[70px] right-0 bottom-0 left-0 bg-white z-50">
+      <ul className="flex flex-col p-4">
         {data.map((menu) => {
           return (
             <li key={menu.id} className="border-b text-lg">
               <Link
                 href={menu.url}
                 onClick={() => setMobileMenu(!mobileMenu)}
-                className="text-gray-800 block px-2 py-1 hover:bg-gray-200 rounded transition duration-300"
+                className="text-gray-800 block px-2 py-1 hover:bg-gray-200  transition duration-300"
               >
                 {menu.name}
               </Link>

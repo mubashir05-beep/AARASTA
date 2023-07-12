@@ -35,7 +35,7 @@ const Kameez = () => {
           Shalwar Kameez
         </h1>
       </div>
-      <div className="mt-[20px]">
+      <div className="mt-[40px]">
         <div className="w-[400px] max-[410px]:w-[300px] max-[500px]:w-[300px] max-[830px]:max-w-[500px] border-b  border-white gap-6 flex  flex-col items-center">
           <h1
             className={`${

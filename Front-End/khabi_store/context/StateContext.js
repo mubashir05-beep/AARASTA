@@ -31,7 +31,7 @@ export const StateContext = ({ children }) => {
   const [storedPrice, setStoredPrice] = useState(0);
   const [lock, setLock] = useState(false);
   const [navbarVisible, setNavbarVisible] = useState(true);
-
+  
   const [products, setProducts] = useState([]);
   const [searchToggle, setSearchToggle] = useState(false);
   const [searchState, setSearchState] = useState(false);

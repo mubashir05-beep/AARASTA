@@ -25,7 +25,7 @@ const Shirts = () => {
           <Image
             src="/Header_shirt-transformed.png"
             className={`${
-              isHovered ? "scale-[1.11]" : "scale-[1.09]"
+              isHovered ? "scale-[1.15]" : "scale-[1.09]"
             } object-contain transition-transform duration-500 relative  max-[700px]:w-[400px] `}
             height={200}
             width={500}
