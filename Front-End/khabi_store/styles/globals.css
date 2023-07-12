@@ -79,9 +79,31 @@ font-family: 'Inter', sans-serif;
   height: 100%;
   --gradient-color-1: #FBB6AC; /* Coral Pink */
   --gradient-color-2: #FFD166; /* Honey Yellow */
-  --gradient-color-3: #fffc44; /* Sky Blue */
-  --gradient-color-4: #ffef15; /* Mint Green */
+  /* --gradient-color-3: #fffc44; /* Sky Blue */
+  /* --gradient-color-4: #ffef15; Mint Green */ 
 
   background: linear-gradient(to right, var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-3), var(--gradient-color-4));
 }
 
+/* Animation for expanding the search bar */
+.h-9 {
+  height: 2.25rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+/* Animation for showing/hiding the search results */
+.transition-all {
+  transition-property: all;
+  transition-duration: 0.3s;
+}
+
+.hidden {
+  display: none;
+}
+.transition-width {
+  transition-property: width;
+  transition-duration: 0.3s;
+}

@@ -14,7 +14,7 @@ const HeaderHero = () => {
 
   return (
     <div className="relative h-screen" ref={ref}>
-      {/* <canvas
+      <canvas
         id="gradient-canvas"
         data-transition-in
         className="w-full h-full"
@@ -23,7 +23,7 @@ const HeaderHero = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-      /> */}
+      />
          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-[0.1]" />
       <div className="absolute bottom-0 right-0 flex p-8 flex-col left-0 w-[70vw] h-[40vh] border-t gap-4 border-white">
         <div className="text-4xl text-[#fde8c0] mix-blend-difference font-semibold">

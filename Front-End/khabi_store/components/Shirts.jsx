@@ -57,7 +57,7 @@ const Shirts = () => {
         </p>
         <Link href="/shirts">
           <button className="bg-transparent hover:bg-black hover:text-white text-black font-bold py-2 px-4 rounded border border-black transition-colors duration-300 ease-in-out">
-            Learn More
+          View More
           </button>
         </Link>
       </div>
