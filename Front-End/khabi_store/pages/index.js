@@ -18,15 +18,12 @@ const Home = ({ products }) => {
 
   return (
     <main>
-      <div className="flex items-center justify-center">
+      <div className="flex items-center m-8 max-[1500px]:flex-col max-[1300px]:gap-[60px]  justify-center">
         <Shirts />
-        <div
-          className="border border-r border-black"
-          style={{ height: "500px" }}
-        />
+        <div className="border  border-r max-[1500px]:border-none h-[500px] max-[1500px]:h-0 border-black" />
         <Kameez />
       </div>
-      <Landing_Offer />
+      {/* <Landing_Offer /> */}
     </main>
   );
 };
