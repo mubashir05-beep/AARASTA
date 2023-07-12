@@ -77,9 +77,11 @@ font-family: 'Inter', sans-serif;
 #gradient-canvas {
   width: 100%;
   height: 100%;
-  --gradient-color-1: #272727; /* Dark gray */
+  --gradient-color-1: #FBB6AC; /* Coral Pink */
+  --gradient-color-2: #FFD166; /* Honey Yellow */
+  --gradient-color-3: #fffc44; /* Sky Blue */
+  --gradient-color-4: #ffef15; /* Mint Green */
 
-  --gradient-color-3: #ca2448; /* Dark teal */
- 
+  background: linear-gradient(to right, var(--gradient-color-1), var(--gradient-color-2), var(--gradient-color-3), var(--gradient-color-4));
 }
 

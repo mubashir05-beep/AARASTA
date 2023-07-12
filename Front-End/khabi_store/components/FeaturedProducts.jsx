@@ -1,55 +1,23 @@
 import React from "react";
 import HeaderTitle from "./HeaderTitle";
 import Products from "./Products";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
 
 const FeaturedProducts = ({ products }) => {
-  const responsive = {
-    superLargeDesktop: {
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1023, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 767, min: 0 },
-      items: 1,
-    },
-  };
-
-  const renderCarouselItems = () => {
-    return products
-      .filter((product) => product.featured)
-      .map((product) => (
-        <div key={product._id}>
-          <Products product={product} />
-        </div>
-      ));
-  };
-
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex mx-[3rem] items-center flex-col border border-black rounded-xl p-[1rem] md:flex-row">
       <HeaderTitle />
-      <Carousel
-        responsive={responsive}
-        itemClass="carousel-item-padding"
-        className="mx-3"
-      >
-        {renderCarouselItems()}
-      </Carousel>
-
-      <style jsx>{`
-        .carousel-item-padding {
-          padding-right: 50px; /* adjust the gap size as needed */
-        }
-      `}</style>
+      <div className="flex mx-3 w-full justify-between">
+        <div className="flex flex-wrap gap-3 w-full justify-between md:gap-50">
+          {products
+            .filter((product) => product.featured)
+            .slice(0, 3) // Retrieve only the first three products
+            .map((product) => (
+              <div key={product._id} className="w-full md:w-[350px]">
+                <Products product={product} />
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 };

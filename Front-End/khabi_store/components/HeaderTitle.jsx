@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 const HeaderTitle = () => {
   return (
-    <div className='flex flex-col items-center py-8 mx-[3rem]'>
-      <h2 className='text-[40px] text-center'>Featured Products</h2>
-      <div className='text-[16px] text-center border-b'>Discover our handpicked selection of top-notch products, crafted to elevate your everyday life.</div>
+    <div className='flex flex-col items-center justify-center rounded-lg mr-12 p-8 bg-gradient-to-r from-purple-200 to-blue-200 w-[400px] h-[600px]'>
+      <h2 className='text-2xl text-center font-bold text-white mb-6'>Featured Products</h2>
+      <div className='text-lg text-center text-gray-800'>Discover our handpicked selection of top-notch products, crafted to elevate your everyday life.</div>
     </div>
-  )
-}
+  );
+};
 
-export default HeaderTitle
+export default HeaderTitle;
