@@ -69,7 +69,7 @@ const Shirts = ({ products }) => {
   return (
     <>
       <div>
-        <div className="relative h-[60vh]" ref={ref}>
+        <div className="relative h-[70vh]" ref={ref}>
           <canvas
             id="gradient-canvas"
             data-transition-in
@@ -80,28 +80,36 @@ const Shirts = ({ products }) => {
               backgroundPosition: "center",
             }}
           />
-      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-10 flex items-end justify-between gap-[1rem] px-[3rem] py-8">
-  <div className="flex flex-col justify-center gap-[1rem] mix-blend-difference">
-    <span className="text-white font-bold text-4xl max-[425px]:text-3xl">SUMMER SALE</span>
-    <span className="text-white font-bold text-2xl max-[425px]:text-3xl">
-      Unleash Your Style This Summer!
-    </span>
-    <span className="text-white font-bold text-sm max-[425px]:text-3xl">
-      Discover the Perfect Blend of Comfort and Elegance at Unbeatable Prices!
-    </span>
-    <span className="text-white font-bold text-sm max-[425px]:text-3xl">
-      UPTO <span className="text-5xl">50% OFF</span>
-    </span>
-  </div>
-  <div className="flex flex-col w-[300px]">
-  <div className="text-white font-bold text-lg">Coupon 10% OFF</div>
-  <div className="text-white font-bold text-4xl">'SUMMER10'</div>
-  <div className="text-white font-bold text-xs">*Coupon code is valid for orders above $1500 and must be applied before the inclusion of any shipping fees. Please review terms and conditions for further details.</div>
-  </div>
-  
-</div>
+          <div className="absolute top-0 left-0 w-full h-full px-[3rem] max-[1060px]:justify-center max-[1060px]:p-0 bg-black bg-opacity-20 flex max-[1060px]:flex-col max-[1060px]:items-start items-end justify-between gap-[1rem] py-8">
+            <div className="flex max-[640px]:flex-col max-[640px]:items-start flex-col max-[1060px]:flex-row max-[1060px]:items-center max-[1060px]:h-[70vh] w-[70vw] max-[640px]:justify-center max-[1060px]:justify-between max-[1060px]:w-screen max-[1060px]:px-12  max-[1060px]:py-8  gap-[1rem] ">
+              <div className="flex flex-col max-w-[600px] max-[1010px]:w-[400px] max-[485px]:w-auto">
+                <span className="text-white font-bold max-[710px]:text-[2rem] text-[3rem] ">
+                  SUMMER SALE
+                </span>
+                <span className="text-white font-bold  text-base max-[815px]:text-sm  max-[710px]:text-xs ">
+                Sizzling Discounts Await You! Hurry, Shop Now to Enjoy Our Hottest Deals of the Season!. Prepare to be dazzled by up to 50% off on a wide range of shirts! It's the perfect opportunity to revamp your wardrobe without breaking the bank.
+                </span>
+               
+              </div>
 
-
+              <div className="text-white font-bold flex flex-col max-[1060px]:items-center text-xl max-[640px]:flex-row max-[640px]:gap-2">
+                Enjoy UPTO <span className="text-7xl max-[710px]:text-[2rem] max-[795px]:text-[3rem]">50% OFF</span>
+              </div>
+            </div>
+            <div className="flex flex-col max-[1060px]:h-[30vh] max-[1060px]:w-[100vw] max-[1060px]:px-12 max-[1060px]:py-8 max-[532px]:h-auto max-[1060px]:border-t max-[1060px]:border-black w-[30vw] gap-2">
+              <div className="text-white font-bold text-lg">
+                Exclusive Coupon: Use it to Get an Additional 10% OFF!
+              </div>
+              <div className="text-white font-bold text-4xl max-[1060px]:text-[2xl]">
+                'SUMMER10'
+              </div>
+              <div className="text-white font-bold text-xs">
+                *Coupon code is valid for orders above $1500 and must be applied
+                before the inclusion of any shipping fees. Please review terms
+                and conditions for further details.
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-row mx-12 rounded-xl px-12 border-black border my-12 py-4 gap-2">
@@ -113,7 +121,7 @@ const Shirts = ({ products }) => {
         </div>
 
         <FeaturedProducts products={products} />
-        <Landing_Offer/>
+        <Landing_Offer />
         <div>
           <div className="flex flex-row items-center mx-12 rounded-xl px-12 border-black border my-12 py-4 gap-2">
             <span className="mr-2">Sort by:</span>
