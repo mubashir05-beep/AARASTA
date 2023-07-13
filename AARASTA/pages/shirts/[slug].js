@@ -47,8 +47,8 @@ const Product = ({ products, product }) => {
 
   return (
  
-    <div className="flex flex-col mx-[3rem] max-[500px]:mx-[1.5rem] my-[1rem]">
-      <div className="flex flex-row gap-1 items-center">
+    <div className="flex flex-col mx-[3rem] max-[500px]:mx-[1.5rem] my-[1rem]  border-black border  rounded-xl">
+      <div className="flex flex-row mx-12 rounded-xl px-12 border-black border my-12 py-4 gap-2">
         <Link href="../" className="font-normal hover:underline">
           Home
         </Link>
