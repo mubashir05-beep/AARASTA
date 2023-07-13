@@ -31,7 +31,7 @@ export const StateContext = ({ children }) => {
   const [storedPrice, setStoredPrice] = useState(0);
   const [lock, setLock] = useState(false);
   const [navbarVisible, setNavbarVisible] = useState(true);
-  
+
   const [products, setProducts] = useState([]);
   const [searchToggle, setSearchToggle] = useState(false);
   const [searchState, setSearchState] = useState(false);
@@ -169,17 +169,17 @@ export const StateContext = ({ children }) => {
   };
   const onAdd = (selectedProduct, quantity) => {
     const selectedProductSize = selectedSize[selectedProduct._id];
-  
+
     if (!selectedProductSize) {
       alert("Please select a size!");
       return;
     }
-  
+
     const existingProductIndex = cartItems.findIndex(
       (item) =>
         item._id === selectedProduct._id && item.size === selectedProductSize
     );
-  
+
     if (existingProductIndex !== -1) {
       const updatedCartItems = cartItems.map((item, index) => {
         if (index === existingProductIndex) {
@@ -187,7 +187,7 @@ export const StateContext = ({ children }) => {
         }
         return item;
       });
-  
+
       setCartItems(updatedCartItems);
       toast.success(
         `${quantity} ${selectedProduct.name} (${selectedProductSize}) added to the cart`
@@ -198,7 +198,7 @@ export const StateContext = ({ children }) => {
         quantity,
         size: selectedProductSize,
       };
-  
+
       if (selectedProduct.discount) {
         newCartItem.discountedPrice =
           selectedProduct.price - selectedProduct.discount;
@@ -211,56 +211,56 @@ export const StateContext = ({ children }) => {
           (prevTotalPrice) => prevTotalPrice + selectedProduct.price * quantity
         );
       }
-  
+
       setCartItems([...cartItems, newCartItem]);
       toast.success(
         `${quantity} ${selectedProduct.name} (${selectedProductSize}) added to the cart`
       );
     }
-  
+
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
   };
-  
- const toggleCartItemQuanitity = (id, value) => {
-  setCouponStatus(false);
-  setCustomerCoupon("");
-  setAddCoupon(false);
-  setCouponSubmit(false);
-  setOriginalCart([]);
-  setOriginalPrice(0);
 
-  const updatedCartItems = cartItems.map((item) => {
-    if (item._id === id) {
-      if (value === "inc") {
-        if (item.quantity < 5) {
-          return { ...item, quantity: item.quantity + 1 };
-        }
-      } else if (value === "dec") {
-        if (item.quantity > 1) {
-          return { ...item, quantity: item.quantity - 1 };
+  const toggleCartItemQuanitity = (id, value) => {
+    setCouponStatus(false);
+    setCustomerCoupon("");
+    setAddCoupon(false);
+    setCouponSubmit(false);
+    setOriginalCart([]);
+    setOriginalPrice(0);
+
+    const updatedCartItems = cartItems.map((item) => {
+      if (item._id === id) {
+        if (value === "inc") {
+          if (item.quantity < 5) {
+            return { ...item, quantity: item.quantity + 1 };
+          }
+        } else if (value === "dec") {
+          if (item.quantity > 1) {
+            return { ...item, quantity: item.quantity - 1 };
+          }
         }
       }
-    }
-    return item;
-  });
+      return item;
+    });
 
-  const updatedTotalPrice = updatedCartItems.reduce((acc, item) => {
-    if (item.discount) {
-      return acc + (item.price - item.discount) * item.quantity;
-    } else {
-      return acc + item.price * item.quantity;
-    }
-  }, 0);
+    const updatedTotalPrice = updatedCartItems.reduce((acc, item) => {
+      if (item.discount) {
+        return acc + (item.price - item.discount) * item.quantity;
+      } else {
+        return acc + item.price * item.quantity;
+      }
+    }, 0);
 
-  const updatedTotalQuantities = updatedCartItems.reduce(
-    (acc, item) => acc + item.quantity,
-    0
-  );
+    const updatedTotalQuantities = updatedCartItems.reduce(
+      (acc, item) => acc + item.quantity,
+      0
+    );
 
-  setCartItems(updatedCartItems);
-  setTotalPrice(updatedTotalPrice);
-  setTotalQuantities(updatedTotalQuantities);
-};
+    setCartItems(updatedCartItems);
+    setTotalPrice(updatedTotalPrice);
+    setTotalQuantities(updatedTotalQuantities);
+  };
 
   const onRemove = (product) => {
     const removedProducts = cartItems.filter(

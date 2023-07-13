@@ -1,5 +1,5 @@
 import React from "react";
-FaShippingFast
+// FaShippingFast
 const ChooseUs = () => {
   return (
     <div className="bg-[#242424] flex flex-col   max-[1300px]:p-[4rem] max-[460px]:px[2rem] p-[6rem] max-[860px]:items-center ">

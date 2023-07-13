@@ -4,10 +4,10 @@ import Products from "./Products";
 
 const FeaturedProducts = ({ products }) => {
   return (
-    <div className="flex mx-[3rem]  items-center flex-col border border-black rounded-xl p-4 ">
+    <div className="flex mx-[3rem] max-[500px]:mx-[1rem] max-[500px]:gap-[1rem] items-center flex-col border border-black rounded-xl p-4 ">
       <HeaderTitle />
       <div className="flex  w-full justify-between">
-        <div className="flex flex-wrap gap-8 p-8 w-full items-center justify-center ">
+        <div className="flex flex-wrap gap-8 max-[500px]:p-0 p-8 w-full items-center justify-center ">
           {products
             .filter((product) => product.featured)
             .slice(0, 4) // Retrieve only the first three products

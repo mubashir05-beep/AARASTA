@@ -54,13 +54,22 @@ const ProductCard = ({ product }) => {
             PKR {product.price}
           </p>
         )}
-        <div className="flex items-center justify-center">
+        {
+          product.quantity && <div className="flex items-center justify-center">
           <Link href={`/shirts/${product.slug.current}`}>
             <button className="flex items-center px-4 py-2 bg-transparent text-black hover:border-gray-500 focus:outline-none border border-black rounded">
               Buy Now
             </button>
           </Link>
         </div>
+        }
+      <div className="text-center"> {!product.quantity && <div className="text-black hover:text-red-500">
+              Product Not Available
+             </div>}
+
+      </div>
+       
+        
       </div>
     </div>
   );

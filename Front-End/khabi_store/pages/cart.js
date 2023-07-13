@@ -61,11 +61,9 @@ const Cart = ({ coupons }) => {
     handleSubmit();
   };
   const closecouponFunc = () => {
-    if(processing){
+    if (processing) {
       setProcessingModal(true);
-    }
-    else setProcessingModal(false);
-    
+    } else setProcessingModal(false);
   };
   useEffect(() => {
     if (totalPrice >= 2500) {
@@ -231,6 +229,7 @@ const Cart = ({ coupons }) => {
     products: products,
     totalPrice: totalPrice,
   };
+  const [submit, setSubmit] = useState(false);
   const submitOrder = async (orderData) => {
     try {
       const response = await fetch("/api/order", {
@@ -243,9 +242,10 @@ const Cart = ({ coupons }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data.message);
+        
         // Perform any additional actions or show success message
-        setOrderCompleted(true);
+        setSubmit(true);
+        console.log(submit)
       } else {
         throw new Error(
           "Failed to submit order. Server returned status: " + response.status
@@ -292,8 +292,11 @@ const Cart = ({ coupons }) => {
 
       if (response.ok) {
         setMailState(true);
-        toast.success("Email sent successfully!");
 
+        setOrderCompleted(true);
+        console.log(orderCompleted)
+        toast.success("Email sent successfully!");
+        
         // Create the order here
         await submitOrder(orderData);
         toast.success("Your order has been completed!");
@@ -309,7 +312,10 @@ const Cart = ({ coupons }) => {
   const [tryAgain, setTryAgain] = useState(false);
   const [disable, setDisable] = useState(false);
   const handleCheckout = async () => {
-    if ((Object.keys(address).length !== 0 && cartItems.length >= 1) || submited === true) {
+    if (
+      (Object.keys(address).length !== 0 && cartItems.length >= 1) ||
+      submit === true
+    ) {
       if (disable) {
         return; // Exit the function if the button is already disabled
       }
@@ -323,7 +329,8 @@ const Cart = ({ coupons }) => {
   
         // Redirect to the success page only if the order is successfully completed
         // You can modify this condition based on your specific requirements
-        if (orderCompleted) {
+        console.log(orderCompleted,submit)
+        if (orderCompleted && submit) {
           router.push("/success");
         }
       } catch (error) {
@@ -340,7 +347,7 @@ const Cart = ({ coupons }) => {
       toast.error("Please fill out the address form!");
     }
   };
-  
+
   const isAddressFormFilled = () => {
     return (
       address.name &&
@@ -725,7 +732,7 @@ const Cart = ({ coupons }) => {
                       !nameErr &&
                       !phoneErr &&
                       !zipErr &&
-                      !emailErr&&
+                      !emailErr &&
                       !cityErr &&
                       !addressErr
                         ? " hover:bg-gray-600"
@@ -738,18 +745,18 @@ const Cart = ({ coupons }) => {
                         !nameErr &&
                         !phoneErr &&
                         !zipErr &&
-                        !emailErr&&
+                        !emailErr &&
                         !cityErr &&
                         !addressErr)
                     }
                   >
                     {isAddressFormFilled() &&
-                        !nameErr &&
-                        !phoneErr &&
-                        !zipErr &&
-                        !emailErr&&
-                        !cityErr &&
-                        !addressErr ? (
+                    !nameErr &&
+                    !phoneErr &&
+                    !zipErr &&
+                    !emailErr &&
+                    !cityErr &&
+                    !addressErr ? (
                       <div>Proceed to Checkout</div>
                     ) : (
                       <div>Please Fill Out Your Address Form Correctly! </div>
