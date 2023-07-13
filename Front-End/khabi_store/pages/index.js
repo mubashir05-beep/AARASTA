@@ -8,6 +8,7 @@ import Shirts from "@/components/Shirts";
 import Kameez from "@/components/Kameez";
 import Landing_Offer from "@/components/Landing_Offer";
 import Result_Search from "@/components/Result_Search";
+import ChooseUs from "@/components/ChooseUs";
 
 const Home = ({ products }) => {
   const { setProducts } = useStateContext();
@@ -23,6 +24,7 @@ const Home = ({ products }) => {
         <div className="border  border-r max-[1500px]:border-none h-[500px] max-[1500px]:h-0 border-black" />
         <Kameez />
       </div>
+     < ChooseUs/>
       <Landing_Offer />
     </main>
   );

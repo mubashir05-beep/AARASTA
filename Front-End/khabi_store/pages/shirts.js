@@ -80,17 +80,17 @@ const Shirts = ({ products }) => {
               backgroundPosition: "center",
             }}
           />
-          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-10 flex flex-col items-center gap-[1rem] px-[3rem] py-8">
-            <span className="text-white font-bold text-[4rem] max-[425px]:text-[3rem]">
-              New Collection
-            </span>
-            <span className="text-white font-bold text-[8rem] max-[425px]:text-[3rem]">
-              Summer<span className=" mix-blend-overlay">Ease</span>
-            </span>
+          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-10 flex justify-between gap-[1rem] px-[3rem] py-8">
+          <div className="flex flex-col justify-center gap-[1rem]">
+          <span className="text-white font-bold text-[4rem] max-[425px]:text-[3rem]">SUMMER SALE</span>
             <span className="text-white font-bold text-[2rem] max-[425px]:text-[3rem]">
-              Unleash Your Casual Confidence with Effortless Summer Style for
-              Men.
+            Unleash Your Style This Summer!
             </span>
+            <span className="text-white font-bold text-[1rem] max-[425px]:text-[3rem]">
+            Discover the Perfect Blend of Comfort and Elegance at Unbeatable Prices!
+            </span>
+          </div>
+          
           </div>
         </div>
 
