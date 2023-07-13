@@ -80,18 +80,28 @@ const Shirts = ({ products }) => {
               backgroundPosition: "center",
             }}
           />
-          <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-10 flex justify-between gap-[1rem] px-[3rem] py-8">
-          <div className="flex flex-col justify-center gap-[1rem]">
-          <span className="text-white font-bold text-[4rem] max-[425px]:text-[3rem]">SUMMER SALE</span>
-            <span className="text-white font-bold text-[2rem] max-[425px]:text-[3rem]">
-            Unleash Your Style This Summer!
-            </span>
-            <span className="text-white font-bold text-[1rem] max-[425px]:text-[3rem]">
-            Discover the Perfect Blend of Comfort and Elegance at Unbeatable Prices!
-            </span>
-          </div>
-          
-          </div>
+      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-10 flex items-end justify-between gap-[1rem] px-[3rem] py-8">
+  <div className="flex flex-col justify-center gap-[1rem] mix-blend-difference">
+    <span className="text-white font-bold text-4xl max-[425px]:text-3xl">SUMMER SALE</span>
+    <span className="text-white font-bold text-2xl max-[425px]:text-3xl">
+      Unleash Your Style This Summer!
+    </span>
+    <span className="text-white font-bold text-sm max-[425px]:text-3xl">
+      Discover the Perfect Blend of Comfort and Elegance at Unbeatable Prices!
+    </span>
+    <span className="text-white font-bold text-sm max-[425px]:text-3xl">
+      UPTO <span className="text-5xl">50% OFF</span>
+    </span>
+  </div>
+  <div className="flex flex-col w-[300px]">
+  <div className="text-white font-bold text-lg">Coupon 10% OFF</div>
+  <div className="text-white font-bold text-4xl">'SUMMER10'</div>
+  <div className="text-white font-bold text-xs">*Coupon code is valid for orders above $1500 and must be applied before the inclusion of any shipping fees. Please review terms and conditions for further details.</div>
+  </div>
+  
+</div>
+
+
         </div>
 
         <div className="flex flex-row mx-12 rounded-xl px-12 border-black border my-12 py-4 gap-2">
