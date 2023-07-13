@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
       <Link href={`/shirts/${product.slug.current}`}>
         <div className="relative cursor-pointer">
           <img
-            className="w-full h-[400px] object-cover"
+            className=" object-cover "
             src={urlFor(product.image && product.image[0])}
             alt={product.name}
           />
@@ -57,7 +57,7 @@ const ProductCard = ({ product }) => {
         <div className="flex items-center justify-center">
           <Link href={`/shirts/${product.slug.current}`}>
             <button className="flex items-center px-4 py-2 bg-transparent text-black hover:border-gray-500 focus:outline-none border border-black rounded">
-              Learn More
+              Buy Now
             </button>
           </Link>
         </div>

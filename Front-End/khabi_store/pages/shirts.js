@@ -81,29 +81,29 @@ const Shirts = ({ products }) => {
             }}
           />
           <div className="absolute top-0 left-0 w-full h-full px-[3rem] max-[1060px]:justify-center max-[1060px]:p-0 bg-black bg-opacity-20 flex max-[1060px]:flex-col max-[1060px]:items-start items-end justify-between gap-[1rem] py-8">
-            <div className="flex max-[640px]:flex-col max-[640px]:items-start flex-col max-[1060px]:flex-row max-[1060px]:items-center max-[1060px]:h-[70vh] w-[70vw] max-[640px]:justify-center max-[1060px]:justify-between max-[1060px]:w-screen max-[1060px]:px-12  max-[1060px]:py-8  gap-[1rem] ">
+            <div className="flex max-[640px]:flex-col max-[640px]:items-start flex-col max-[1060px]:flex-row max-[1060px]:items-center max-[1060px]:h-[70vh]  w-[70vw] max-[640px]:justify-center max-[1060px]:justify-between max-[1060px]:w-screen max-[1060px]:px-12  max-[1060px]:py-8  gap-[1rem]   ">
               <div className="flex flex-col max-w-[600px] max-[1010px]:w-[400px] max-[485px]:w-auto">
-                <span className="text-white font-bold max-[710px]:text-[2rem] text-[3rem] ">
+                <span className="text-white font-bold max-[710px]:text-[2rem] text-[3rem] max-[400px]:text-[2rem]  ">
                   SUMMER SALE
                 </span>
-                <span className="text-white font-bold  text-base max-[815px]:text-sm  max-[710px]:text-xs ">
+                <span className="text-white font-bold  max-[400px]:font-semibold text-base max-[815px]:text-sm  max-[710px]:text-xs ">
                 Sizzling Discounts Await You! Hurry, Shop Now to Enjoy Our Hottest Deals of the Season!. Prepare to be dazzled by up to 50% off on a wide range of shirts! It's the perfect opportunity to revamp your wardrobe without breaking the bank.
                 </span>
                
               </div>
 
-              <div className="text-white font-bold flex flex-col max-[1060px]:items-center text-xl max-[640px]:flex-row max-[640px]:gap-2">
-                Enjoy UPTO <span className="text-7xl max-[710px]:text-[2rem] max-[795px]:text-[3rem]">50% OFF</span>
+              <div className="text-white font-bold flex flex-col max-[1060px]:items-center max-[400px]:text-base text-xl max-[640px]:flex-row max-[640px]:gap-2 max-[400px]:gap-1">
+                Enjoy UPTO <span className="text-7xl max-[710px]:text-[2rem] max-[795px]:text-[3rem] max-[400px]:[2rem]  ">50% OFF</span>
               </div>
             </div>
-            <div className="flex flex-col max-[1060px]:h-[30vh] max-[1060px]:w-[100vw] max-[1060px]:px-12 max-[1060px]:py-8 max-[532px]:h-auto max-[1060px]:border-t max-[1060px]:border-black w-[30vw] gap-2">
-              <div className="text-white font-bold text-lg">
+            <div className="flex flex-col max-[1060px]:h-[30vh] max-[1060px]:w-[100vw] max-[1060px]:px-12 max-[1060px]:py-8  max-[1060px]:border-t max-[1060px]:border-black w-[30vw] gap-2">
+              <div className="text-white font-bold text-lg max-[400px]:text-sm">
                 Exclusive Coupon: Use it to Get an Additional 10% OFF!
               </div>
-              <div className="text-white font-bold text-4xl max-[1060px]:text-[2xl]">
+              <div className="text-white font-bold text-4xl max-[1060px]:text-[2xl] max-[400px]:text-xl">
                 'SUMMER10'
               </div>
-              <div className="text-white font-bold text-xs">
+              <div className="text-white font-bold text-xs max-[400px]:font-semibold">
                 *Coupon code is valid for orders above $1500 and must be applied
                 before the inclusion of any shipping fees. Please review terms
                 and conditions for further details.
