@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
 import Image from "next/image";
-
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { MdOutlineClose } from "react-icons/md";
 const Product = ({ products, product }) => {
   const {
@@ -29,10 +30,9 @@ const Product = ({ products, product }) => {
   const handleAddToCart = () => {
     if (!selectedSize) {
       setErr(true);
-    } 
-    else if (!selected) {
+    } else if (!selected) {
       setErr(true);
-    }else {
+    } else {
       onAdd(product, qty);
       setShowModal(true);
     }
@@ -64,17 +64,16 @@ const Product = ({ products, product }) => {
 
       <div className="flex flex-col lg:flex-row items-center mx-6 my-6 justify-center gap-10">
         <div className="max-w-[600px] relative">
-          <img
-            src={urlFor(product.image && product.image[0])}
-            alt={product.name}
-          />
-          {product.discount && (
-            <span className="absolute top-0 right-0 z-20 bg-red-500 text-white px-2 py-1 text-xs font-bold">
-              {((product.discount / product.price) * 100).toFixed(0)}% OFF
-            </span>
-          )}
+          {/* Use the Carousel component to display the images */}
+          <Carousel>
+            {product.imagezz &&
+              product.image.map((image, index) => (
+                <div key={index}>
+                  <img src={urlFor(image)} alt={product.name} />
+                </div>
+              ))}
+          </Carousel>
         </div>
-
         <div className="flex flex-col md:w-[450px]">
           <div className="flex flex-col gap-[1px] my-[12px]">
             <div>
@@ -202,15 +201,17 @@ const Product = ({ products, product }) => {
           </div>
         </div>
 
-        
         {showModal && selected && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30" onClick={() => setShowModal(false)}>
+          <div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30"
+            onClick={() => setShowModal(false)}
+          >
             <div className="bg-white p-8 rounded flex flex-col items-center">
               <button
                 className="absolute top-10 right-10 mt-2 mr-2 text-gray-500 hover:text-gray-700"
                 onClick={() => setShowModal(false)}
               >
-                <MdOutlineClose color="white" size={24}/>
+                <MdOutlineClose color="white" size={24} />
               </button>
               <h2 className="text-2xl font-bold mb-4">Product Added to Cart</h2>
               <p className="mb-4">What would you like to do next?</p>
