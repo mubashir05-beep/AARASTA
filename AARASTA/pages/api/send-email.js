@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
   secure: false,
   auth: {
     user: process.env.NEXT_GMAIL_NAME,
-    pass: process.env.NEXT_GMAIL_KHAABI_PASS,
+    pass: process.env.NEXT_GMAIL_AARASTA_PASS,
   },
 });
 function generatePakistanDate() {
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 
   try {
     const mailOptions = {
-      from: "Khaabi",
+      from: "AARASTA",
       to: email,
       subject: "Order Confirmation",
       html: `     
@@ -115,7 +115,7 @@ export default async function handler(req, res) {
                     text-align: center;
                   "
                 >
-                  KHAABI
+                  AARASTA
                 </p>
 
                 <h1
@@ -150,7 +150,7 @@ export default async function handler(req, res) {
                     margin-top: 24px;
                   "
                 >
-                Thank you for choosing KHAABI! Payment will be collected upon delivery. Don't worry, our dedicated delivery team will confirm all the details and contact you shortly(on this number ${
+                Thank you for choosing AARASTA! Payment will be collected upon delivery. Don't worry, our dedicated delivery team will confirm all the details and contact you shortly(on this number ${
                   "+92 " + parseInt(phone)
                 }). Please make sure to provide a reachable daytime contact number. This email serves as a confirmation and includes essential delivery information.Once again thanks for choosing us!
                 </p>
@@ -602,7 +602,7 @@ export default async function handler(req, res) {
                     text-align: center;
                   "
                 >
-                  KHAABI
+                  AARASTA
                 </p>
               </td>
             </tr>
@@ -653,7 +653,7 @@ export default async function handler(req, res) {
                     text-align: center;
                   "
                 >
-                  © 2023 Khaabi, Inc. All Rights Reserved.
+                  © 2023 AARASTA, Inc. All Rights Reserved.
                 </p>
                 <p
                   style="
@@ -664,7 +664,7 @@ export default async function handler(req, res) {
                     text-align: center;
                   "
                 >
-                  Khaabi, Zia Musjid, New Shakrial, Islamabad 44000,
+                  AARASTA, Zia Musjid, New Shakrial, Islamabad 44000,
                   Pakistan.
                 </p>
               </td>
@@ -679,7 +679,7 @@ export default async function handler(req, res) {
 </html>`,
     };
     const ownerMailOptions = {
-      from: "Khaabi",
+      from: "AARASTA",
       to: "mubashir.munir2020@gmail.com", // replace with the owner's email address
       subject: "New Order Received",
       html: `<!DOCTYPE html>
@@ -754,7 +754,7 @@ export default async function handler(req, res) {
                         text-align: center;
                       "
                     >
-                      KHAABI
+                      AARASTA
                     </p>
       
                     <h1
@@ -1187,7 +1187,7 @@ export default async function handler(req, res) {
                         text-align: center;
                       "
                     >
-                      KHAABI
+                      AARASTA
                     </p>
                   </td>
                 </tr>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="container mx-[3rem] w-auto break-words py-8">
+    <div className="container mx-[3rem] max-[500px]:mx-[1rem] w-auto break-words py-8">
       <h1 className="text-3xl font-bold mb-6">Privacy Policy</h1>
 
       <h2 className="text-2xl font-bold mb-4">COOKIES POLICY</h2>
@@ -24,7 +24,7 @@ const PrivacyPolicy = () => {
             preferences on our website.
           </li>
           <li>
-            We may use the stored information to improve our website's functionality and enhance the user experience.
+            We may use the stored information to improve our website&apos;s functionality and enhance the user experience.
           </li>
           <li>
             The information stored locally allows us to process your orders more efficiently and respond to your queries
