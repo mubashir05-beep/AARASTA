@@ -66,7 +66,7 @@ const Product = ({ products, product }) => {
         <div className="max-w-[600px] relative">
           {/* Use the Carousel component to display the images */}
           <Carousel>
-            {product.imagezz &&
+            {product.image &&
               product.image.map((image, index) => (
                 <div key={index}>
                   <img src={urlFor(image)} alt={product.name} />
