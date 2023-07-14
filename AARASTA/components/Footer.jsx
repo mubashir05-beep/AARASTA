@@ -28,9 +28,9 @@ const Footer = () => {
   const year = getCurrentYear();
 
   return (
-    <div className="flex flex-col bg-black text-white px-[3rem] max-[500px]:px-[1rem] py-[1rem]">
+    <div className="flex  flex-col bg-black text-white px-[3rem] max-[500px]:px-[1rem] py-[1rem]">
       <div className="font-semibold text-[32px]">Explore with Us!</div>
-      <div className="flex flex-col md:flex-row justify-between">
+      <div className="flex flex-col min-[850px]:flex-row justify-between">
         <ul className="flex flex-col gap-3 my-5">
           {data.map((item) => {
             return (
@@ -40,9 +40,9 @@ const Footer = () => {
             );
           })}
         </ul>
-        <div className="flex items-baseline  gap-[50px]">
-          <div>
-            <h3 className="text-3xl font-medium text-white mb-4 md:mb-0">
+        <div className="flex items-baseline max-[1170px]:flex-col  gap-[50px]">
+          <div className="mt-12">
+            <h3 className="text-3xl font-medium text-white  mb-4 md:mb-0">
               Need Help?
             </h3>
             <ul className="flex flex-col gap-3 my-5">

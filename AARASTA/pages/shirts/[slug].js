@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
 import Image from "next/image";
 
+import { MdOutlineClose } from "react-icons/md";
 const Product = ({ products, product }) => {
   const {
     qty,
@@ -28,7 +29,10 @@ const Product = ({ products, product }) => {
   const handleAddToCart = () => {
     if (!selectedSize) {
       setErr(true);
-    } else {
+    } 
+    else if (!selected) {
+      setErr(true);
+    }else {
       onAdd(product, qty);
       setShowModal(true);
     }
@@ -45,9 +49,8 @@ const Product = ({ products, product }) => {
   };
 
   return (
- 
     <div className="flex flex-col mx-[3rem] max-[500px]:mx-[1.5rem] my-[1rem]  border-black border  rounded-xl">
-      <div className="flex flex-row mx-12 rounded-xl px-12 border-black border my-12 py-4 gap-2">
+      <div className="flex flex-row mx-12  max-[455px]:mx-4 max-[455px]:px-4 rounded-xl px-12 border-black border my-12 py-4 gap-2">
         <Link href="../" className="font-normal hover:underline">
           Home
         </Link>
@@ -195,32 +198,19 @@ const Product = ({ products, product }) => {
           <div className="text-[14px] text-red-400">
             Disclaimer: Due to the difference in lighting used during
             photoshoots, the color or texture of the actual product may slightly
-           vary from the image.
+            vary from the image.
           </div>
         </div>
 
-        {/* Modal */}
-        {showModal && selectedSize && (
-          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30">
+        
+        {showModal && selected && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30" onClick={() => setShowModal(false)}>
             <div className="bg-white p-8 rounded flex flex-col items-center">
               <button
-                className="absolute top-0 right-0 mt-2 mr-2 text-gray-500 hover:text-gray-700"
+                className="absolute top-10 right-10 mt-2 mr-2 text-gray-500 hover:text-gray-700"
                 onClick={() => setShowModal(false)}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+                <MdOutlineClose color="white" size={24}/>
               </button>
               <h2 className="text-2xl font-bold mb-4">Product Added to Cart</h2>
               <p className="mb-4">What would you like to do next?</p>
@@ -245,7 +235,6 @@ const Product = ({ products, product }) => {
         )}
       </div>
     </div>
-    
   );
 };
 
