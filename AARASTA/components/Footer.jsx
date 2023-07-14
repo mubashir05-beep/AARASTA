@@ -13,8 +13,8 @@ const Footer = () => {
     { id: 2, name: "Shirts", url: "/shirts" },
     { id: 3, name: "About Us", url: "/about" },
     { id: 4, name: "Contact Us", url: "/contact" },
-    { id: 5, name: "Contact", url: "/contact" },
-    { id: 6, name: "Contact", url: "/contact" },
+    { id: 5, name: "Privacy Policy", url: "/policy" },
+    { id: 6, name: "Terms and Conditions ", url: "/terms_conditions" },
   ];
   function getCurrentYear() {
     const currentDate = new Date();
