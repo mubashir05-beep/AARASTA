@@ -65,8 +65,8 @@ const Footer = () => {
                 <div className="text-lg pt-1 text-white">
                   Welcome to AARASTA! We are a brand built on the passion and
                   dedication of two brothers who share a common vision - to
-                  create exceptional "Kameez Shalwar" and suits for men. Our
-                  story began with a deep-rooted love for traditional
+                  create exceptional &ldquo;Kameez Shalwar&rdquo; and suits for
+                  men. Our story began with a deep-rooted love for traditional
                   craftsmanship and a desire to bring the essence of our
                   heritage to the modern world. Want to{" "}
                   <span className="underline underline-offset-4 cursor-pointer">
@@ -80,7 +80,7 @@ const Footer = () => {
       </div>
       <div className="flex flex-row items-center mt-2 justify-between">
         <p className="text-white/[0.7] break-words">
-          Copyright © {year} AARASTA. All Rights Reserved
+          Copyright &copy; {year} AARASTA. All Rights Reserved
         </p>
         <div className="flex gap-5 items-center">
           <Link href="#">
