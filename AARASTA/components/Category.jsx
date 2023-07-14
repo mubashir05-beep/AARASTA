@@ -1,10 +1,17 @@
 import React from 'react';
+import Image from 'next/image';
 
 const Category = () => {
   return (
     <div>
       <div className="flex justify-center mx-[3rem] max-[500px]:mx-[1.5rem] my-[3rem]">
-        <img src="/shirt_sample.webp" alt="" className="rounded-l-lg object-none w-[400px] h-[400px]" />
+        <Image
+          src="/shirt_sample.webp"
+          alt=""
+          className="rounded-l-lg object-none w-[400px] h-[400px]"
+          width={400}
+          height={400}
+        />
         <div className="bg-white text-black flex-grow flex flex-col justify-center px-6 py-4">
           <h2 className="text-2xl font-bold">Shop our shirts</h2>
           <p className="mt-2">Discover our wide range of stylish and comfortable shirts for every occasion.</p>

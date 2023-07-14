@@ -87,9 +87,8 @@ const Shirts = ({ products }) => {
                   SUMMER SALE
                 </span>
                 <span className="text-white font-bold  max-[400px]:font-semibold text-base max-[815px]:text-sm  max-[710px]:text-xs ">
-                Sizzling Discounts Await You! Hurry, Shop Now to Enjoy Our Hottest Deals of the Season!. Prepare to be dazzled by up to 50% off on a wide range of shirts! It's the perfect opportunity to revamp your wardrobe without breaking the bank.
+                  Sizzling Discounts Await You! Hurry, Shop Now to Enjoy Our Hottest Deals of the Season!. Prepare to be dazzled by up to 50% off on a wide range of shirts! It&apos;s the perfect opportunity to revamp your wardrobe without breaking the bank.
                 </span>
-               
               </div>
 
               <div className="text-white font-bold flex flex-col max-[1060px]:items-center max-[400px]:text-base text-xl max-[640px]:flex-row max-[640px]:gap-2 max-[400px]:gap-1">
@@ -101,7 +100,7 @@ const Shirts = ({ products }) => {
                 Exclusive Coupon: Use it to Get an Additional 10% OFF!
               </div>
               <div className="text-white font-bold text-4xl max-[1060px]:text-[2xl] max-[400px]:text-xl">
-                'SUMMER10'
+                &apos;SUMMER10&apos;
               </div>
               <div className="text-white font-bold text-xs max-[400px]:font-semibold">
                 *Coupon code is valid for orders above $1500 and must be applied

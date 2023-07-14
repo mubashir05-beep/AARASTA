@@ -15,7 +15,7 @@ const Home = ({ products }) => {
 
   useEffect(() => {
     setProducts(products);
-  }, [products]);
+  }, [products, setProducts]);
 
   return (
     <main>
@@ -24,7 +24,7 @@ const Home = ({ products }) => {
         <div className="border  border-r max-[1500px]:border-none h-[500px] max-[1500px]:h-0 border-black" />
         <Kameez />
       </div>
-     < ChooseUs/>
+      <ChooseUs />
       <Landing_Offer />
     </main>
   );

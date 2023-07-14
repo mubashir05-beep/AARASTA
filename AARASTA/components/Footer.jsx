@@ -9,11 +9,19 @@ import Link from "next/link";
 
 const Footer = () => {
   const data = [
-    { id: 1, name: "Tailored Clothing", url: "/tailored_clothing" },
-    { id: 2, name: "Ready to Wear", url: "/ready_to_wear" },
+    { id: 1, name: "Tailored Clothing", url: "/" },
+    { id: 2, name: "Shirts", url: "/shirts" },
     { id: 3, name: "About Us", url: "/about" },
-    { id: 4, name: "Contact", url: "/contact" },
+    { id: 4, name: "Contact Us", url: "/contact" },
+    { id: 5, name: "Contact", url: "/contact" },
+    { id: 6, name: "Contact", url: "/contact" },
   ];
+  function getCurrentYear() {
+    const currentDate = new Date();
+    return currentDate.getFullYear();
+  }
+  const year = getCurrentYear();
+      
   return (
     <div className="flex flex-col bg-black  text-white px-[3rem] py-[1rem]">
       <div className="font-semibold text-[32px]">Explore with Us!</div>
@@ -54,7 +62,7 @@ const Footer = () => {
       </div>
       <div className="flex flex-row items-center mt-2 justify-between">
         <p className="text-white/[0.7] break-words">
-          Copyright © 2023 Khaabi. All Rights Reserved
+          Copyright © {year} AARASTA. All Rights Reserved
         </p>
         <div className="flex gap-5 items-center ">
           <Link href={"#"}>

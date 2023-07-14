@@ -10,8 +10,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { client } from "@/lib/client";
 import CartHead from "@/components/CartHead";
-import Menu from "@/components/Menu";
-import { escape } from "querystring";
+import Image from "next/image";
 
 const Cart = ({ coupons }) => {
   const {
@@ -71,10 +70,11 @@ const Cart = ({ coupons }) => {
     } else {
       setDelivery(totalPrice + 99);
     }
-  }, [totalPrice]);
+  }, [totalPrice, setDelivery]);
   useEffect(() => {
     setCoupon(coupons);
-  }, [coupons]);
+  }, [coupons, setCoupon]);
+
   const openModal = () => {
     setIsOpen(true);
   };
@@ -181,6 +181,7 @@ const Cart = ({ coupons }) => {
       cityErr,
       addressErr,
     }));
+
     // Update error messages
     // If there are no errors, submit the form
     if (
@@ -242,10 +243,10 @@ const Cart = ({ coupons }) => {
 
       if (response.ok) {
         const data = await response.json();
-        
+
         // Perform any additional actions or show success message
         setSubmit(true);
-        console.log(submit)
+        console.log(submit);
       } else {
         throw new Error(
           "Failed to submit order. Server returned status: " + response.status
@@ -294,9 +295,9 @@ const Cart = ({ coupons }) => {
         setMailState(true);
 
         setOrderCompleted(true);
-        console.log(orderCompleted)
+
         toast.success("Email sent successfully!");
-        
+
         // Create the order here
         await submitOrder(orderData);
         toast.success("Your order has been completed!");
@@ -319,17 +320,17 @@ const Cart = ({ coupons }) => {
       if (disable) {
         return; // Exit the function if the button is already disabled
       }
-  
+
       setProcessing(true);
       setDisable(true); // Disable the button
-  
+
       try {
         await sendEmail();
         setProcessing(false);
-  
+
         // Redirect to the success page only if the order is successfully completed
         // You can modify this condition based on your specific requirements
-        console.log(orderCompleted,submit)
+
         if (orderCompleted && submit) {
           router.push("/success");
         }
@@ -337,7 +338,7 @@ const Cart = ({ coupons }) => {
         setProcessing(false);
         toast.error("Error processing order!");
         setTryAgain(true);
-  
+
         setTimeout(() => {
           setTryAgain(false);
           setDisable(false); // Re-enable the button after an error
@@ -358,6 +359,7 @@ const Cart = ({ coupons }) => {
       address.addressAll
     );
   };
+
   const [priceSetter, setPriceSetter] = useState(0);
   const submitCoupon = (e) => {
     e.preventDefault();
@@ -398,6 +400,7 @@ const Cart = ({ coupons }) => {
       });
     }
   };
+
   useEffect(() => {
     if (cartItems.length !== originalCart) {
       if (cartItems.length === 0) {
@@ -419,7 +422,7 @@ const Cart = ({ coupons }) => {
               setCouponStatus(true);
             } else if (coupon.couponDiscountPercentage) {
               const discountPercentage = Number(
-                coupon.couponDiscountPercentage
+                couponItem.couponDiscountPercentage
               );
               const discountAmount = (totalPrice * discountPercentage) / 100;
               const discountedPrice = totalPrice - discountAmount;
@@ -430,10 +433,12 @@ const Cart = ({ coupons }) => {
         });
     }
   }, [cartItems.length, totalPrice]);
+
   const handleCoupon = (e) => {
     e.preventDefault();
     setCustomerCoupon(e.target.value);
   };
+
   return (
     <>
       <div className="mx-[3rem]  max-[500px]:mx-[1.5rem] my-[3rem] py-3">
@@ -617,6 +622,8 @@ const Cart = ({ coupons }) => {
                           className="rounded-lg max-[600px]:w-[150px] max-[350px]:w-[120px]"
                           alt={item.name}
                         />
+                       
+
                         <div className="flex flex-col max-[600px]:gap-1 ml-3">
                           <div className="text-lg font-semibold max-[350px]:text-base">
                             <Link href={`./shirts/${item.slug.current}`}>

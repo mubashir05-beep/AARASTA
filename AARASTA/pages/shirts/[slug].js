@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useStateContext } from "@/context/StateContext";
 import Image from "next/image";
-import Menu from "@/components/Menu";
 
 const Product = ({ products, product }) => {
   const {
@@ -23,8 +22,8 @@ const Product = ({ products, product }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    setDiscountedPrice(() => product.discount);
-  }, []);
+    setDiscountedPrice(product.discount);
+  }, [product.discount, setDiscountedPrice]);
 
   const handleAddToCart = () => {
     if (!selectedSize) {
