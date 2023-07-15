@@ -9,7 +9,7 @@ const devOnlyPlugins = [getStartedPlugin()]
 
 export default defineConfig({
   name: 'default',
-  title: 'magenta-baboon',
+  title: 'AARASTA',
 
   projectId: 'a3lmxvs9',
   dataset: 'production',
