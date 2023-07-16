@@ -65,7 +65,7 @@ const Product = ({ products, product }) => {
       <div className="flex flex-col lg:flex-row items-center mx-6 my-6 justify-center gap-10">
         <div className="max-w-[600px] relative">
           {/* Use the Carousel component to display the images */}
-          <Carousel>
+          <Carousel showIndicators={false} showStatus={false} >
             {product.image &&
               product.image.map((image, index) => (
                 <div key={index}>

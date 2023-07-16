@@ -58,11 +58,11 @@ const Footer = () => {
           </div>
           <div className="bg-black py-8">
             <div className="max-w-6xl">
-              <div className="flex flex-col gap-4 max-w-[500px] justify-between">
+              <div className="flex flex-col gap-4 max-w-[400px] justify-between">
                 <h3 className="text-3xl font-medium text-white mb-4 md:mb-0">
                   About Us
                 </h3>
-                <div className="text-lg pt-1 text-white">
+                <div className="text-sm pt-1 text-white">
                   Welcome to AARASTA! We are a brand built on the passion and
                   dedication of two brothers who share a common vision - to
                   create exceptional &ldquo;Kameez Shalwar&rdquo; and suits for
