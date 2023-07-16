@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
-import { client } from "@/lib/client";
-import { useStateContext } from "@/context/StateContext";
-import Link from "next/link";
-import Products from "@/components/Products";
+import React, { useState, useEffect, useRef } from 'react';
+import { client } from '@/lib/client';
+import { useStateContext } from '@/context/StateContext';
+import Link from 'next/link';
+import Products from '@/components/Products';
 
-import Shirts from "@/components/Shirts";
-
-import Kameez from "@/components/Kameez";
-import Landing_Offer from "@/components/Landing_Offer";
-import Result_Search from "@/components/Result_Search";
-import ChooseUs from "@/components/ChooseUs";
-import FeaturedProducts from "@/components/FeaturedProducts";
+import Shirts from '@/components/Shirts';
+import Kameez from '@/components/Kameez';
+import ChooseUs from '@/components/ChooseUs';
 
 const Home = ({ products }) => {
   const { setProducts } = useStateContext();
@@ -34,7 +30,7 @@ const Home = ({ products }) => {
           <div className="text-lg pt-1 text-black ">
             Welcome to AARASTA! We are a brand built on the passion and
             dedication of two brothers who share a common vision - to create
-            exceptional &ldquo;Kameez Shalwar&rdquo; and suits for men. Our
+            exceptional &apos;Kameez Shalwar&apos; and suits for men. Our
             story began with a deep-rooted love for traditional craftsmanship
             and a desire to bring the essence of our heritage to the modern
             world. Want to
@@ -51,7 +47,7 @@ const Home = ({ products }) => {
             Have a Query or Need to Book an Appointment? Contact Us Now!
           </h2>
           <p className="mb-2 ">
-            We'll Be More Than Happy to Assist You! And Solve All of Your
+            We&apos;ll Be More Than Happy to Assist You! And Solve All of Your
             Queries
           </p>
           <Link href="/contact">
@@ -62,27 +58,29 @@ const Home = ({ products }) => {
         </div>
       </div>
       <div className="mb-10">
-
-      <div className="flex mx-[3rem] max-[500px]:mx-[1rem] max-[500px]:gap-[1rem] items-center flex-col border border-black rounded-xl p-8 ">
-  <div className='flex flex-col  rounded-lg p-8 bg-gradient-to-r from-purple-300   w-full'>
-    <h2 className='text-2xl font-bold text-black mb-6'>Best Selling Products!</h2>
-    <div className='text-lg  text-gray-800'>Discover Our Best Selling Products and Experience Unmatched Quality!</div>
-  </div>
-  <div className="flex  w-full justify-between">
-    <div className="flex flex-wrap gap-8 max-[500px]:p-0 p-8 w-full items-center justify-center ">
-      {products
-        .filter((product) => product.featured)
-        .slice(0, 4) // Retrieve only the first three products
-        .map((product) => (
-          <div key={product._id} className="w-[400px]">
-            <Products product={product} />
+        <div className="flex mx-[3rem] max-[500px]:mx-[1rem] max-[500px]:gap-[1rem] items-center flex-col border border-black rounded-xl p-8 ">
+          <div className="flex flex-col  rounded-lg p-8 bg-gradient-to-r from-purple-300   w-full">
+            <h2 className="text-2xl font-bold text-black mb-6">
+              Best Selling Products!
+            </h2>
+            <div className="text-lg  text-gray-800">
+              Discover Our Best Selling Products and Experience Unmatched Quality!
+            </div>
           </div>
-        ))}
-    </div>
-  </div>
-</div>
+          <div className="flex  w-full justify-between">
+            <div className="flex flex-wrap gap-8 max-[500px]:p-0 p-8 w-full items-center justify-center ">
+              {products
+                .filter((product) => product.featured)
+                .slice(0, 4) // Retrieve only the first three products
+                .map((product) => (
+                  <div key={product._id} className="w-[400px]">
+                    <Products product={product} />
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
       </div>
-    
     </main>
   );
 };
