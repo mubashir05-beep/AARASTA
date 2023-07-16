@@ -243,10 +243,8 @@ const Cart = ({ coupons }) => {
 
       if (response.ok) {
         const data = await response.json();
-
-        // Perform any additional actions or show success message
-        setSubmit(true);
-        console.log(submit);
+        await setSubmit(true);
+        router.push("/success");
       } else {
         throw new Error(
           "Failed to submit order. Server returned status: " + response.status
@@ -254,10 +252,10 @@ const Cart = ({ coupons }) => {
       }
     } catch (error) {
       console.error("Error submitting order:", error.message);
-      // Handle error or show error message
       toast.error("Error submitting order!");
     }
   };
+
   const sendEmail = async () => {
     try {
       const products = cartItems.map((item) => ({
@@ -292,13 +290,9 @@ const Cart = ({ coupons }) => {
       });
 
       if (response.ok) {
-        setMailState(true);
-
-        setOrderCompleted(true);
-
+        await setMailState(true);
+        await setOrderCompleted(true);
         toast.success("Email sent successfully!");
-
-        // Create the order here
         await submitOrder(orderData);
         toast.success("Your order has been completed!");
       } else {
@@ -312,6 +306,7 @@ const Cart = ({ coupons }) => {
   const router = useRouter();
   const [tryAgain, setTryAgain] = useState(false);
   const [disable, setDisable] = useState(false);
+
   const handleCheckout = async () => {
     if (
       (Object.keys(address).length !== 0 && cartItems.length >= 1) ||
@@ -326,14 +321,13 @@ const Cart = ({ coupons }) => {
 
       try {
         await sendEmail();
-        setProcessing(false);
 
-        // Redirect to the success page only if the order is successfully completed
-        // You can modify this condition based on your specific requirements
+        // Wait for the order to be completed before redirecting
+        
+          setProcessing(false);
 
-        if (orderCompleted && submit) {
-          router.push("/success");
-        }
+        // Wait for 1 second before re-enabling the button (if needed)
+        setDisable(false);
       } catch (error) {
         setProcessing(false);
         toast.error("Error processing order!");
@@ -622,7 +616,6 @@ const Cart = ({ coupons }) => {
                           className="rounded-lg max-[600px]:w-[150px] max-[350px]:w-[120px]"
                           alt={item.name}
                         />
-                       
 
                         <div className="flex flex-col max-[600px]:gap-1 ml-3">
                           <div className="text-lg font-semibold max-[350px]:text-base">
