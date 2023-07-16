@@ -81,7 +81,7 @@ const Menu = () => {
 
 
   return (
-    <div className="flex justify-between items-center w-full z-[55555555555] py-4 px-8 transition-colors duration-300 bg-white text-black ">
+    <div className="flex justify-between  items-center w-full z-[55555555555] py-4 px-8 transition-colors duration-300 bg-white text-black ">
       <Link href="/">
         <div className="font-semibold pointer text-[24px] logo">AARASTA</div>
       </Link>
