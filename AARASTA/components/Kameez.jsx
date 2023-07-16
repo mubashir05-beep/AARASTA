@@ -14,7 +14,7 @@ const Kameez = () => {
 
   return (
     <div
-      className="w-[50vw] m-4 flex items-center max-[830px]:flex-col py-8 max-[750px]:w-[500px] gap-[30px] max-[500px]:w-[60vw] max-[950px]:w-[750px] max-[700px]:w-[500px] max-[1500px]:w-[850px] max-[1500px]:justify-between "
+      className="w-[50vw] m-4  flex items-center max-[830px]:flex-col py-8 max-[750px]:w-[500px] gap-[30px] max-[500px]:w-[60vw] max-[950px]:w-[750px] max-[700px]:w-[500px] max-[1500px]:w-[850px] max-[1500px]:justify-between "
       onMouseEnter={handleHover}
       onMouseLeave={handleMouseLeave}
     >
@@ -23,14 +23,14 @@ const Kameez = () => {
           src="/47039-1_1_-transformed.png"
           className={`${
             isHovered ? "scale-[1.26]" : "scale-[1.2]"
-          } transition-transform  duration-500  max-[700px]:w-[400px]  `}
+          } transition-transform  duration-500  max-[800px]:w-[400px]  `}
           height={200}
           width={500}
         />
         <h1
           className={`${
             isHovered ? "scale-105" : "scale-85"
-          } transition-transform duration-500 text-7xl max-[535px]:text-[6rem] max-[500px]:text-[20vw] text-center text-gray-400 max-[831px]:block min-[831px]:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-semibold`}
+          } transition-transform duration-500 text-7xl max-[535px]:text-[6rem] max-[500px]:text-[20vw] text-center text-black max-[831px]:block min-[831px]:hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-semibold`}
         >
           Shalwar Kameez
         </h1>
