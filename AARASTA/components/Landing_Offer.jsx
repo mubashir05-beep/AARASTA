@@ -3,7 +3,7 @@ import React from 'react';
 
 const Landing_Offer = () => {
   return (
-    <div className="flex max-[860px]:flex-col max-[860px]:gap-4 justify-between items-center mx-[3rem] max-[500px]:mx-[1.5rem] my-[3rem] bg-gradient-to-r from-purple-200 to-blue-200 p-[2rem] rounded-lg">
+    <div className="flex max-[860px]:flex-col max-[860px]:gap-4 justify-between items-center mx-[3rem] max-[500px]:mx-[1.5rem] my-[3rem] bg-gradient-to-r from-purple-300 p-[2rem] rounded-lg">
       <div className="flex flex-col">
         <h2 className="text-2xl font-bold mb-4  max-[860px]:text-center">
           Free Shipping on Orders Above PKR 2499/-
