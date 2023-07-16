@@ -708,6 +708,12 @@ const Cart = ({ coupons }) => {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="font-semibold text-gray-800 text-lg">
+                      Delivery Method:
+                    </p>
+                    <div className="text-lg">COD</div>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <p className="font-semibold text-gray-800 text-lg">
                       Delivery Fee:
                     </p>
                     <div className="text-lg">
