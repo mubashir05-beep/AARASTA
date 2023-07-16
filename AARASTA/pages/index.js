@@ -64,23 +64,23 @@ const Home = ({ products }) => {
       <div className="mb-10">
 
       <div className="flex mx-[3rem] max-[500px]:mx-[1rem] max-[500px]:gap-[1rem] items-center flex-col border border-black rounded-xl p-8 ">
-      <div className='flex flex-col  rounded-lg p-8 bg-gradient-to-r from-purple-300   w-full'>
-      <h2 className='text-2xl font-bold text-black mb-6'>Best Selling Products!</h2>
-      <div className='text-lg  text-gray-800'>Discover Our Best Selling Products and Experience Unmatched Quality!</div>
-    </div>
-        <div className="flex  w-full justify-between">
-          <div className="flex flex-wrap gap-8 max-[500px]:p-0 p-8 w-full items-center justify-center ">
-            {products
-              .filter((product) => product.featured)
-              .slice(0, 4) // Retrieve only the first three products
-              .map((product) => (
-                <div key={product._id} className="w-[400px]">
-                  <Products product={product} />
-                </div>
-              ))}
+  <div className='flex flex-col  rounded-lg p-8 bg-gradient-to-r from-purple-300   w-full'>
+    <h2 className='text-2xl font-bold text-black mb-6'>Best Selling Products!</h2>
+    <div className='text-lg  text-gray-800'>Discover Our Best Selling Products and Experience Unmatched Quality!</div>
+  </div>
+  <div className="flex  w-full justify-between">
+    <div className="flex flex-wrap gap-8 max-[500px]:p-0 p-8 w-full items-center justify-center ">
+      {products
+        .filter((product) => product.featured)
+        .slice(0, 4) // Retrieve only the first three products
+        .map((product) => (
+          <div key={product._id} className="w-[400px]">
+            <Products product={product} />
           </div>
-        </div>
-      </div>
+        ))}
+    </div>
+  </div>
+</div>
       </div>
     
     </main>
