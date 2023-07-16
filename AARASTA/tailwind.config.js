@@ -9,7 +9,7 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {borderWidth: ['group-hover'],},
     fontFamily: {
       'Popins': 'Poppins, sans-serif',
       'Roboto': 'Roboto Condensed, sans-serif'
@@ -22,5 +22,6 @@ module.exports = {
   variants: {
     scrollbar: ['rounded']
 }
+
 }
 

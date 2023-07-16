@@ -18,6 +18,9 @@ export const StateContext = ({ children }) => {
   const [top, setTop] = useState(0);
   const [mailState, setMailState] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const [cust_name, setCust_Name] = useState("");
+  const [cust_email, setCust_Email] = useState("");
+  const [cust_mssg, setCust_mssg] = useState("");
   const [selectedSize, setSelectedSize] = useState({});
   const [discountedPrice, setDiscountedPrice] = useState(0);
   const [coupon, setCoupon] = useState("");
@@ -373,6 +376,9 @@ export const StateContext = ({ children }) => {
         setStoredPrice,
         searchState,
         setSearchState,
+        cust_name, setCust_Name,
+        cust_email, setCust_Email,
+        cust_mssg, setCust_mssg,
       }}
     >
       {children}
