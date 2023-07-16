@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Gradient } from "./Gradient";
+import { Gradient } from "@/components/Gradient";
 import { useStateContext } from "@/context/StateContext";
 import { toast } from "react-hot-toast";
 
@@ -96,11 +96,21 @@ const Contact = () => {
           message: cust_mssg,
         }),
       });
+  
+      if (response.ok) {
+        // Clear the form fields after successful email send
+        setCust_Name("");
+        setCust_Email("");
+        setCust_mssg("");
+      } else {
+        toast.error("Error sending email!");
+      }
     } catch (error) {
       console.error("Error sending email:", error);
       toast.error("Error sending email!");
     }
   };
+  
   return (
     <div className="h-screen mx-14 my-14 relative" ref={ref}>
       <canvas
