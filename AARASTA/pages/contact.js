@@ -112,20 +112,20 @@ const Contact = () => {
   };
   
   return (
-    <div className="h-screen mx-14 my-14 relative" ref={ref}>
+    <div className="h-screen mx-14 my-14 max-[730px]:m-0 relative" ref={ref}>
       <canvas
         id="gradient-canvas"
         data-transition-in
-        className="w-full h-full  rounded-2xl"
+        className="w-full h-full  rounded-2xl max-[730px]:rounded-none"
         style={{
           backgroundImage: `url("/hero-background.jpg")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       />
-      <div className="absolute top-0 left-0 w-full h-full px-[3rem] items-center justify-center rounded-2xl  bg-black bg-opacity-30 flex flex-col gap-[2rem] py-8">
+      <div className="absolute top-0 left-0 w-full h-full px-[3rem] max-[750px]:px-[1rem] items-center justify-center rounded-2xl max-[730px]:rounded-none bg-black bg-opacity-30 flex flex-col gap-[2rem] py-8">
         <form
-          className="bg-black text-white p-8 w-[500px] rounded-lg shadow-md backdrop-blur-md backdrop-filter backdrop-opacity-60"
+          className="bg-black text-white p-8 w-[500px] max-[533px]:w-auto rounded-lg shadow-md backdrop-blur-md backdrop-filter backdrop-opacity-60"
           onSubmit={formSubmit}
         >
           <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
@@ -205,7 +205,7 @@ const Contact = () => {
             )}
           </button>
         </form>
-        <div className="max-w-[800px] text-white text-base">
+        <div className="max-w-[800px] max-[730px]:px-[2rem ] max-[533px]:px-0  text-white text-base">
           *If you prefer not to contact us through the form, feel free to reach
           out via WhatsApp or, regular messages at (0300 0000000), or email us @
           (aarasta.customer@gmail.com). We are always delighted to assist you,

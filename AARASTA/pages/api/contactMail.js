@@ -42,30 +42,32 @@ export default async function handler(req, res) {
         from: "Customer Message",
         to: "mubashir.munir2020@gmail.com",
         subject: "New Message!",
-        html: `<!DOCTYPE html>
-           <html lang="en">
-           <head>
-             <meta charset="UTF-8">
-             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-             <title>New Message from Contact Form</title>
-           </head>
-           <body style="font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f2f2f2;">
-             <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-               <h2 style="color: #333; text-align: center;">New Message from Contact Form</h2>
-               <p style="font-size: 16px; color: #333;">Dear Admin,</p>
-               <p style="font-size: 16px; color: #333;">You have received a new message from the contact form on your website. Please find the details below:</p>
-               <ul style="list-style: none; padding: 0;">
-                 <li style="font-size: 16px; color: #333;">Name: ${name}</li>
-                 <li style="font-size: 16px; color: #333;">Email: ${email}</li>
-                 <li style="font-size: 16px; color: #333;">Message: ${message}</li>
-               </ul>
-               <p style="font-size: 16px; color: #333;">Please respond to the customer as soon as possible and address their query or request.</p>
-               <p style="font-size: 16px; color: #333;">Thank you for your prompt attention to this matter.</p>
-             </div>
-           </body>
-           </html>
-           `,
+        html: `
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>New Message from Contact Form</title>
+          </head>
+          <body style="font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f2f2f2;">
+            <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+              <h2 style="color: #333; text-align: center;">New Message from Contact Form</h2>
+              <p style="font-size: 16px; color: #333;">Dear Admin,</p>
+              <p style="font-size: 16px; color: #333;">You have received a new message from the contact form on your website. Please find the details below:</p>
+              <ul style="list-style: none; padding: 0;">
+                <li style="font-size: 16px; color: #333;">Name: ${name}</li>
+                <li style="font-size: 16px; color: #333;">Email: ${email}</li>
+                <li style="font-size: 16px; color: #333;">Message: ${message}</li>
+              </ul>
+              <p style="font-size: 16px; color: #333;">Please respond to the customer as soon as possible and address their query or request.</p>
+              <p style="font-size: 16px; color: #333;">Thank you for your prompt attention to this matter.</p>
+            </div>
+          </body>
+          </html>
+        `,
       };
+      
       
 
     await transporter.sendMail(mailOptions);

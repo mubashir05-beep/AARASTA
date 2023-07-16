@@ -29,7 +29,8 @@ const Menu = () => {
   const data = [
     { id: 1, name: "Home", url: "/" },
     { id: 2, name: "Shirts", url: "/shirts" },
-    { id: 3, name: "About Us", url: "/about" },
+    { id: 3, name: "Contact", url: "/contact" },
+    { id: 4, name: "About Us", url: "/about" },
   ];
 
   const handleMenu = () => {
@@ -105,7 +106,7 @@ const Menu = () => {
             onClick={handleToggleSearch}
           />
           <input
-            className={`p-1 outline-none ${
+            className={`p-1 outline-none w-[10rem] ${
               !searchToggle ? "hidden" : ""
             } transition-width ${searchToggle ? "w-full" : "w-0"}`}
             onChange={handleSearchData}
