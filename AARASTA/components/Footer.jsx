@@ -16,8 +16,8 @@ const Footer = () => {
   ];
 
   const contact = [
-    { id: 1, name: "aarasta.customer@gmail.com" },
-    { id: 2, name: "0300-00000000" },
+    { id: 1, type:'Email Us', name: "aarasta.customer@gmail.com" },
+    { id: 2,  type:'Call Us',name: "0300-00000000" },
   ];
 
   function getCurrentYear() {
@@ -34,6 +34,7 @@ const Footer = () => {
         <ul className="flex flex-col gap-3 my-5">
           {data.map((item) => {
             return (
+              
               <li key={item.id}>
                 <Link href={item.url}>{item.name}</Link>
               </li>
@@ -48,9 +49,12 @@ const Footer = () => {
             <ul className="flex flex-col gap-3 my-5">
               {contact.map((item) => {
                 return (
+                  <div >
+                    {item.type}
                   <li key={item.id}>
                     <div>{item.name}</div>
                   </li>
+                  </div>
                 );
               })}
               <li>Mon - Sat (9AM - 5PM)</li>
