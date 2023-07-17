@@ -1,6 +1,8 @@
 # AARASTA
 AARASTA: Tailored Elegance for Men's Ethnic Wear(still in production).
 
+LIVE URL : https://aarasta.vercel.app/
+
 AARASTA is a brand site dedicated to offering a premium selection of shalwar kameez and custom shirts for men. With a focus on personalized suiting, customers can expect unparalleled craftsmanship and timeless elegance.
 
 This GitHub repository showcases the technical prowess behind AARASTA. The site is built on Next.js, providing seamless user experiences and top-notch performance. Content management is made easy with Sanity.io, while Nodemailer ensures efficient communication with customers.
