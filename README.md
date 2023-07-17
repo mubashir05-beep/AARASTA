@@ -32,8 +32,12 @@ Explore the world of AARASTA and discover how technology and tradition harmoniou
 # CONTACT PAGE
 ![Screenshot 2023-07-18 at 01-40-49 AARASTA](https://github.com/mubashir05-beep/AARASTA/assets/100374421/3578e493-36ee-483f-8267-e9e0c93c2dae)
 
-#MAILS (ADMIN-SIDE)
-![Screenshot 2023-07-18 at 01-44-29 New Order Received - mubashir munir2020@gmail com - Gmail](https://github.com/mubashir05-beep/AARASTA/assets/100374421/d5937c0b-76cd-4f37-9dc5-defab08f9e6a)
+# MAILS (CUSTOMER-SIDE)
+![Screenshot 2023-07-18 at 01-56-18 Gmail - Order Confirmation](https://github.com/mubashir05-beep/AARASTA/assets/100374421/317ece20-5dfb-454f-b472-ff35771ad7f6)
+
+# MAILS (ADMIN-SIDE)
+
+![Screenshot 2023-07-18 at 01-54-51 Gmail - New Order Received](https://github.com/mubashir05-beep/AARASTA/assets/100374421/0686a416-ad63-4ec1-adec-02bb46aa68fd)
 
 Just a heads up, some of the pages are still in development and might change based on what the clients want. Oh, and just to let you know, this is all volunteer work, so we're doing it to help out and make a difference!
 
