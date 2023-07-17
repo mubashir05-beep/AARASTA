@@ -22,7 +22,7 @@ const Home = ({ products }) => {
         <div className="border  border-r max-[1500px]:border-none h-[500px] max-[1500px]:h-0 border-black" />
         <Kameez />
       </div>
-      <div className="flex max-[860px]:flex-col max-[860px]:gap-4 justify-between items-center mx-[3rem] max-[500px]:mx-[1.5rem] my-[3rem] bg-gradient-to-r from-purple-300 p-[2rem] rounded-lg">
+      <div className="flex max-[860px]:flex-col max-[860px]:gap-4 justify-between items-center mx-[3rem] max-[500px]:mx-[1.5rem] my-[3rem] bg-gradient-to-r from-purple-200 p-[2rem] rounded-lg">
         <div className="flex flex-col">
           <h2 className="text-3xl font-bold mb-4  max-[860px]:text-center">
             Welcome!
@@ -41,7 +41,7 @@ const Home = ({ products }) => {
         </div>
       </div>
       <ChooseUs />
-      <div className="flex max-[860px]:flex-col max-[860px]:gap-4 justify-between items-center mx-[3rem] max-[500px]:mx-[1.5rem] my-[3rem] bg-gradient-to-r from-purple-300 p-[2rem] rounded-lg">
+      <div className="flex max-[860px]:flex-col max-[860px]:gap-4 justify-between items-center mx-[3rem] max-[500px]:mx-[1.5rem] my-[3rem] bg-gradient-to-r from-purple-200 p-[2rem] rounded-lg">
         <div className="flex flex-col">
           <h2 className="text-3xl font-bold mb-4  ">
             Have a Query or Need to Book an Appointment? Contact Us Now!
@@ -59,7 +59,7 @@ const Home = ({ products }) => {
       </div>
       <div className="mb-10">
         <div className="flex mx-[3rem] max-[500px]:mx-[1rem] max-[500px]:gap-[1rem] items-center flex-col border border-black rounded-xl p-8 ">
-          <div className="flex flex-col  rounded-lg p-8 bg-gradient-to-r from-purple-300   w-full">
+          <div className="flex flex-col  rounded-lg p-8 bg-gradient-to-r from-purple-200   w-full">
             <h2 className="text-2xl font-bold text-black mb-6">
               Best Selling Products!
             </h2>
