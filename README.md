@@ -39,5 +39,15 @@ Explore the world of AARASTA and discover how technology and tradition harmoniou
 
 ![Screenshot 2023-07-18 at 01-54-51 Gmail - New Order Received](https://github.com/mubashir05-beep/AARASTA/assets/100374421/0686a416-ad63-4ec1-adec-02bb46aa68fd)
 
+# SANITY (PRODUCT-SCHEMA)
+![Screenshot 2023-07-18 at 02-02-31 AARASTA – Desk](https://github.com/mubashir05-beep/AARASTA/assets/100374421/bdec1978-4fcb-4d01-bd46-0976960c6473)
+
+# SANITY (ORDER-SCHEMA)
+![Screenshot 2023-07-18 at 02-04-02 AARASTA – Desk](https://github.com/mubashir05-beep/AARASTA/assets/100374421/eb3be1fe-aaa5-4eaf-bf3a-e012857c61d1)
+
+# SANITY (COUPON-SCHEMA)
+![Screenshot 2023-07-18 at 02-05-24 AARASTA – Desk](https://github.com/mubashir05-beep/AARASTA/assets/100374421/a57353c9-bbed-40cf-9e27-eeb62aed97c9)
+
+
 Just a heads up, some of the pages are still in development and might change based on what the clients want. Oh, and just to let you know, this is all volunteer work, so we're doing it to help out and make a difference!
 
