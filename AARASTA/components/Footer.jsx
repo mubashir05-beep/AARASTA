@@ -49,7 +49,7 @@ const Footer = () => {
             <ul className="flex flex-col gap-3 my-5">
               {contact.map((item) => {
                 return (
-                  <div >
+                  <div key={item.id}>
                     {item.type}
                   <li key={item.id}>
                     <div>{item.name}</div>

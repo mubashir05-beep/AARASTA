@@ -8,7 +8,7 @@ const MobileMenu = () => {
   const data = [
     { id: 1, name: "Home", url: "/" },
     { id: 2, name: "Shirts", url: "/shirts" },
-    { id: 3, name: "About Us", url: "/about" },
+    { id: 3, name: "About Us", url: "/aboutus" },
     { id: 4, name: "Contact", url: "/contact" },
   ];
 

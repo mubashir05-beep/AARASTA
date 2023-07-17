@@ -30,7 +30,7 @@ const Menu = () => {
     { id: 1, name: "Home", url: "/" },
     { id: 2, name: "Shirts", url: "/shirts" },
     { id: 3, name: "Contact", url: "/contact" },
-    { id: 4, name: "About Us", url: "/about" },
+    { id: 4, name: "About Us", url: "/aboutus" },
   ];
 
   const handleMenu = () => {
