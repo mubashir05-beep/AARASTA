@@ -9,7 +9,7 @@
     2)Tailwind CSS.
     3)Sanity-IO.
     4)JavaScript ES6+.
-    5) Nodemailer.
+    5)Nodemailer.
   
 AARASTA is a brand site dedicated to offering a premium selection of shalwar kameez and custom shirts for men. With a focus on personalized suiting, customers can expect unparalleled craftsmanship and timeless elegance.
 
