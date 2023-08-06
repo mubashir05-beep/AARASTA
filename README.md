@@ -3,7 +3,7 @@
 
 # LIVE URL : https://aarasta.vercel.app/
 
-# Technologies & Techniques Used :
+# Tech Stack :
 
     1)NEXT-JS.
     2)Tailwind CSS.
