@@ -4,6 +4,7 @@ import { useStateContext } from "@/context/StateContext";
 import { TbTruckDelivery } from "react-icons/tb";
 import Image from "next/image";
 import Menu from "@/components/Menu";
+ import Link from 'next/image';
 
 const Success = () => {
   const router = useRouter();
@@ -40,18 +41,18 @@ const Success = () => {
           confirmation of your order.
         </p>
         <div className="flex gap-4 mt-4">
-          <div
-            onClick={gotoHome}
+          <Link
+            href="/"
             className="cursor-pointer py-2 px-4 rounded-xl border hover:bg-black hover:border-black hover:text-white duration-300 active:bg-gray-300 active:text-black active:border-gray-300"
           >
             Home
-          </div>
-          <div
-            onClick={gotoPage}
+          </Link>
+          <Link
+            href="/shirts"
             className="cursor-pointer py-2 px-4 rounded-xl border hover:bg-black hover:border-black hover:text-white duration-300 active:bg-gray-300 active:text-black active:border-gray-300"
           >
             Explore!
-          </div>
+          </Link>
         </div>
       </div>
     </>

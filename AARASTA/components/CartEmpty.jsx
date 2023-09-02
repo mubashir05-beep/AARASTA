@@ -13,7 +13,7 @@ const CartEmpty = () => {
         </div>
       </div>
       <div className='py-6'>
-        <Link href={'/ready_to_wear'}>
+        <Link href={'/shirts'}>
           <button className='py-3 rounded-md text-white px-[20px] bg-black/[0.9] hover:bg-black/[0.6] active:bg-black/[0.4] duration-200'>Explore Now</button>
         </Link>
       </div>
