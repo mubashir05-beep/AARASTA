@@ -35,8 +35,8 @@ const Success = () => {
         <p className="text-center md:text-left text-gray-600 my-4">
           Your order was successfully received, and an email confirmation has been
           sent to your registered email address. Please check your inbox, and if
-          you don't find the email, kindly check your spam or junk folder. If you
-          need any further assistance, please don't hesitate to contact our
+          you don&apos;t find the email, kindly check your spam or junk folder. If you
+          need any further assistance, please don&apos;t hesitate to contact our
           support service. Our team will shortly reach out to you regarding the
           confirmation of your order.
         </p>
