@@ -7,20 +7,13 @@ import Menu from "@/components/Menu";
 import Link from 'next/link'; // Corrected import for Link
 
 const Success = () => {
-  const router = useRouter();
-  const { deleteCart } = useStateContext();
 
-  useEffect(() => {
-    deleteCart();
-  }, [deleteCart]);
+  // const { deleteCart } = useStateContext();
 
-  const gotoPage = () => {
-    router.push("/shirts");
-  };
+  // useEffect(() => {
+  //   deleteCart();
+  // }, [deleteCart]);
 
-  const gotoHome = () => {
-    router.push("/");
-  };
 
   return (
     <>
@@ -41,6 +34,7 @@ const Success = () => {
           confirmation of your order.
         </p>
         <div className="flex gap-4 mt-4">
+        
           <Link
             href="/"
             className="cursor-pointer py-2 px-4 rounded-xl border hover:bg-black hover:border-black hover:text-white duration-300 active:bg-gray-300 active:text-black active:border-gray-300"
@@ -54,7 +48,8 @@ const Success = () => {
             Explore!
           </Link>
         </div>
-      </div>
+        </div>
+      
     </>
   );
 };
