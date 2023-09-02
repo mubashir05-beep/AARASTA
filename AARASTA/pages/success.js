@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useStateContext } from "@/context/StateContext";
-import { TbTruckDelivery } from "react-icons/tb";
+import { TiTruckDelivery } from "react-icons/ti"; // Corrected import for TiTruckDelivery
 import Image from "next/image";
 import Menu from "@/components/Menu";
- import Link from 'next/image';
+import Link from 'next/link'; // Corrected import for Link
 
 const Success = () => {
   const router = useRouter();
@@ -35,8 +35,8 @@ const Success = () => {
         <p className="text-center md:text-left text-gray-600 my-4">
           Your order was successfully received, and an email confirmation has been
           sent to your registered email address. Please check your inbox, and if
-          you don&apos;t find the email, kindly check your spam or junk folder. If you
-          need any further assistance, please don&apos;t hesitate to contact our
+          you don't find the email, kindly check your spam or junk folder. If you
+          need any further assistance, please don't hesitate to contact our
           support service. Our team will shortly reach out to you regarding the
           confirmation of your order.
         </p>
